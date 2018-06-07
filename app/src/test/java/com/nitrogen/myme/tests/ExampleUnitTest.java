@@ -1,4 +1,4 @@
-package com.nitrogen.myme;
+package com.nitrogen.myme.tests;
 
 import org.junit.Test;
 
