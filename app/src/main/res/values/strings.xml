@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Myme</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_studio">Studio</string>
+    <string name="title_explore">Explore</string>
 </resources>
