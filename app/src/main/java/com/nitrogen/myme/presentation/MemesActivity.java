@@ -1,4 +1,4 @@
-package com.nitrogen.myme;
+package com.nitrogen.myme.presentation;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,15 +10,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
+
+import com.nitrogen.myme.R;
+import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.objects.Meme;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-
-    //private TextView mTextMessage;
-    ArrayList<Meme> memes;
+public class MemesActivity extends AppCompatActivity {
+    AccessMemes accessMemes;
+    List<Meme> memes;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_memes);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -60,15 +62,16 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
-        // ...
-        // Lookup the recyclerview in activity layout
+        // Lookup the recycler view in activity layout
         RecyclerView rvMemes = (RecyclerView) findViewById(R.id.rvMemes);
 
         // Initialize memes
-        memes = Meme.createMemesList(20);
+        accessMemes = new AccessMemes();
+        memes = accessMemes.getMemes();
+
         // Create adapter passing in the sample user data
         MemesRecyclerAdapter adapter = new MemesRecyclerAdapter(memes);
-        // Attach the adapter to the recyclerview to populate items
+        // Attach the adapter to the recycler view to populate items
         rvMemes.setAdapter(adapter);
         // Set layout manager to position the items
         int numberOfColumns = 3;

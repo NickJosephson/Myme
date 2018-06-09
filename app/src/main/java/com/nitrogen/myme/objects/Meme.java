@@ -1,20 +1,29 @@
 package com.nitrogen.myme.objects;
 
-import java.util.ArrayList;
+import android.net.Uri;
 
-public class Meme {
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public abstract class Meme {
     private String name;
     private String description;
-    //tags
-    //dank level
-    //file location
-    //  or resource identifier
-    private int resourceID;
+    private Author author;
+    private Date creationDate;
+    private List<Tag> tags;
+    private int memeID;
+    private static int lastMemeID = 0;
+    public abstract Uri getThumbnailPath();
 
     public Meme(final String name)
     {
         this.name = name;
         this.description = null;
+        this.author = null;
+        this.creationDate = new Date();
+        this.tags = new ArrayList<Tag>();
+        this.memeID = lastMemeID++;
     }
 
     public String getName() {
@@ -26,15 +35,7 @@ public class Meme {
         return name;
     }
 
-    private static int lastMemeId = 0;
-
-    public static ArrayList<Meme> createMemesList(int numMemes) {
-        ArrayList<Meme> memes = new ArrayList<Meme>();
-
-        for (int i = 1; i <= numMemes; i++) {
-            memes.add(new Meme("Person " + ++lastMemeId));
-        }
-        //test
-        return memes;
+    public int getMemeID() {
+        return memeID;
     }
 }
