@@ -33,7 +33,7 @@ public class DisplayMemeActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
