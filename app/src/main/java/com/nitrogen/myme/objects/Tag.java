@@ -2,6 +2,12 @@ package com.nitrogen.myme.objects;
 
 public class Tag {
     private String name;
-    //ID
-    //other info for recommendation system
+
+    public Tag (final String name) {
+        this.name = name;
+    }
+
+    public String getTag () {
+        return name;
+    }
 }

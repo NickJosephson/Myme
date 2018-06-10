@@ -16,13 +16,13 @@ public abstract class Meme {
     private static int lastMemeID = 0;
     public abstract Uri getThumbnailPath();
 
-    public Meme(final String name)
+    public Meme(final String name, final List<Tag> tags)
     {
         this.name = name;
         this.description = null;
         this.author = null;
         this.creationDate = new Date();
-        this.tags = new ArrayList<Tag>();
+        this.tags = tags;
         this.memeID = lastMemeID++;
     }
 

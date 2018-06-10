@@ -1,13 +1,13 @@
-package com.nitrogen.myme.objects;
-
+package com.nitrogen.myme.objects;;
+import java.util.List;
 
 import android.net.Uri;
 
 public class ImageMeme extends Meme {
     Uri imagePath;
 
-    public ImageMeme(String name, Uri source) {
-        super(name);
+    public ImageMeme(String name, Uri source, final List<Tag> tags) {
+        super(name,tags);
         imagePath = source;
     }
 
