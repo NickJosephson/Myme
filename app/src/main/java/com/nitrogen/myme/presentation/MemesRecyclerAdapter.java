@@ -1,7 +1,8 @@
-package com.nitrogen.myme;
+package com.nitrogen.myme.presentation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import java.util.List;
 
+import com.nitrogen.myme.R;
 import com.nitrogen.myme.objects.Meme;
+import com.nitrogen.myme.presentation.DisplayMemeActivity;
 
 // Note that we specify the custom ViewHolder which gives us access to our views
 public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdapter.ViewHolder> {
@@ -21,7 +24,7 @@ public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdap
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public ImageView memeImageView;
-        public int memeNum = 0;
+        public Meme meme;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -36,11 +39,10 @@ public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdap
         public static final String EXTRA_MESSAGE = "com.nicholasjosephson.myfirstapp.MESSAGE";
 
         @Override
-        public void onClick(View v) {
-            //Intent intent = new Intent(v.getContext() , DisplayMessageActivity.class);
-            //int message = memeNum;
-            //intent.putExtra(EXTRA_MESSAGE, message);
-            //v.getContext().startActivity(intent);
+        public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(), DisplayMemeActivity.class);
+            intent.putExtra(DisplayMemeActivity.EXTRA_MESSAGE_MEME_ID, meme.getMemeID());
+            view.getContext().startActivity(intent);
         }
 
     }
@@ -76,20 +78,9 @@ public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdap
 
         // Set item views based on your views and data model
         ImageView imageView = viewHolder.memeImageView;
-        viewHolder.memeNum = position;
-        int[] rlp = {
-                R.mipmap.meme1,
-                R.mipmap.meme2,
-                R.mipmap.meme3,
-                R.mipmap.meme4,
-                R.mipmap.meme5,
-                R.mipmap.meme6,
-                R.mipmap.meme7,
-                R.mipmap.meme8
-        };
+        viewHolder.meme = meme;
 
-        imageView.setImageResource(rlp[position%rlp.length]);
-
+        imageView.setImageURI(meme.getThumbnailPath());
     }
 
     // Returns the total count of items in the list
