@@ -11,14 +11,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 public class CreateActivity extends AppCompatActivity {
 
     private ImageView uploadedImage;
     private Button uploadImagebutton;
+    private Button rotateImagebutton;
     private static final int PICK_IMAGE = 100; // can be any value
     private Uri imageURI;
+
+    private TextView orientation;
 
     // I duplicated this in MainActivity.java because I suck - Kevin
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -52,7 +56,11 @@ public class CreateActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         uploadedImage = (ImageView)findViewById(R.id.imageView1);
+        initializeButtons();
+        orientation = (TextView)findViewById(R.id.imageOrientation);
+    }
 
+    private void initializeButtons() {
         uploadImagebutton = (Button)findViewById(R.id.galleryButton);
 
         uploadImagebutton.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +69,18 @@ public class CreateActivity extends AppCompatActivity {
                 openGallery();
             }
         });
+
+        rotateImagebutton = (Button)findViewById(R.id.rotateImgButton);
+
+        rotateImagebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(uploadedImage != null) {
+                    uploadedImage.setRotation(uploadedImage.getRotation() + 90);
+                }
+            }
+        });
+
     }
 
     // reference: https://www.youtube.com/watch?v=OPnusBmMQTw
@@ -75,7 +95,10 @@ public class CreateActivity extends AppCompatActivity {
         if(resultCode == RESULT_OK && requestCode == PICK_IMAGE){
             imageURI = data.getData();
             uploadedImage.setImageURI(imageURI);
+
+            if(!rotateImagebutton.isShown()) {
+                rotateImagebutton.setVisibility(View.VISIBLE);
+            }
         }
     }
-
 }

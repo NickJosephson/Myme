@@ -20,6 +20,21 @@
         android:layout_height="fill_parent"
         android:id="@+id/imageView1"
         />
+    <TextView
+        android:id="@+id/imageOrientation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintLeft_toRightOf="@+id/rotateImgButton"
+        />
+    <Button
+        android:id="@+id/rotateImgButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rotate"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        android:visibility="gone"
+        />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
