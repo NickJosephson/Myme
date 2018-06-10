@@ -6,16 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@drawable/is_this_a"
     >
 
-    <TextView
+    <Button
+        android:id="@+id/galleryButton"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginTop="80dp"
-        android:textSize="30sp"
-        android:id="@+id/activityTitleCreate"
-        android:textAlignment="center"
+        android:text="Pick an Image"
+        />
+    <ImageView
+        android:src="@android:drawable/ic_menu_gallery"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/imageView1"
         />
 
     <android.support.design.widget.BottomNavigationView

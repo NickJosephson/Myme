@@ -1,14 +1,24 @@
 package com.nitrogen.myme;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+
 
 public class CreateActivity extends AppCompatActivity {
+
+    private ImageView uploadedImage;
+    private Button uploadImagebutton;
+    private static final int PICK_IMAGE = 100; // can be any value
+    private Uri imageURI;
 
     // I duplicated this in MainActivity.java because I suck - Kevin
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -41,7 +51,31 @@ public class CreateActivity extends AppCompatActivity {
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        TextView title = findViewById(R.id.activityTitleCreate);
-        title.setText("This is the CREATE activity.") ;
+        uploadedImage = (ImageView)findViewById(R.id.imageView1);
+
+        uploadImagebutton = (Button)findViewById(R.id.galleryButton);
+
+        uploadImagebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
     }
+
+    // reference: https://www.youtube.com/watch?v=OPnusBmMQTw
+    private void openGallery() {
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == PICK_IMAGE){
+            imageURI = data.getData();
+            uploadedImage.setImageURI(imageURI);
+        }
+    }
+
 }
