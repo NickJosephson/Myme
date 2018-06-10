@@ -12,8 +12,8 @@
         android:title="@string/title_studio" />
 
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/home_icon"
-        android:title="@string/title_home" />
+        android:id="@+id/navigation_bookmarks"
+        android:icon="@drawable/bookmarks_icon"
+        android:title="@string/title_bookmarks" />
 
 </menu>

@@ -28,7 +28,7 @@ public class MemesActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
+                case R.id.navigation_bookmarks:
                     //mTextMessage.setText(R.string.title_home);
                     return true;
                 case R.id.navigation_explore:
