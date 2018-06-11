@@ -76,26 +76,6 @@ public class MemesPersistenceStub implements MemesPersistence {
         return newMemes;
     }
 
-    /* getMemesByTag
-     *
-     * purpose: Filters through the meme database to return a list of Memes where each
-     *          Meme has the specified tag.
-     */
-    @Override
-    public List<Meme> getMemesByTag(Tag tag) {
-        List<Meme> memeList = new ArrayList<>();
-        List<Tag> currMemeTags;
-
-        for(int i = 0 ; i< this.memes.size() ; i++) {
-            currMemeTags = (this.memes.get(i)).getTags();
-
-            if(currMemeTags.contains(tag)) {
-                memeList.add(this.memes.get(i));
-            }
-        }
-        return memeList;
-    }
-
     /* getMemesByTags
      *
      * purpose: Filters through the meme database to return a list of Memes where each

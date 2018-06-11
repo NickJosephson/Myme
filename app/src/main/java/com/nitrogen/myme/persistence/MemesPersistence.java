@@ -9,7 +9,6 @@ public interface MemesPersistence {
 
     List<Meme> getMemeRandom(Meme currentMeme);
 
-    List<Meme> getMemesByTag(Tag tag);
     List<Meme> getMemesByTags(List<Tag> tags);
 
     Meme insertMeme(Meme currentMeme);
