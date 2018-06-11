@@ -31,6 +31,8 @@ public abstract class Meme {
 
     public int getMemeID() { return memeID; }
 
+    public List<Tag> getTags() { return this.tags; }
+
     @Override
     public String toString() {
         return name;
