@@ -17,6 +17,7 @@ import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MemesActivity extends AppCompatActivity {
@@ -118,7 +119,14 @@ public class MemesActivity extends AppCompatActivity {
      *
     */
     private void handleSearch(String input) {
-        memes =  accessMemes.getMemesByTag(new Tag(input));
+        String[] strings = input.split("\\s");
+        List<Tag> tags = new ArrayList<>();
+
+        for(int i = 0 ; i < strings.length; i ++) {
+            tags.add(new Tag(strings[i]));
+        }
+        memes =  accessMemes.getMemesByTags(tags);
+//        memes =  accessMemes.getMemesByTag(new Tag(input));
         displayMemes(memes);
     }
 
