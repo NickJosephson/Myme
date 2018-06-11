@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemes;
@@ -50,9 +49,10 @@ public class MemesActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_bar, menu);
 
-        MenuItem search = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView)search.getActionView();
+        MenuItem searchIcon = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView)searchIcon.getActionView();
 
+        // handle input from the user
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -63,7 +63,16 @@ public class MemesActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // do nothing
+                // do nothing (this method definition is required by the constructor)
+                return false;
+            }
+        });
+
+        // if the user cancels their search, go back to initial meme list
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                displayMemes(accessMemes.getMemes());
                 return false;
             }
         });
