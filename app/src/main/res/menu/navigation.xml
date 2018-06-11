@@ -6,14 +6,14 @@
         android:icon="@drawable/explore_icon"
         android:title="@string/title_explore" />
 
-    <item
-        android:id="@+id/navigation_studio"
-        android:icon="@drawable/studio_icon"
-        android:title="@string/title_studio" />
+    <!--<item-->
+        <!--android:id="@+id/navigation_studio"-->
+        <!--android:icon="@drawable/studio_icon"-->
+        <!--android:title="@string/title_studio" />-->
 
     <item
-        android:id="@+id/navigation_bookmarks"
-        android:icon="@drawable/bookmarks_icon"
-        android:title="@string/title_bookmarks" />
+        android:id="@+id/navigation_favourites"
+        android:icon="@drawable/favourites_icon"
+        android:title="@string/title_favourites" />
 
 </menu>
