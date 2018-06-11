@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -76,6 +77,9 @@ public class MemesActivity extends AppCompatActivity {
         // Set layout manager to position the items
         int numberOfColumns = 3;
         rvMemes.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+
+
+        //rvMemes.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
