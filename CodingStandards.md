@@ -1,12 +1,11 @@
-
  
-##Indentation
+## Indentation
 Use the `Tab` button.
 
-##Line Length
+## Line Length
 Android Studio has a vertical line, by default. Let’s use this as a guideline.
 
-##Commenting
+## Commenting
 Whenever possible, `methods` should be documented with a multiline comment above its signature to explain its purpose (with the exception of `accessors` and `mutators`).
 
 	/* myMethod
@@ -14,7 +13,7 @@ Whenever possible, `methods` should be documented with a multiline comment above
 	 * purpose: This is just an example.
 	 */	
 
-##Naming conventions
+## Naming conventions
 
 `variables`, `methods`, `classes` and `interfaces` use __camelCase__.
 
@@ -37,7 +36,7 @@ The exception being in `strings.xml`, where all characters are __lowercase__.
 
 	isFound vs. found
 	hasValue vs. value
-##{ Braces }
+## { Braces }
 The __opening brace__ is always on the __same line__ as the method’s signature, the class name the conditional statement, etc.
 
 The __closing brace__ is on its __own line__, with the exception of simple `accessors` and `mutators`.
@@ -53,10 +52,10 @@ The __closing brace__ is on its __own line__, with the exception of simple `acce
     public String getSomething() { return this.something; }
  
  
-##Method Order
+## Method Order
 Methods should be grouped by __functionality__, rather than scope or accessibility.
 
-##Method Signatures
+## Method Signatures
 
 Method signatures should only have a __space__ before the opening brace
 
@@ -75,11 +74,11 @@ If there is __overloading__, new parameters are added to the __end__ of the sign
 	}
  
 
-##Exception Handling/Logging
+## Exception Handling/Logging
 Let's aim to fail gracefully. If an error is thrown, print the stack trace.
 
  
-##Loops and Conditional Statements
+## Loops and Conditional Statements
 
 Pulled straight from the [Java Code Conventions](http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-142311.html#430):
 
@@ -107,7 +106,7 @@ We will __refrain__ from using syntax like this for simple `if-else` statements:
     return (condition ? x : y); 
 
  
-##Package and Import Statements
+## Package and Import Statements
 Pulled straight from the [Java Code Conventions](http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-141855.html#277):
 
 First __non-comment line__ in the file should be a __package statement__
@@ -119,7 +118,7 @@ After, __import__ statements can follow
 
 
 
-##File Structure
+## File Structure
 Android's guidelines can be found [here](https://developer.android.com/guide/topics/resources/providing-resources)
 
 
