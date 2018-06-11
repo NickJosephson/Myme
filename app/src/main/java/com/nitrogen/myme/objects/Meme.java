@@ -26,16 +26,15 @@ public abstract class Meme {
         this.memeID = lastMemeID++;
     }
 
-    public String getName() {
-        return name;
-    }
+    // accessors
+    public String getName() { return name; }
+
+    public int getMemeID() { return memeID; }
 
     @Override
     public String toString() {
         return name;
     }
 
-    public int getMemeID() {
-        return memeID;
-    }
+
 }

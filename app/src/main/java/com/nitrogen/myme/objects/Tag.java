@@ -7,6 +7,7 @@ public class Tag {
         this.name = name;
     }
 
+    // accessor
     public String getTag () {
         return name;
     }

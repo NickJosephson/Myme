@@ -27,26 +27,31 @@ public class MemesPersistenceStub implements MemesPersistence {
         }
     }
 
-    private ArrayList<Tag> randomTags (int num) {
+    private ArrayList<Tag> randomTags(int num) {
         ArrayList<Tag> result = new ArrayList<Tag>();
 
-        // picks tags pseudo randomly based on 'num' argument
+        // picks tags pseudo-randomly based on 'num' argument
         // result always has at least 1 tag
 
-        if(num%3 == 0)
-            result.add( new Tag(availableTags[0]) ) ;
-        if(num%2 == 0)
-            result.add( new Tag(availableTags[1]) ) ;
-        if(num%7 == 0)
-            result.add( new Tag(availableTags[2]) ) ;
-        if(num%2 == 1)
-            result.add( new Tag(availableTags[0]) ) ;
+        if(num%3 == 0) {
+            result.add(new Tag(availableTags[0]));
+        }
+        if(num%2 == 0) {
+            result.add(new Tag(availableTags[1]));
+        }
+        if(num%7 == 0) {
+            result.add(new Tag(availableTags[2]));
+        }
+        if(num%2 == 1) {
+            result.add(new Tag(availableTags[0]));
+        }
 
         return result;
     }
 
     @Override
     public List<Meme> getMemeSequential() {
+
         return Collections.unmodifiableList(memes);
     }
 
