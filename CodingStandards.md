@@ -123,7 +123,7 @@ Android's guidelines can be found [here](https://developer.android.com/guide/top
 
 
 
-__Things to note: __
+__Things to note:__
 
 Use strings.xml `res/values/strings.xml`
  
