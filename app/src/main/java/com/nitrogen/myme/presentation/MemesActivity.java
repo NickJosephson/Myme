@@ -11,10 +11,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.SearchView;
 
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.objects.Meme;
+import com.nitrogen.myme.objects.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,8 @@ import java.util.List;
 public class MemesActivity extends AppCompatActivity {
     AccessMemes accessMemes;
     List<Meme> memes;
+
+    MemesRecyclerAdapter adapter;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -47,7 +51,35 @@ public class MemesActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_bar, menu);
 
-        return true;
+        MenuItem searchIcon = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView)searchIcon.getActionView();
+
+        // handle input from the user
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String userInput) {
+                // filter through meme db
+                handleSearch(userInput);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String userInput) {
+                // do nothing (this method definition is required by the constructor)
+                return false;
+            }
+        });
+
+        // if the user cancels their search, go back to initial meme list
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                displayMemes(accessMemes.getMemes());
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -71,16 +103,38 @@ public class MemesActivity extends AppCompatActivity {
         memes = accessMemes.getMemes();
 
         // Create adapter passing in the sample user data
-        MemesRecyclerAdapter adapter = new MemesRecyclerAdapter(memes);
+        adapter = new MemesRecyclerAdapter(memes);
+
         // Attach the adapter to the recycler view to populate items
         rvMemes.setAdapter(adapter);
+
         // Set layout manager to position the items
         int numberOfColumns = 3;
         rvMemes.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
-
-
-        //rvMemes.setLayoutManager(new LinearLayoutManager(this));
-
     }
 
+    /* handleSearch
+     *
+     * purpose: take the user's input (the name of a tag) and perform a query to retrieve a
+     *          list of memes with that tag.
+     *
+    */
+    private void handleSearch(String input) {
+        String[] strings = input.split("\\s");
+        List<Tag> tags = new ArrayList<>();
+
+        for(int i = 0 ; i < strings.length; i ++) {
+            tags.add(new Tag(strings[i]));
+        }
+        memes =  accessMemes.getMemesByTags(tags);
+        displayMemes(memes);
+    }
+
+    /* displayMemes
+     *
+     * purpose: update the memes displayed on the screen.
+    */
+    private void displayMemes(List<Meme> memes) {
+        adapter.updateMemeList(memes);
+    }
 }
