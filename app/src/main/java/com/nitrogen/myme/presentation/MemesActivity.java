@@ -1,5 +1,6 @@
 package com.nitrogen.myme.presentation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -38,6 +39,7 @@ public class MemesActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_favourites:
                     //mTextMessage.setText(R.string.title_dashboard);
+                    startActivity(new Intent(MemesActivity.this, FavouritesActivity.class));
                     return true;
 //                case R.id.navigation_studio:
 //                    //mTextMessage.setText(R.string.title_notifications);
@@ -93,6 +95,10 @@ public class MemesActivity extends AppCompatActivity {
         //mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        Menu bottomNavMenu = navigation.getMenu();
+        MenuItem item = bottomNavMenu.getItem(0);
+        item.setChecked(true);
 
 
         // Lookup the recycler view in activity layout

@@ -26,6 +26,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nitrogen.myme.presentation.MemesActivity" />
         </activity>
+        <activity android:name=".presentation.FavouritesActivity"></activity>
     </application>
 
 </manifest>
