@@ -55,14 +55,14 @@ public class MemesActivity extends AppCompatActivity {
         // handle input from the user
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextSubmit(String userInput) {
                 // filter through meme db
-                handleSearch(query);
+                handleSearch(userInput);
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public boolean onQueryTextChange(String userInput) {
                 // do nothing (this method definition is required by the constructor)
                 return false;
             }
