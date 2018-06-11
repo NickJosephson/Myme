@@ -29,11 +29,14 @@ public class MemesPersistenceStub implements MemesPersistence {
         }
     }
 
+    /* randomTags
+     *
+     * purpose: Assign pseudo-random tags to a meme.
+     *          This ensures each meme has at least 1 tag.
+     *
+     */
     private ArrayList<Tag> randomTags(int num) {
         ArrayList<Tag> result = new ArrayList<Tag>();
-
-        // picks tags pseudo-randomly based on 'num' argument
-        // result always has at least 1 tag
 
         if(num%3 == 0) {
             result.add(new Tag(availableTags[0]));
@@ -41,11 +44,14 @@ public class MemesPersistenceStub implements MemesPersistence {
         if(num%2 == 0) {
             result.add(new Tag(availableTags[1]));
         }
-        if(num%7 == 0) {
-            result.add(new Tag(availableTags[2]));
-        }
         if(num%2 == 1) {
             result.add(new Tag(availableTags[0]));
+        }
+        if(num%5 == 0) {
+            result.add(new Tag(availableTags[2]));
+        }
+        if(num%7 == 0) {
+            result.add(new Tag(availableTags[3]));
         }
 
         return result;
