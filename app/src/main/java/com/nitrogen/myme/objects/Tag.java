@@ -8,7 +8,18 @@ public class Tag {
     }
 
     // accessor
-    public String getTag () {
+    public String getTagName () {
         return name;
     }
+
+
+    /* equals
+     *
+     * purpose: override Object's equals method so equality is validated by tag names
+     */
+    @Override
+    public boolean equals(Object tag) {
+        return this.name.equals( ((Tag)tag).getTagName());
+    }
+
 }
