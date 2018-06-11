@@ -10,12 +10,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.objects.Meme;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MemesActivity extends AppCompatActivity {
@@ -46,7 +47,28 @@ public class MemesActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_bar, menu);
 
-        return true;
+        MenuItem search = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView)search.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // filter through memes
+                Toast.makeText(getApplicationContext(), "Search for my memes",
+                        Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // do nothing
+                Toast.makeText(getApplicationContext(), "User Input",
+                        Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -71,12 +93,13 @@ public class MemesActivity extends AppCompatActivity {
 
         // Create adapter passing in the sample user data
         MemesRecyclerAdapter adapter = new MemesRecyclerAdapter(memes);
+
         // Attach the adapter to the recycler view to populate items
         rvMemes.setAdapter(adapter);
+
         // Set layout manager to position the items
         int numberOfColumns = 3;
         rvMemes.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
-
     }
 
 }
