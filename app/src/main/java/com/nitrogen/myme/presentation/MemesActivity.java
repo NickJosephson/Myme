@@ -24,6 +24,8 @@ public class MemesActivity extends AppCompatActivity {
     AccessMemes accessMemes;
     List<Meme> memes;
 
+    MemesRecyclerAdapter adapter;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -54,7 +56,7 @@ public class MemesActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // filter through memes
+                // filter through meme db
                 handleSearch(query);
                 return false;
             }
@@ -62,8 +64,6 @@ public class MemesActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 // do nothing
-                Toast.makeText(getApplicationContext(), "User Input",
-                        Toast.LENGTH_LONG).show();
                 return false;
             }
         });
@@ -92,7 +92,7 @@ public class MemesActivity extends AppCompatActivity {
         memes = accessMemes.getMemes();
 
         // Create adapter passing in the sample user data
-        MemesRecyclerAdapter adapter = new MemesRecyclerAdapter(memes);
+        adapter = new MemesRecyclerAdapter(memes);
 
         // Attach the adapter to the recycler view to populate items
         rvMemes.setAdapter(adapter);
@@ -109,6 +109,15 @@ public class MemesActivity extends AppCompatActivity {
      *
     */
     private void handleSearch(String input) {
-        memes =  accessMemes.getMemesByTag(new Tag(input));;
+        memes =  accessMemes.getMemesByTag(new Tag(input));
+        displayMemes(memes);
+    }
+
+    /* displayMemes
+     *
+     * purpose: update the memes displayed on the screen.
+    */
+    private void displayMemes(List<Meme> memes) {
+        adapter.updateMemeList(memes);
     }
 }

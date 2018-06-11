@@ -89,4 +89,8 @@ public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdap
         return memes.size();
     }
 
+    // mutator to update the memes that will be displayed
+    public void updateMemeList(List<Meme> newMemeList) {
+        this.memes = newMemeList;
+    }
 }
