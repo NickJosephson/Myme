@@ -5,10 +5,11 @@ import java.util.List;
 
 import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.objects.Meme;
+import com.nitrogen.myme.objects.Tag;
 import com.nitrogen.myme.persistence.MemesPersistence;
 
 public class AccessMemes
-{
+{ //TODO: Refactor braces
     private MemesPersistence memePersistence;
     private List<Meme> memes;
     private Meme meme;
@@ -48,6 +49,11 @@ public class AccessMemes
             currentMeme = 0;
         }
         return meme;
+    }
+
+    public List<Meme> getMemesByTag(Tag tag)
+    {
+        return Collections.unmodifiableList(memePersistence.getMemesByTag(tag));
     }
 
     /*

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.objects.Meme;
+import com.nitrogen.myme.objects.Tag;
 
 import java.util.List;
 
@@ -54,8 +55,7 @@ public class MemesActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // filter through memes
-                Toast.makeText(getApplicationContext(), "Search for my memes",
-                        Toast.LENGTH_LONG).show();
+                handleSearch(query);
                 return false;
             }
 
@@ -102,4 +102,13 @@ public class MemesActivity extends AppCompatActivity {
         rvMemes.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
     }
 
+    /* handleSearch
+     *
+     * purpose: take the user's input (the name of a tag) and perform a query to retrieve a
+     *          list of memes with that tag.
+     *
+    */
+    private void handleSearch(String input) {
+        memes =  accessMemes.getMemesByTag(new Tag(input));;
+    }
 }

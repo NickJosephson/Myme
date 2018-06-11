@@ -13,6 +13,8 @@ import java.util.List;
 import com.nitrogen.myme.objects.Meme;
 
 public class MemesPersistenceStub implements MemesPersistence {
+
+    private final int NUM_MEMES = 32; // 8 * 4
     private List<Meme> memes;
     private int[] memeNames = {R.mipmap.meme1,R.mipmap.meme2,R.mipmap.meme3,R.mipmap.meme4,
                                       R.mipmap.meme5,R.mipmap.meme6,R.mipmap.meme7,R.mipmap.meme8};
@@ -21,9 +23,9 @@ public class MemesPersistenceStub implements MemesPersistence {
     public MemesPersistenceStub() {
         this.memes = new ArrayList<>();
 
-        for(int i = 0 ; i < 8*4 ; i++) {
+        for(int i = 0 ; i < NUM_MEMES ; i++) {
             memes.add(new ImageMeme("meme", Uri.parse("android.resource://com.nitrogen.myme/"
-                                    + memeNames[i%8]), randomTags(i)));
+                                    + memeNames[i%memeNames.length]), randomTags(i)));
         }
     }
 
@@ -66,6 +68,26 @@ public class MemesPersistenceStub implements MemesPersistence {
             newMemes.add(memes.get(index));
         }
         return newMemes;
+    }
+
+    /* getMemesByTag
+     *
+     * purpose: Filters through the meme database to return a list of Memes where each
+     *          Meme has the specified tag.
+     */
+    @Override
+    public List<Meme> getMemesByTag(Tag tag) {
+        List<Meme> memeList = new ArrayList<>();
+        List<Tag> currMemeTags;
+
+        for(int i = 0 ; i< this.memes.size() ; i++) {
+            currMemeTags = (this.memes.get(i)).getTags();
+
+            if(currMemeTags.contains(tag)) {
+                memeList.add(this.memes.get(i));
+            }
+        }
+        return memeList;
     }
 
     @Override
