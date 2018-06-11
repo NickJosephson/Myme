@@ -8,6 +8,8 @@ public interface MemesPersistence {
 
     List<Meme> getMemeRandom(Meme currentMeme);
 
+//    List<Meme> getMemesByTag(String tag);
+
     Meme insertMeme(Meme currentMeme);
 
     Meme updateMeme(Meme currentMeme);
