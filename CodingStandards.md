@@ -57,13 +57,13 @@ Methods should be grouped by __functionality__, rather than scope or accessibili
 
 ## Method Signatures
 
-Method signatures should only have a __space__ before the opening brace
+Method signatures should only have a space __before__ the opening brace.
 
 	public int add(int x, int y) {
         return x + y;
 	}
 
-If there is __overloading__, new parameters are added to the __end__ of the signature
+If there is __overloading__, new parameters are added to the __end__ of the signature.
 
 	public void doSomething(int x) {
 	    ...
@@ -110,7 +110,7 @@ We will __refrain__ from using syntax like this for simple `if-else` statements:
 Pulled straight from the [Java Code Conventions](http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-141855.html#277):
 
 First __non-comment line__ in the file should be a __package statement__
-After, __import__ statements can follow
+After, __import__ statements can follow.
  
     package java.awt;
  
@@ -119,7 +119,7 @@ After, __import__ statements can follow
 
 
 ## File Structure
-Android's guidelines can be found [here](https://developer.android.com/guide/topics/resources/providing-resources)
+Android's guidelines can be found [here](https://developer.android.com/guide/topics/resources/providing-resources).
 
 
 
@@ -127,14 +127,14 @@ __Things to note:__
 
 Use strings.xml `res/values/strings.xml`
  
->All text displayed in the UI (i.e. needed in a View) should be a constant in strings.xml
+>All text displayed in the UI (i.e. needed in a View) should be a constant in strings.xml.
 
-Images belong in one folder `res/drawables`
+Images belong in one folder `res/drawables`.
 
 >All images in the UI should be in one folder
 
 Icons belong in one folder `res/mipmap`
->All icons in the UI should be in one folder
+>All icons in the UI should be in one folder.
 
 
 
