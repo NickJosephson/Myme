@@ -51,11 +51,6 @@ public class AccessMemes
         return meme;
     }
 
-    public List<Meme> getMemesByTags(List<Tag> tags)
-    {
-        return Collections.unmodifiableList(memePersistence.getMemesByTags(tags));
-    }
-
     /*
     public Meme getMeme(String memeID)
     {

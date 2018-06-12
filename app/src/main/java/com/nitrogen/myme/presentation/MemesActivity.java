@@ -15,6 +15,7 @@ import android.widget.SearchView;
 
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemes;
+import com.nitrogen.myme.business.SearchMemes;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
 
@@ -26,6 +27,8 @@ public class MemesActivity extends AppCompatActivity {
     List<Meme> memes;
 
     MemesRecyclerAdapter adapter;
+
+    SearchMemes searchMemes;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -111,6 +114,8 @@ public class MemesActivity extends AppCompatActivity {
         // Set layout manager to position the items
         int numberOfColumns = 3;
         rvMemes.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+
+        searchMemes = new SearchMemes();
     }
 
     /* handleSearch
@@ -126,7 +131,7 @@ public class MemesActivity extends AppCompatActivity {
         for(int i = 0 ; i < strings.length; i ++) {
             tags.add(new Tag(strings[i]));
         }
-        memes =  accessMemes.getMemesByTags(tags);
+        memes =  searchMemes.getMemesByTags(tags);
         displayMemes(memes);
     }
 

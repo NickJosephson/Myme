@@ -3,6 +3,7 @@ package com.nitrogen.myme.persistence.stubs;
 import android.net.Uri;
 
 import com.nitrogen.myme.R;
+import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.objects.ImageMeme;
 import com.nitrogen.myme.objects.Tag;
 import com.nitrogen.myme.persistence.MemesPersistence;
@@ -24,7 +25,7 @@ public class MemesPersistenceStub implements MemesPersistence {
 
     public MemesPersistenceStub() {
         this.memes = new ArrayList<>();
-        this.tags = new TagsPersistenceStub().getTags();
+        this.tags = Services.getTagsPersistence().getTags();
 
         for(int i = 0 ; i < NUM_MEMES ; i++) {
             memes.add(new ImageMeme("meme", Uri.parse("android.resource://com.nitrogen.myme/"
@@ -79,27 +80,6 @@ public class MemesPersistenceStub implements MemesPersistence {
         return newMemes;
     }
 
-    /* getMemesByTags
-     *
-     * purpose: Filters through the meme database to return a list of Memes where each
-     *          Meme has one or more of the tags in the list of tags provided.
-     */
-    @Override
-    public List<Meme> getMemesByTags(List<Tag> tags) {
-        List<Meme> memeList = new ArrayList<>();
-        List<Tag> currMemeTags;
-
-        for(int i = 0 ; i< this.memes.size() ; i++) {
-            currMemeTags = (this.memes.get(i)).getTags();
-
-            for(int j = 0 ; j < tags.size() ; j++) {
-                if (currMemeTags.contains(tags.get(j))) {
-                    memeList.add(this.memes.get(i));
-                }
-            }
-        }
-        return memeList;
-    }
 
     @Override
     public Meme insertMeme(Meme currentMeme) {
