@@ -69,8 +69,7 @@ public class MemesPersistenceStub implements MemesPersistence {
         int index;
 
         index = memes.indexOf(currentMeme);
-        if (index >= 0)
-        {
+        if (index >= 0) {
             newMemes.add(memes.get(index));
         }
         return newMemes;
@@ -110,8 +109,7 @@ public class MemesPersistenceStub implements MemesPersistence {
         int index;
 
         index = memes.indexOf(currentMeme);
-        if (index >= 0)
-        {
+        if (index >= 0) {
             memes.set(index, currentMeme);
         }
         return currentMeme;
@@ -122,8 +120,7 @@ public class MemesPersistenceStub implements MemesPersistence {
         int index;
 
         index = memes.indexOf(currentMeme);
-        if (index >= 0)
-        {
+        if (index >= 0) {
             memes.remove(index);
         }
     }
