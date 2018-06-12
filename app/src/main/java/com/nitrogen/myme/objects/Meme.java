@@ -33,6 +33,14 @@ public abstract class Meme {
 
     public List<Tag> getTags() { return this.tags; }
 
+    /* hasTag
+     *
+     * purpose: check if this meme has a certain tag.
+     */
+    public boolean hasTag(Tag tag) {
+        return tags.contains(tag);
+    }
+
     @Override
     public String toString() {
         return name;
