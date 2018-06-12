@@ -33,6 +33,14 @@ public abstract class Meme {
 
     public List<Tag> getTags() { return this.tags; }
 
+    public List<String> getStringTags(){
+        List<String> temp = new ArrayList<>();
+        for(int i = 0; i<tags.size();i++){
+            temp.add(tags.get(i).getTagName());
+        }
+        return temp;
+    }
+
     @Override
     public String toString() {
         return name;

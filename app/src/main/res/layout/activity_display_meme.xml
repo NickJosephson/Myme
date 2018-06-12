@@ -54,12 +54,12 @@
                 <include layout="@layout/content_display_meme" />
             </RelativeLayout>
 
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:gravity="center|top"
-
-                android:textSize="16sp" />
+                android:gravity="center|top">
+                <include layout="@layout/display_meme_sliding_panel"/>
+            </RelativeLayout>
         </com.sothree.slidinguppanel.SlidingUpPanelLayout>
     </RelativeLayout>
 
