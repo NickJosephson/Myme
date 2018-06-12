@@ -5,9 +5,10 @@
     android:orientation="horizontal"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textSize="30dp"
+    android:textSize="30sp"
     android:paddingLeft="18dp"
     android:paddingRight="18dp"
     android:fontFamily="cursive"
+
     android:background="@drawable/tag_background">
 </TextView>
