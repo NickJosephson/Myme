@@ -41,6 +41,15 @@ public abstract class Meme {
         return tags.contains(tag);
     }
 
+    /* equals
+     *
+     * purpose: override Object's equals method so equality is validated by meme name
+     */
+    @Override
+    public boolean equals(Object meme) {
+        return this.name.equalsIgnoreCase(((Meme)meme).getName());
+    }
+
     @Override
     public String toString() {
         return name;
