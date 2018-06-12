@@ -9,9 +9,7 @@ public interface MemesPersistence {
 
     List<Meme> getMemeRandom(Meme currentMeme);
 
-    Meme insertMeme(Meme currentMeme);
+    boolean insertMeme(Meme currentMeme);
 
-    Meme updateMeme(Meme currentMeme);
-
-    void deleteMeme(Meme currentMeme);
+    Meme deleteMeme(Meme currentMeme);
 }

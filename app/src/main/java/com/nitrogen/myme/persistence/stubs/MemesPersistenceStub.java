@@ -73,41 +73,40 @@ public class MemesPersistenceStub implements MemesPersistence {
         int index;
 
         index = memes.indexOf(currentMeme);
-        if (index >= 0)
-        {
+        if (index >= 0) {
             newMemes.add(memes.get(index));
         }
         return newMemes;
     }
 
-
+    /* insertMeme
+     *
+     * purpose: Insert a meme into the database.
+     *          The meme must have a unique name.
+     *
+     *          returns True if the meme was added and False otherwise.
+     */
     @Override
-    public Meme insertMeme(Meme currentMeme) {
-        // don't bother checking for duplicates
-        memes.add(currentMeme);
-        return currentMeme;
-    }
+    public boolean insertMeme(Meme meme) {
+        boolean memeInserted = false;
 
-    @Override
-    public Meme updateMeme(Meme currentMeme) {
-        int index;
-
-        index = memes.indexOf(currentMeme);
-        if (index >= 0)
-        {
-            memes.set(index, currentMeme);
+        // don't add duplicates
+        if(!memes.contains(meme)) {
+            memes.add(meme);
+            memeInserted = true;
         }
-        return currentMeme;
+        return memeInserted;
     }
 
     @Override
-    public void deleteMeme(Meme currentMeme) {
+    public Meme deleteMeme(Meme meme) {
         int index;
 
-        index = memes.indexOf(currentMeme);
-        if (index >= 0)
-        {
+        index = memes.indexOf(meme);
+        if (index >= 0) {
             memes.remove(index);
+
         }
+        return meme;
     }
 }

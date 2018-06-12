@@ -70,19 +70,4 @@ public class AccessMemes
         return meme;
     }
     */
-
-    public Meme insertMeme(Meme currentMeme)
-    {
-        return memePersistence.insertMeme(currentMeme);
-    }
-
-    public Meme updateMeme(Meme currentMeme)
-    {
-        return memePersistence.updateMeme(currentMeme);
-    }
-
-    public void deleteMeme(Meme currentMeme)
-    {
-        memePersistence.deleteMeme(currentMeme);
-    }
 }
