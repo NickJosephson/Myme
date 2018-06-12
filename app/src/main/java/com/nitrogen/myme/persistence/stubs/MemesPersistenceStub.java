@@ -16,12 +16,15 @@ public class MemesPersistenceStub implements MemesPersistence {
 
     private final int NUM_MEMES = 32; // 8 * 4
     private List<Meme> memes;
+
+    private List<Tag> tags;
+
     private int[] memeNames = {R.mipmap.meme1,R.mipmap.meme2,R.mipmap.meme3,R.mipmap.meme4,
                                       R.mipmap.meme5,R.mipmap.meme6,R.mipmap.meme7,R.mipmap.meme8};
-    private String[] availableTags = {"dank", "edgy", "normie", "wholesome"};
 
     public MemesPersistenceStub() {
         this.memes = new ArrayList<>();
+        this.tags = new TagsPersistenceStub().getTags();
 
         for(int i = 0 ; i < NUM_MEMES ; i++) {
             memes.add(new ImageMeme("meme", Uri.parse("android.resource://com.nitrogen.myme/"
@@ -36,22 +39,22 @@ public class MemesPersistenceStub implements MemesPersistence {
      *
      */
     private ArrayList<Tag> randomTags(int num) {
-        ArrayList<Tag> result = new ArrayList<Tag>();
+        ArrayList<Tag> result = new ArrayList<>();
 
         if(num%3 == 0) {
-            result.add(new Tag(availableTags[0]));
+            result.add(tags.get(0));
         }
         if(num%2 == 0) {
-            result.add(new Tag(availableTags[1]));
+            result.add(tags.get(1));
         }
         if(num%2 == 1) {
-            result.add(new Tag(availableTags[0]));
+            result.add(tags.get(0));
         }
         if(num%5 == 0) {
-            result.add(new Tag(availableTags[2]));
+            result.add(tags.get(2));
         }
         if(num%7 == 0) {
-            result.add(new Tag(availableTags[3]));
+            result.add(tags.get(3));
         }
 
         return result;
