@@ -1,4 +1,4 @@
-package com.nitrogen.myme.objects;;
+package com.nitrogen.myme.objects;
 import java.util.List;
 
 import android.net.Uri;
