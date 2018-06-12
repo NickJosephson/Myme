@@ -11,8 +11,7 @@ public class Services
     private static TagsPersistence tagsPersistence = null;
 
     public static synchronized MemesPersistence getMemesPersistence() {
-        if (memesPersistence == null)
-        {
+        if (memesPersistence == null) {
             memesPersistence = new MemesPersistenceStub();
         }
 
@@ -20,8 +19,7 @@ public class Services
     }
 
     public static synchronized TagsPersistence getTagsPersistence() {
-        if (tagsPersistence == null)
-        {
+        if (tagsPersistence == null) {
             tagsPersistence = new TagsPersistenceStub();
         }
 
