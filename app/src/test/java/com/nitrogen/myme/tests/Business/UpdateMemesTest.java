@@ -27,7 +27,7 @@ public class UpdateMemesTest {
     private Meme createMeme(String name) {
         List<Tag> tags = new ArrayList<>();
         tags.add(new Tag("test_tag"));
-        return new ImageMeme( name, Uri.parse("android.resource://com.nitrogen.myme/"+ R.mipmap.meme1), tags);
+        return new ImageMeme( name, ("android.resource://com.nitrogen.myme/"+ R.drawable.meme1), tags);
     }
 
     @Before

@@ -9,7 +9,7 @@ import java.util.List;
 public class TagsPersistenceStub implements TagsPersistence {
 
     private List<Tag> tags;
-    private String[] availableTags = {"dank", "edgy", "normie", "wholesome"};
+    private String[] availableTags = {"dank", "edgy", "normie", "wholesome"}; //, "dead meme", "aww", "funny", "meIRL"};
 
     public TagsPersistenceStub() {
         this.tags = new ArrayList<>();
