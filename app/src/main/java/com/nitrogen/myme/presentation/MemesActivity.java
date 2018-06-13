@@ -23,12 +23,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemesActivity extends AppCompatActivity {
-    AccessMemes accessMemes;
-    List<Meme> memes;
+    private AccessMemes accessMemes;
+    private List<Meme> memes;
+    private MemesRecyclerAdapter adapter;
+    private RecyclerView rvMemes;
+    private boolean layoutAsGrid = true;
+    private SearchMemes searchMemes;
 
-    MemesRecyclerAdapter adapter;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.grid_toggle:
+                // User chose the "Settings" item, show the app settings UI...
+                layoutAsGrid = !layoutAsGrid;
+                setRVLayout(layoutAsGrid);
+                setRVLayoutIcon(layoutAsGrid, item);
+                return true;
 
-    SearchMemes searchMemes;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    private void setRVLayout(boolean asGrid) {
+        int numberOfColumns = 3;
+
+        if (layoutAsGrid) {
+            rvMemes.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+        } else {
+            rvMemes.setLayoutManager(new LinearLayoutManager(this));
+        }
+    }
+
+    private void setRVLayoutIcon(boolean asGrid, MenuItem item) {
+        if (layoutAsGrid) {
+            item.setIcon(R.drawable.list_icon);
+        } else {
+            item.setIcon(R.drawable.grid_icon);
+        }
+    }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -82,6 +119,7 @@ public class MemesActivity extends AppCompatActivity {
             }
         });
 
+        setRVLayoutIcon(layoutAsGrid, menu.findItem(R.id.grid_toggle));
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -99,7 +137,7 @@ public class MemesActivity extends AppCompatActivity {
 
 
         // Lookup the recycler view in activity layout
-        RecyclerView rvMemes = (RecyclerView) findViewById(R.id.rvMemes);
+        rvMemes = (RecyclerView) findViewById(R.id.rvMemes);
 
         // Initialize memes
         accessMemes = new AccessMemes();
@@ -112,8 +150,7 @@ public class MemesActivity extends AppCompatActivity {
         rvMemes.setAdapter(adapter);
 
         // Set layout manager to position the items
-        int numberOfColumns = 3;
-        rvMemes.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+        setRVLayout(layoutAsGrid);
 
         searchMemes = new SearchMemes();
     }

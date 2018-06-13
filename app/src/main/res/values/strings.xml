@@ -6,4 +6,5 @@
     <string name="search_title">Search</string>
     <string name="title_activity_display_meme">DisplayMemeActivity</string>
     <string name="title_bookmarks">Bookmarks</string>
+    <string name="tags_label">Tags:</string>
 </resources>
