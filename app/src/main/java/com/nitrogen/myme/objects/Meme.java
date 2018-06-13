@@ -33,6 +33,23 @@ public abstract class Meme {
 
     public List<Tag> getTags() { return this.tags; }
 
+    /* hasTag
+     *
+     * purpose: check if this meme has a certain tag.
+     */
+    public boolean hasTag(Tag tag) {
+        return tags.contains(tag);
+    }
+
+    /* equals
+     *
+     * purpose: override Object's equals method so equality is validated by meme name
+     */
+    @Override
+    public boolean equals(Object meme) {
+        return this.name.equalsIgnoreCase(((Meme)meme).getName());
+    }
+
     public List<String> getStringTags() {
         List<String> temp = new ArrayList<>();
         for(int i = 0; i<tags.size();i++) {

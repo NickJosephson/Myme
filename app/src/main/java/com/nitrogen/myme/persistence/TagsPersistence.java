@@ -8,7 +8,7 @@ public interface TagsPersistence {
 
     List<Tag> getTags();
 
-    Boolean insertTag(Tag newTag);
+    boolean insertTag(Tag tag);
 
-    Boolean removeTag(Tag targetTag);
+    Tag deleteTag(Tag tag);
 }
