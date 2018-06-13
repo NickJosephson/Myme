@@ -46,7 +46,7 @@ public abstract class Meme {
      */
     @Override
     public boolean equals(Object meme) {
-        return this.name.equalsIgnoreCase(((Meme) meme).getName());
+        return this.name.equalsIgnoreCase(((Meme)meme).getName());
     }
 
     public List<String> getStringTags() {

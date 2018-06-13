@@ -28,7 +28,7 @@ public class MemesPersistenceStub implements MemesPersistence {
         this.tags = Services.getTagsPersistence().getTags();
 
         for(int i = 0 ; i < NUM_MEMES ; i++) {
-            memes.add(new ImageMeme("meme"+i, Uri.parse("android.resource://com.nitrogen.myme/"
+            memes.add(new ImageMeme("meme_"+i, Uri.parse("android.resource://com.nitrogen.myme/"
                                     + memeNames[i%memeNames.length]), randomTags(i)));
         }
     }

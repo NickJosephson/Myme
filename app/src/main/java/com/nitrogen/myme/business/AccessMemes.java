@@ -25,23 +25,23 @@ public class AccessMemes {
         memes = memePersistence.getMemeSequential();
         return Collections.unmodifiableList(memes);
     }
-
-    public Meme getSequential() {
-        String result = null;
-        if (memes == null) {
-            memes = memePersistence.getMemeSequential();
-            currentMeme = 0;
-        }
-        if (currentMeme < memes.size()) {
-            meme = (Meme) memes.get(currentMeme);
-            currentMeme++;
-        } else {
-            memes = null;
-            meme = null;
-            currentMeme = 0;
-        }
-        return meme;
-    }
+    // TODO: Clean up
+//    public Meme getSequential() {
+//        String result = null;
+//        if (memes == null) {
+//            memes = memePersistence.getMemeSequential();
+//            currentMeme = 0;
+//        }
+//        if (currentMeme < memes.size()) {
+//            meme = (Meme) memes.get(currentMeme);
+//            currentMeme++;
+//        } else {
+//            memes = null;
+//            meme = null;
+//            currentMeme = 0;
+//        }
+//        return meme;
+//    }
 
     /*
     public Meme getMeme(String memeID) {
