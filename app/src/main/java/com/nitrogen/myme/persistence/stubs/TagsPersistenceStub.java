@@ -22,18 +22,27 @@ public class TagsPersistenceStub implements TagsPersistence {
     // accessor
     public List<Tag> getTags() { return this.tags; }
 
-    public Boolean insertTag(Tag newTag) {
+    @Override
+    public boolean insertTag(Tag tag) {
         boolean tagAdded = false;
-        if(!tags.contains(newTag)) {
-            tags.add(newTag);
+        if(!tags.contains(tag)) {
+            tags.add(tag);
             tagAdded = true;
         }
 
         return tagAdded;
     }
 
-    public Boolean removeTag(Tag targetTag) {
-        return tags.remove(targetTag);
-    }
 
+    @Override
+    public Tag deleteTag(Tag tag) {
+        int index;
+
+        index = tags.indexOf(tag);
+        if (index >= 0) {
+            tags.remove(index);
+
+        }
+        return tag;
+    }
 }
