@@ -82,7 +82,7 @@ public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdap
         ImageView imageView = viewHolder.memeImageView;
         viewHolder.meme = meme;
 
-        imageView.setImageURI(meme.getThumbnailPath());
+        imageView.setImageURI(Uri.parse(meme.getThumbnailPath()));
         int vis = (meme.getIsFavourite()) ? View.VISIBLE : View.INVISIBLE;
         viewHolder.favouriteIconView.setVisibility(vis);
     }

@@ -1,6 +1,7 @@
 package com.nitrogen.myme.presentation;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -45,7 +46,7 @@ public class DisplayMemeActivity extends AppCompatActivity {
 
         TextView textView = findViewById(R.id.panelName);
         textView.setText(meme.getName());
-        imageView.setImageURI(meme.getImagePath());
+        imageView.setImageURI(Uri.parse(meme.getImagePath()));
 
         GridView grid = (GridView) findViewById(R.id.panelTags);
         grid.setNumColumns(3);

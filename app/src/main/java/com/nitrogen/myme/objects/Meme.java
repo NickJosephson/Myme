@@ -1,7 +1,5 @@
 package com.nitrogen.myme.objects;
 
-import android.net.Uri;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +13,7 @@ public abstract class Meme {
     private int memeID;
     private static int lastMemeID = 0;
     private boolean isFavourite = false;
-    public abstract Uri getThumbnailPath();
+    public abstract String getThumbnailPath();
 
     public Meme(final String name, final List<Tag> tags) {
         this.name = name;
