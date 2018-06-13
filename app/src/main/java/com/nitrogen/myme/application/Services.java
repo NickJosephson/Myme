@@ -5,8 +5,7 @@ import com.nitrogen.myme.persistence.TagsPersistence;
 import com.nitrogen.myme.persistence.stubs.MemesPersistenceStub;
 import com.nitrogen.myme.persistence.stubs.TagsPersistenceStub;
 
-public class Services
-{
+public class Services {
     private static MemesPersistence memesPersistence = null;
     private static TagsPersistence tagsPersistence = null;
 

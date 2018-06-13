@@ -21,5 +21,4 @@ public class Tag {
     public boolean equals(Object tag) {
         return this.name.equals( ((Tag)tag).getTagName());
     }
-
 }
