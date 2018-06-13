@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 
 import com.nitrogen.myme.R;
+import com.nitrogen.myme.business.AccessFavourites;
 import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.business.SearchMemes;
 import com.nitrogen.myme.objects.Meme;
@@ -23,8 +24,8 @@ import com.nitrogen.myme.objects.Tag;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemesActivity extends AppCompatActivity {
-    private AccessMemes accessMemes;
+public class FavouritesActivity extends AppCompatActivity {
+    private AccessFavourites accessMemes;
     private List<Meme> memes;
     private MemesRecyclerAdapter adapter;
     private RecyclerView rvMemes;
@@ -67,28 +68,6 @@ public class MemesActivity extends AppCompatActivity {
         }
     }
 
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_explore:
-                    //mTextMessage.setText(R.string.title_home);
-                    return true;
-                case R.id.navigation_favourites:
-                    //mTextMessage.setText(R.string.title_dashboard);
-                    startActivity(new Intent(MemesActivity.this, FavouritesActivity.class));
-                    return true;
-//                case R.id.navigation_studio:
-//                    //mTextMessage.setText(R.string.title_notifications);
-//                    return true;
-            }
-            return false;
-        }
-    };
-
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_bar, menu);
@@ -125,28 +104,29 @@ public class MemesActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_memes);
+        setContentView(R.layout.activity_favourites);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-
-        //mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         Menu bottomNavMenu = navigation.getMenu();
-        MenuItem item = bottomNavMenu.getItem(0);
+        MenuItem item = bottomNavMenu.getItem(1);
         item.setChecked(true);
 
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
+
+
         // Lookup the recycler view in activity layout
-        rvMemes = (RecyclerView) findViewById(R.id.rvMemes);
+        rvMemes = (RecyclerView) findViewById(R.id.rvFavourites);
 
         // Initialize memes
-        accessMemes = new AccessMemes();
+        accessMemes = new AccessFavourites();
         memes = accessMemes.getMemes();
 
         // Create adapter passing in the sample user data
@@ -159,14 +139,42 @@ public class MemesActivity extends AppCompatActivity {
         setRVLayout(layoutAsGrid);
 
         searchMemes = new SearchMemes();
+
     }
+
+
+
+
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_explore:
+                    //mTextMessage.setText(R.string.title_home);
+                    startActivity(new Intent(FavouritesActivity.this, MemesActivity.class));
+                    return true;
+                case R.id.navigation_favourites:
+                    //mTextMessage.setText(R.string.title_dashboard);
+
+                    return true;
+//                case R.id.navigation_studio:
+//                    //mTextMessage.setText(R.string.title_notifications);
+//                    return true;
+            }
+            return false;
+        }
+    };
+
 
     /* handleSearch
      *
      * purpose: take the user's input (the name of a tag) and perform a query to retrieve a
      *          list of memes with that tag.
      *
-    */
+     */
     private void handleSearch(String input) {
         String[] strings = input.split("\\s");
         List<Tag> tags = new ArrayList<>();
@@ -181,8 +189,11 @@ public class MemesActivity extends AppCompatActivity {
     /* displayMemes
      *
      * purpose: update the memes displayed on the screen.
-    */
+     */
     private void displayMemes(List<Meme> memes) {
         adapter.updateMemeList(memes);
     }
+
+
+
 }

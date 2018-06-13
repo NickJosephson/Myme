@@ -28,8 +28,6 @@ public class MemesPersistenceStub implements MemesPersistence {
             R.drawable.meme8,
     };
 
-    private String[] availableTags = {"dank", "edgy", "normie", "wholesome"};
-
     public MemesPersistenceStub() {
         this.memes = new ArrayList<>();
         this.tags = Services.getTagsPersistence().getTags();
