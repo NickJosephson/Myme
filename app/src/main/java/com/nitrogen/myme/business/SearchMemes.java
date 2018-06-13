@@ -37,7 +37,7 @@ public class SearchMemes {
 
             // add current meme to the list if it has a tag we're looking for
             for(int j = 0 ; j < tags.size() ; j++) {
-                if (currMemeTags.contains(tags.get(j))) {
+                if (currMemeTags.contains(tags.get(j)) && !(result.contains(currMeme))) {
                     result.add(currMeme);
                 }
             }
