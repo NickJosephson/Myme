@@ -25,27 +25,23 @@ public class AccessMemes {
         memes = memePersistence.getMemeSequential();
         return Collections.unmodifiableList(memes);
     }
-
-    public Meme getSequential() {
-        String result = null;
-        if (memes == null) {
-            memes = memePersistence.getMemeSequential();
-            currentMeme = 0;
-        }
-        if (currentMeme < memes.size()) {
-            meme = (Meme) memes.get(currentMeme);
-            currentMeme++;
-        } else {
-            memes = null;
-            meme = null;
-            currentMeme = 0;
-        }
-        return meme;
-    }
-
-    public List<Meme> getMemesByTags(List<Tag> tags) {
-        return Collections.unmodifiableList(memePersistence.getMemesByTags(tags));
-    }
+    // TODO: Clean up
+//    public Meme getSequential() {
+//        String result = null;
+//        if (memes == null) {
+//            memes = memePersistence.getMemeSequential();
+//            currentMeme = 0;
+//        }
+//        if (currentMeme < memes.size()) {
+//            meme = (Meme) memes.get(currentMeme);
+//            currentMeme++;
+//        } else {
+//            memes = null;
+//            meme = null;
+//            currentMeme = 0;
+//        }
+//        return meme;
+//    }
 
     /*
     public Meme getMeme(String memeID) {
@@ -65,19 +61,4 @@ public class AccessMemes {
         return meme;
     }
     */
-
-    public Meme insertMeme(Meme currentMeme)
-    {
-        return memePersistence.insertMeme(currentMeme);
-    }
-
-    public Meme updateMeme(Meme currentMeme)
-    {
-        return memePersistence.updateMeme(currentMeme);
-    }
-
-    public void deleteMeme(Meme currentMeme)
-    {
-        memePersistence.deleteMeme(currentMeme);
-    }
 }
