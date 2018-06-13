@@ -17,18 +17,25 @@ public class MemesPersistenceStub implements MemesPersistence {
 
     private final int NUM_MEMES = 32; // 8 * 4
     private List<Meme> memes;
-
     private List<Tag> tags;
+    private int[] memeNames = {R.drawable.meme1,
+            R.drawable.meme2,
+            R.drawable.meme3,
+            R.drawable.meme4,
+            R.drawable.meme5,
+            R.drawable.meme6,
+            R.drawable.meme7,
+            R.drawable.meme8,
+    };
 
-    private int[] memeNames = {R.mipmap.meme1,R.mipmap.meme2,R.mipmap.meme3,R.mipmap.meme4,
-                                      R.mipmap.meme5,R.mipmap.meme6,R.mipmap.meme7,R.mipmap.meme8};
+    private String[] availableTags = {"dank", "edgy", "normie", "wholesome"};
 
     public MemesPersistenceStub() {
         this.memes = new ArrayList<>();
         this.tags = Services.getTagsPersistence().getTags();
 
         for(int i = 0 ; i < NUM_MEMES ; i++) {
-            memes.add(new ImageMeme("meme_"+i, Uri.parse("android.resource://com.nitrogen.myme/"
+            memes.add(new ImageMeme("meme"+i, ("android.resource://com.nitrogen.myme/"
                                     + memeNames[i%memeNames.length]), randomTags(i)));
         }
     }

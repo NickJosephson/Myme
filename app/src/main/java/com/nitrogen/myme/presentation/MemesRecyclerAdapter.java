@@ -25,6 +25,7 @@ public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdap
         // for any view that will be set as you render a row
         public ImageView memeImageView;
         public Meme meme;
+        public ImageView favouriteIconView;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -34,6 +35,7 @@ public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdap
             super(itemView);
             itemView.setOnClickListener(this);
             memeImageView = (ImageView) itemView.findViewById(R.id.meme_image);
+            favouriteIconView = (ImageView) itemView.findViewById(R.id.heartIcon);
         }
 
         public static final String EXTRA_MESSAGE = "com.nicholasjosephson.myfirstapp.MESSAGE";
@@ -80,7 +82,9 @@ public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdap
         ImageView imageView = viewHolder.memeImageView;
         viewHolder.meme = meme;
 
-        imageView.setImageURI(meme.getThumbnailPath());
+        imageView.setImageURI(Uri.parse(meme.getThumbnailPath()));
+        int vis = (meme.getIsFavourite()) ? View.VISIBLE : View.INVISIBLE;
+        viewHolder.favouriteIconView.setVisibility(vis);
     }
 
     // Returns the total count of items in the list
