@@ -16,8 +16,16 @@ public class MemesPersistenceStub implements MemesPersistence {
 
     private final int NUM_MEMES = 32; // 8 * 4
     private List<Meme> memes;
-    private int[] memeNames = {R.mipmap.meme1,R.mipmap.meme2,R.mipmap.meme3,R.mipmap.meme4,
-                                      R.mipmap.meme5,R.mipmap.meme6,R.mipmap.meme7,R.mipmap.meme8};
+    private int[] memeNames = {R.drawable.meme1,
+            R.drawable.meme2,
+            R.drawable.meme3,
+            R.drawable.meme4,
+            R.drawable.meme5,
+            R.drawable.meme6,
+            R.drawable.meme7,
+            R.drawable.meme8,
+    };
+
     private String[] availableTags = {"dank", "edgy", "normie", "wholesome"};
 
     public MemesPersistenceStub() {

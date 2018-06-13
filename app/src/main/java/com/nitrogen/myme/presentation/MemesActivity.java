@@ -110,6 +110,8 @@ public class MemesActivity extends AppCompatActivity {
         // Set layout manager to position the items
         int numberOfColumns = 3;
         rvMemes.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+
+        //rvMemes.setLayoutManager(new LinearLayoutManager(this));
     }
 
     /* handleSearch

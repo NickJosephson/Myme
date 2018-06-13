@@ -64,8 +64,6 @@ public class DisplayMemeActivity extends AppCompatActivity {
         grid.setAdapter(namesAdaptor);
 
 
-
-
     }
 
 
