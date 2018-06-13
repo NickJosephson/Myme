@@ -19,6 +19,7 @@ import com.nitrogen.myme.objects.Meme;
 
 public class DisplayMemeActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE_MEME_ID = "com.nitrogen.myme.MESSAGE_MEME_ID";
+    private ImageMeme meme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +27,6 @@ public class DisplayMemeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_meme);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         // add back arrow to toolbar
         if (getSupportActionBar() != null){
@@ -48,7 +40,7 @@ public class DisplayMemeActivity extends AppCompatActivity {
 
         AccessMemes accessMemes = new AccessMemes();
 
-        ImageMeme meme = (ImageMeme) accessMemes.getMemes().get(message);
+        meme = (ImageMeme) accessMemes.getMemes().get(message);
         ImageView imageView = findViewById(R.id.imageView);
 
         TextView textView = findViewById(R.id.panelName);
@@ -64,6 +56,35 @@ public class DisplayMemeActivity extends AppCompatActivity {
         grid.setAdapter(namesAdaptor);
 
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        boolean fav = meme.getIsFavourite();
+
+        if (fav) {
+            fab.setImageResource(R.drawable.heart_on);
+        } else {
+            fab.setImageResource(R.drawable.heart_off);
+        }
+
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                meme.setIsFavourite(!meme.getIsFavourite());
+                boolean fav = meme.getIsFavourite();
+                FloatingActionButton button = (FloatingActionButton) view;
+
+                if (fav) {
+                    button.setImageResource(R.drawable.heart_on);
+                    Snackbar.make(view, "Added to favourites.", Snackbar.LENGTH_LONG)
+                            .setAction("favourite", null).show();
+                } else {
+                    button.setImageResource(R.drawable.heart_off);
+                    Snackbar.make(view, "Removed from favourites.", Snackbar.LENGTH_LONG)
+                            .setAction("unfavourite", null).show();
+                }
+
+            }
+        });
     }
 
 

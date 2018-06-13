@@ -14,6 +14,7 @@ public abstract class Meme {
     private List<Tag> tags;
     private int memeID;
     private static int lastMemeID = 0;
+    private boolean isFavourite = false;
     public abstract Uri getThumbnailPath();
 
     public Meme(final String name, final List<Tag> tags) {
@@ -30,6 +31,8 @@ public abstract class Meme {
 
     public int getMemeID() { return memeID; }
 
+    public boolean getIsFavourite() { return isFavourite; }
+
     public List<Tag> getTags() { return this.tags; }
 
     public List<String> getStringTags() {
@@ -39,6 +42,8 @@ public abstract class Meme {
         }
         return temp;
     }
+
+    public void setIsFavourite(boolean isFavourite) { this.isFavourite = isFavourite; }
 
     @Override
     public String toString() {
