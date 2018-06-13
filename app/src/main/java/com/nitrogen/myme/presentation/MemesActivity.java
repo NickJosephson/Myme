@@ -22,10 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemesActivity extends AppCompatActivity {
-    AccessMemes accessMemes;
-    List<Meme> memes;
-
-    MemesRecyclerAdapter adapter;
+    private AccessMemes accessMemes;
+    private List<Meme> memes;
+    private MemesRecyclerAdapter adapter;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
