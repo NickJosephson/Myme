@@ -16,14 +16,14 @@ public class MemesPersistenceStub implements MemesPersistence {
     private List<Tag> tags;
     private int[] memeResourceIDs = {
             R.drawable.pff_guy,
-            R.drawable.fuck_yea,
+            R.drawable.frick_yea,
             R.drawable.questioning_face,
             R.drawable.mother_of_god,
             R.drawable.me_gusta,
             R.drawable.lol,
             R.drawable.lololol,
             R.drawable.you_dont_say,
-            R.drawable.are_you_fucking_kidding_me,
+            R.drawable.are_you_flipping_kidding_me,
             R.drawable.forever_alone,
             R.drawable.genius,
             R.drawable.happy_guy_rage_face,
@@ -37,14 +37,14 @@ public class MemesPersistenceStub implements MemesPersistence {
             R.drawable.y_u_no
     };
     private String[] memeNames = {"Pff Guy",
-            "Fuck Yea",
+            "Frick Yea",
             "Questioning Face",
             "Mother of God",
             "Me Gusta",
             "LOL",
             "LOLOLOL",
             "You Don't Say",
-            "Are You Fucking Kidding Me",
+            "Are You Flipping Kidding Me",
             "Forever Alone",
             "Genius",
             "Happy Guy Rage Face",
