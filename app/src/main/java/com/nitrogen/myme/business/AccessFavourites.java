@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.objects.Meme;
-import com.nitrogen.myme.objects.Tag;
 import com.nitrogen.myme.persistence.MemesPersistence;
 
 public class AccessFavourites {
@@ -25,7 +24,7 @@ public class AccessFavourites {
     public List<Meme> getMemes() {
         memes = new ArrayList<Meme>();
 
-        for (Meme meme : memePersistence.getMemeSequential()) {
+        for (Meme meme : memePersistence.getMemes()) {
             if (meme.isFavourite()) {
                 memes.add(meme);
             }

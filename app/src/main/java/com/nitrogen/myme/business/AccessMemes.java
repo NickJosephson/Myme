@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.objects.Meme;
-import com.nitrogen.myme.objects.Tag;
 import com.nitrogen.myme.persistence.MemesPersistence;
 
 public class AccessMemes {
@@ -22,14 +21,14 @@ public class AccessMemes {
     }
 
     public List<Meme> getMemes() {
-        memes = memePersistence.getMemeSequential();
+        memes = memePersistence.getMemes();
         return Collections.unmodifiableList(memes);
     }
     // TODO: Clean up
 //    public Meme getSequential() {
 //        String result = null;
 //        if (memes == null) {
-//            memes = memePersistence.getMemeSequential();
+//            memes = memePersistence.getMemes();
 //            currentMeme = 0;
 //        }
 //        if (currentMeme < memes.size()) {

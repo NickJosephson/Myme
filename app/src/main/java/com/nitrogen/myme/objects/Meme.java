@@ -12,11 +12,11 @@ import java.util.Date;
 public abstract class Meme {
     private String name;
     private String description;
-    private Author author;
-    private Date creationDate;
     private List<Tag> tags;
     private boolean isFavourite = false;
-    private int memeID = lastMemeID++; //unique ID
+    private final Author author;
+    private final Date creationDate;
+    private final int memeID = lastMemeID++; //unique ID
 
     private static int lastMemeID = 0; //used to ensure all memes have a unique ID
 
@@ -29,7 +29,7 @@ public abstract class Meme {
         this.description = "";
         this.author = new Author();
         this.creationDate = new Date();
-        this.tags = new ArrayList<Tag>();
+        this.tags = new ArrayList<>();
     }
 
     public Meme(String name, String description, Author author) {
@@ -37,7 +37,7 @@ public abstract class Meme {
         this.description = description;
         this.author = author;
         this.creationDate = new Date();
-        this.tags = new ArrayList<Tag>();
+        this.tags = new ArrayList<>();
     }
 
     public Meme(String name, String description, Author author, Date creationDate) {
@@ -45,7 +45,7 @@ public abstract class Meme {
         this.description = description;
         this.author = author;
         this.creationDate = creationDate;
-        this.tags = new ArrayList<Tag>();
+        this.tags = new ArrayList<>();
     }
 
     public Meme(String name, String description, Author author, Date creationDate, List<Tag> tags) {
@@ -97,11 +97,7 @@ public abstract class Meme {
 
     @Override
     public boolean equals(Object otherMeme) {
-        if (otherMeme instanceof Meme) {
-            return memeID == ((Meme) otherMeme).getMemeID();
-        } else {
-            return false;
-        }
+        return otherMeme instanceof Meme && memeID == ((Meme) otherMeme).getMemeID();
     }
 
     @Override

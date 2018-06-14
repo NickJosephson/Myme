@@ -1,26 +1,21 @@
 package com.nitrogen.myme.persistence.stubs;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.net.Uri;
-
-import com.nitrogen.myme.R;
-import com.nitrogen.myme.application.Services;
-import com.nitrogen.myme.objects.ImageMeme;
-import com.nitrogen.myme.objects.Tag;
-import com.nitrogen.myme.persistence.MemesPersistence;
-
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+
+import com.nitrogen.myme.persistence.MemesPersistence;
+import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.objects.Meme;
+import com.nitrogen.myme.objects.ImageMeme;
+import com.nitrogen.myme.objects.Tag;
+import com.nitrogen.myme.R;
 
 public class MemesPersistenceStub implements MemesPersistence {
-
-    private final int NUM_MEMES = 18;
     private List<Meme> memes;
     private List<Tag> tags;
-    private int[] memeIDs = {R.drawable.pff_guy,
+    private int[] memeResourceIDs = {
+            R.drawable.pff_guy,
             R.drawable.fuck_yea,
             R.drawable.questioning_face,
             R.drawable.mother_of_god,
@@ -63,16 +58,24 @@ public class MemesPersistenceStub implements MemesPersistence {
             "Y U NO"
     };
 
+    //**************************************************
+    // Constructor
+    //**************************************************
+
     public MemesPersistenceStub() {
         this.memes = new ArrayList<>();
         this.tags = Services.getTagsPersistence().getTags();
 
-        for(int i = 0 ; i < NUM_MEMES ; i++) {
-            Meme newMeme = new ImageMeme(memeNames[i], ("android.resource://com.nitrogen.myme/" + memeIDs[i]));
+        for(int i = 0 ; i < memeResourceIDs.length ; i++) {
+            Meme newMeme = new ImageMeme(memeNames[i], ("android.resource://com.nitrogen.myme/" + memeResourceIDs[i]));
             newMeme.setTags(randomTags(i));
             memes.add(newMeme);
         }
     }
+
+    //**************************************************
+    // Methods
+    //**************************************************
 
     /* randomTags
      *
@@ -103,29 +106,14 @@ public class MemesPersistenceStub implements MemesPersistence {
     }
 
     @Override
-    public List<Meme> getMemeSequential() {
-
+    public List<Meme> getMemes() {
         return Collections.unmodifiableList(memes);
-    }
-
-    @Override
-    public List<Meme> getMemeRandom(Meme currentMeme) {
-        List<Meme> newMemes = new ArrayList<>();
-        int index;
-
-        index = memes.indexOf(currentMeme);
-        if (index >= 0) {
-            newMemes.add(memes.get(index));
-        }
-        return newMemes;
     }
 
     /* insertMeme
      *
      * purpose: Insert a meme into the database.
-     *          The meme must have a unique name.
-     *
-     *          returns True if the meme was added and False otherwise.
+     *          Returns True if the meme was added and False otherwise.
      */
     @Override
     public boolean insertMeme(Meme meme) {
@@ -136,9 +124,14 @@ public class MemesPersistenceStub implements MemesPersistence {
             memes.add(meme);
             memeInserted = true;
         }
+
         return memeInserted;
     }
 
+    /* deleteMeme
+     *
+     * purpose: Delete a meme from the database.
+     */
     @Override
     public Meme deleteMeme(Meme meme) {
         int index;
@@ -146,8 +139,9 @@ public class MemesPersistenceStub implements MemesPersistence {
         index = memes.indexOf(meme);
         if (index >= 0) {
             memes.remove(index);
-
         }
+
         return meme;
     }
+
 }

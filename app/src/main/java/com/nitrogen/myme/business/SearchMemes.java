@@ -28,9 +28,9 @@ public class SearchMemes {
         List<Tag> currMemeTags;
 
         // search through all memes
-        for(int i = 0 ; i< memesPersistence.getMemeSequential().size() ; i++) {
+        for(int i = 0; i< memesPersistence.getMemes().size() ; i++) {
             // examine a meme
-            currMeme = memesPersistence.getMemeSequential().get(i);
+            currMeme = memesPersistence.getMemes().get(i);
 
             // get the tags associated with the current meme
             currMemeTags = currMeme.getTags();
