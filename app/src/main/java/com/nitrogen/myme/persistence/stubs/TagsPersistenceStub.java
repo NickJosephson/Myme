@@ -13,8 +13,10 @@ public class TagsPersistenceStub implements TagsPersistence {
             "dank",
             "edgy",
             "normie",
-            "wholesome"
-    }; //, "dead meme", "aww", "funny", "meIRL"};
+            "wholesome",
+            "aww"
+
+    }; //, "funny", "meIRL"};
 
     //**************************************************
     // Constructor

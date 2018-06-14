@@ -82,7 +82,7 @@ public class MemesPersistenceStub implements MemesPersistence {
             result.add(tags.get(1));
         }
         if(num%2 == 1) {
-            result.add(tags.get(0));
+            result.add(tags.get(4));
         }
         if(num%5 == 0) {
             result.add(tags.get(2));
