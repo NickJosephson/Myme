@@ -16,7 +16,6 @@ public class UpdateTags {
     }
 
     public Tag deleteTag(Tag tag) {
-
         return tagsPersistence.deleteTag(tag);
     }
 }

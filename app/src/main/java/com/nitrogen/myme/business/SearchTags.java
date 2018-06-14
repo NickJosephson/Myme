@@ -3,7 +3,6 @@ package com.nitrogen.myme.business;
 import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
-import com.nitrogen.myme.persistence.MemesPersistence;
 import com.nitrogen.myme.persistence.TagsPersistence;
 
 import java.util.ArrayList;

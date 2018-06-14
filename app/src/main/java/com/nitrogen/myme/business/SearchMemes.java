@@ -28,7 +28,7 @@ public class SearchMemes {
         List<Tag> currMemeTags;
 
         // search through all memes
-        for(int i = 0; i< memesPersistence.getMemes().size() ; i++) {
+        for (int i = 0; i < memesPersistence.getMemes().size(); i++) {
             // examine a meme
             currMeme = memesPersistence.getMemes().get(i);
 
@@ -36,7 +36,7 @@ public class SearchMemes {
             currMemeTags = currMeme.getTags();
 
             // add current meme to the list if it has a tag we're looking for
-            for(int j = 0 ; j < tags.size() ; j++) {
+            for (int j = 0; j < tags.size(); j++) {
                 if (currMemeTags.contains(tags.get(j)) && !(result.contains(currMeme))) {
                     result.add(currMeme);
                 }
@@ -44,4 +44,38 @@ public class SearchMemes {
         }
         return Collections.unmodifiableList(result);
     }
+
+    /* getMemesByName
+     *
+     * purpose: Filters through the meme database to return a list of Memes where each
+     *          Meme has a similar name to the provided.
+     */
+    public List<Meme> getMemesByName(String name) {
+        List<Meme> result = new ArrayList<>();
+
+        String[] keys = name.trim().toLowerCase().split(" ");
+
+        // search through all memes
+        for (int i = 0; i < memesPersistence.getMemes().size(); i++) {
+            // examine a meme
+            Meme currMeme = memesPersistence.getMemes().get(i);
+            String[] potentials = currMeme.getName().trim().toLowerCase().split(" ");
+            boolean match = false;
+
+            for (String key : keys) {
+                for (String potential : potentials) {
+                    if (key.equals(potential)) {
+                        match = true;
+                    }
+                }
+            }
+
+            if (match) {
+                result.add(currMeme);
+            }
+        }
+
+        return Collections.unmodifiableList(result);
+    }
+
 }

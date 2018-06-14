@@ -183,7 +183,13 @@ public class ExploreActivity extends AppCompatActivity {
         for(int i = 0 ; i < strings.length; i ++) {
             tags.add(new Tag(strings[i]));
         }
-        memes =  searchMemes.getMemesByTags(tags);
+
+        memes = searchMemes.getMemesByTags(tags);
+        
+        if (memes.size() <= 0) {
+            memes = searchMemes.getMemesByName(input);
+        }
+
         displayMemes(memes);
     }
 
