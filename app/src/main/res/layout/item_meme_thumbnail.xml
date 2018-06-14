@@ -13,8 +13,10 @@
         app:layout_constraintDimensionRatio="1:1"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:paddingLeft="1dp"
-        android:paddingRight="1dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
         app:srcCompat="@android:drawable/ic_dialog_alert"
         android:background="@drawable/grid_image_border"/>
 
