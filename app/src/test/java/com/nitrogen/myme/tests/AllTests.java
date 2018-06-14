@@ -1,5 +1,7 @@
 package com.nitrogen.myme.tests;
 
+import com.nitrogen.myme.business.AccessFavourites;
+import com.nitrogen.myme.tests.Business.AccessFavouritesTest;
 import com.nitrogen.myme.tests.Business.AccessMemesTest;
 import com.nitrogen.myme.tests.Business.AccessTagsTest;
 import com.nitrogen.myme.tests.Business.SearchMemesTest;
@@ -13,6 +15,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        AccessFavouritesTest.class,
         AccessMemesTest.class,
         AccessTagsTest.class,
         SearchMemesTest.class,
