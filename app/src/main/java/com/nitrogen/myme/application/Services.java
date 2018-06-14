@@ -1,5 +1,7 @@
 package com.nitrogen.myme.application;
 
+import android.content.Context;
+
 import com.nitrogen.myme.persistence.MemesPersistence;
 import com.nitrogen.myme.persistence.TagsPersistence;
 import com.nitrogen.myme.persistence.stubs.MemesPersistenceStub;

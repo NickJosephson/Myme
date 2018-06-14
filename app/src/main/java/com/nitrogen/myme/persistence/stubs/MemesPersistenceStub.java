@@ -1,5 +1,7 @@
 package com.nitrogen.myme.persistence.stubs;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.net.Uri;
 
 import com.nitrogen.myme.R;
@@ -15,17 +17,50 @@ import com.nitrogen.myme.objects.Meme;
 
 public class MemesPersistenceStub implements MemesPersistence {
 
-    private final int NUM_MEMES = 32; // 8 * 4
+    private final int NUM_MEMES = 18;
     private List<Meme> memes;
     private List<Tag> tags;
-    private int[] memeNames = {R.drawable.meme1,
-            R.drawable.meme2,
-            R.drawable.meme3,
-            R.drawable.meme4,
-            R.drawable.meme5,
-            R.drawable.meme6,
-            R.drawable.meme7,
-            R.drawable.meme8,
+    private int[] memeIDs = {R.drawable.pff_guy,
+            R.drawable.fuck_yea,
+            R.drawable.questioning_face,
+            R.drawable.mother_of_god,
+            R.drawable.me_gusta,
+            R.drawable.lol,
+            R.drawable.lololol,
+            R.drawable.you_dont_say,
+            R.drawable.are_you_fucking_kidding_me,
+            R.drawable.forever_alone,
+            R.drawable.genius,
+            R.drawable.happy_guy_rage_face,
+            R.drawable.herp_derp,
+            R.drawable.okay_guy,
+            R.drawable.poker_face,
+            R.drawable.rage_face,
+            R.drawable.staring_face,
+            R.drawable.thumbs_up,
+            R.drawable.troll_face,
+            R.drawable.y_u_no
+    };
+    private String[] memeNames = {"Pff Guy",
+            "Fuck Yea",
+            "Questioning Face",
+            "Mother of God",
+            "Me Gusta",
+            "LOL",
+            "LOLOLOL",
+            "You Don't Say",
+            "Are You Fucking Kidding Me",
+            "Forever Alone",
+            "Genius",
+            "Happy Guy Rage Face",
+            "Herp Derp",
+            "Okay Guy",
+            "Poker Face",
+            "Rage Face",
+            "Staring Face",
+            "Thumbs Up",
+            "Troll Face",
+            "Y U NO"
     };
 
     public MemesPersistenceStub() {
@@ -33,8 +68,8 @@ public class MemesPersistenceStub implements MemesPersistence {
         this.tags = Services.getTagsPersistence().getTags();
 
         for(int i = 0 ; i < NUM_MEMES ; i++) {
-            memes.add(new ImageMeme("meme"+i, ("android.resource://com.nitrogen.myme/"
-                                    + memeNames[i%memeNames.length]), randomTags(i)));
+            memes.add(new ImageMeme(memeNames[i], ("android.resource://com.nitrogen.myme/"
+                                    + memeIDs[i]), randomTags(i)));
         }
     }
 
