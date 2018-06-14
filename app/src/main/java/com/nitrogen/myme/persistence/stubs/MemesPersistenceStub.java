@@ -13,6 +13,7 @@ import com.nitrogen.myme.persistence.MemesPersistence;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import com.nitrogen.myme.objects.Meme;
 
 public class MemesPersistenceStub implements MemesPersistence {
@@ -20,6 +21,7 @@ public class MemesPersistenceStub implements MemesPersistence {
     private final int NUM_MEMES = 18;
     private List<Meme> memes;
     private List<Tag> tags;
+
     private int[] memeIDs = {R.drawable.pff_guy,
             R.drawable.fuck_yea,
             R.drawable.questioning_face,
