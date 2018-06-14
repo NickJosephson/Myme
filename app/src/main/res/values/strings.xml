@@ -1,11 +1,10 @@
 <resources>
     <string name="app_name">Myme</string>
-    <string name="title_home">Home</string>
-    <string name="title_studio">Studio</string>
-    <string name="title_explore">Explore</string>
-    <string name="search_title">Search</string>
     <string name="title_activity_display_meme">DisplayMemeActivity</string>
-    <string name="title_bookmarks">Bookmarks</string>
+    <string name="title_activity_favourite_meme">Favourites</string>
+    <string name="title_explore">Explore</string>
+    <string name="title_studio">Studio</string>
     <string name="title_favourites">Favourites</string>
+    <string name="title_search">Search</string>
     <string name="tags_label">Tags:</string>
 </resources>

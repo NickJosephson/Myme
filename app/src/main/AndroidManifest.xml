@@ -19,14 +19,12 @@
         </activity>
         <activity
             android:name=".presentation.DisplayMemeActivity"
-            android:label="@string/title_activity_display_meme"
-            android:parentActivityName=".presentation.MemesActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nitrogen.myme.presentation.MemesActivity" />
+            android:label= "@string/title_activity_display_meme">
         </activity>
-        <activity android:name=".presentation.FavouritesActivity"></activity>
+        <activity
+            android:name=".presentation.FavouritesActivity"
+            android:label="@string/title_activity_favourite_meme">
+        </activity>
     </application>
 
 </manifest>

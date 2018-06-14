@@ -143,8 +143,12 @@ public class FavouritesActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-
+        rvMemes.getAdapter().notifyDataSetChanged();
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -155,6 +159,7 @@ public class FavouritesActivity extends AppCompatActivity {
                 case R.id.navigation_explore:
                     //mTextMessage.setText(R.string.title_home);
                     startActivity(new Intent(FavouritesActivity.this, MemesActivity.class));
+                    finish();
                     return true;
                 case R.id.navigation_favourites:
                     //mTextMessage.setText(R.string.title_dashboard);

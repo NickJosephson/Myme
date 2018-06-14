@@ -31,6 +31,8 @@ public class MemesActivity extends AppCompatActivity {
     private boolean layoutAsGrid = true;
     private SearchMemes searchMemes;
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -67,6 +69,12 @@ public class MemesActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        rvMemes.getAdapter().notifyDataSetChanged();
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -80,6 +88,7 @@ public class MemesActivity extends AppCompatActivity {
                 case R.id.navigation_favourites:
                     //mTextMessage.setText(R.string.title_dashboard);
                     startActivity(new Intent(MemesActivity.this, FavouritesActivity.class));
+                    finish();
                     return true;
 //                case R.id.navigation_studio:
 //                    //mTextMessage.setText(R.string.title_notifications);
