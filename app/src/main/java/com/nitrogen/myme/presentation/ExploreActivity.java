@@ -1,7 +1,6 @@
 package com.nitrogen.myme.presentation;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import android.content.Intent;
 import android.os.Bundle;
