@@ -14,25 +14,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.SearchView;
 
 import com.nitrogen.myme.R;
-import com.nitrogen.myme.business.AccessFavourites;
+import com.nitrogen.myme.business.AccessMemes;
+import com.nitrogen.myme.business.SearchMemes;
 import com.nitrogen.myme.objects.Meme;
 
-public class FavouritesActivity extends AppCompatActivity {
-    private AccessFavourites accessMemes;
+public class ExploreActivity extends AppCompatActivity {
+    private AccessMemes accessMemes;
     private List<Meme> memes;
     private MemesRecyclerAdapter adapter;
     private RecyclerView rvMemes;
+    private SearchMemes searchMemes = new SearchMemes();;
     private boolean layoutAsGrid = true;
 
     //**************************************************
     // Activity Lifecycle
     //**************************************************
 
-    protected void onCreate(Bundle savedInstanceState){
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favourites);
+        setContentView(R.layout.activity_memes);
 
         // Setup toolbar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -42,11 +46,11 @@ public class FavouritesActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         Menu bottomNavMenu = navigation.getMenu();
-        MenuItem item = bottomNavMenu.getItem(1);
+        MenuItem item = bottomNavMenu.getItem(0);
         item.setChecked(true);
 
         // Initialize memes
-        accessMemes = new AccessFavourites();
+        accessMemes = new AccessMemes();
         memes = accessMemes.getMemes();
 
         // Setup recycler view
@@ -70,7 +74,33 @@ public class FavouritesActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_bar, menu);
 
-        menu.removeItem(R.id.search);
+        MenuItem searchIcon = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView)searchIcon.getActionView();
+
+        // handle input from the user
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String userInput) {
+                // filter through meme db
+                handleSearch(userInput);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String userInput) {
+                // do nothing (this method definition is required by the constructor)
+                return false;
+            }
+        });
+
+        // if the user cancels their search, go back to initial meme list
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                displayMemes(accessMemes.getMemes());
+                return false;
+            }
+        });
 
         setRVLayoutIcon(layoutAsGrid, menu.findItem(R.id.grid_toggle));
         return super.onCreateOptionsMenu(menu);
@@ -90,7 +120,6 @@ public class FavouritesActivity extends AppCompatActivity {
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
@@ -99,15 +128,14 @@ public class FavouritesActivity extends AppCompatActivity {
     //**************************************************
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_explore:
-                    startActivity(new Intent(FavouritesActivity.this, ExploreActivity.class));
-                    finish(); //end this activity
                     return true;
                 case R.id.navigation_favourites:
+                    startActivity(new Intent(ExploreActivity.this, FavouritesActivity.class));
+                    finish(); //end this activity
                     return true;
             }
             return false;
@@ -124,7 +152,7 @@ public class FavouritesActivity extends AppCompatActivity {
      */
     private void setupRV() {
         // Lookup the recycler view in activity layout
-        rvMemes = (RecyclerView) findViewById(R.id.rvFavourites);
+        rvMemes = (RecyclerView) findViewById(R.id.rvMemes);
 
         // Create adapter passing in the sample user data
         adapter = new MemesRecyclerAdapter(memes);
@@ -160,6 +188,24 @@ public class FavouritesActivity extends AppCompatActivity {
         } else {
             item.setIcon(R.drawable.grid_icon);
         }
+    }
+
+    /* handleSearch
+     *
+     * purpose: Take the user's input and perform a query to retrieve a
+     *          list of memes related to the query.
+     */
+    private void handleSearch(String input) {
+        memes = searchMemes.getMemesRelatedTo(input);
+        displayMemes(memes);
+    }
+
+    /* displayMemes
+     *
+     * purpose: update the memes displayed on the screen.
+     */
+    private void displayMemes(List<Meme> memes) {
+        adapter.updateMemeList(memes);
     }
 
 }

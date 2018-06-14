@@ -1,11 +1,9 @@
 package com.nitrogen.myme.persistence;
 
+import java.util.List;
 import com.nitrogen.myme.objects.Tag;
 
-import java.util.List;
-
 public interface TagsPersistence {
-
     List<Tag> getTags();
 
     boolean insertTag(Tag tag);

@@ -3,7 +3,6 @@ package com.nitrogen.myme.business;
 import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
-import com.nitrogen.myme.persistence.MemesPersistence;
 import com.nitrogen.myme.persistence.TagsPersistence;
 
 import java.util.ArrayList;
@@ -12,9 +11,17 @@ import java.util.List;
 public class SearchTags {
     private TagsPersistence tagsPersistence;
 
+    //**************************************************
+    // Constructor
+    //**************************************************
+
     public SearchTags() {
         this.tagsPersistence = Services.getTagsPersistence();
     }
+
+    //**************************************************
+    // Methods
+    //**************************************************
 
     /* getTagsFromMemes
      *

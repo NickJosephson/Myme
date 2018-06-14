@@ -1,36 +1,29 @@
 package com.nitrogen.myme.persistence.stubs;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.net.Uri;
-
-import com.nitrogen.myme.R;
-import com.nitrogen.myme.application.Services;
-import com.nitrogen.myme.objects.ImageMeme;
-import com.nitrogen.myme.objects.Tag;
-import com.nitrogen.myme.persistence.MemesPersistence;
-
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
+import com.nitrogen.myme.persistence.MemesPersistence;
+import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.objects.Meme;
+import com.nitrogen.myme.objects.ImageMeme;
+import com.nitrogen.myme.objects.Tag;
+import com.nitrogen.myme.R;
 
 public class MemesPersistenceStub implements MemesPersistence {
-
-    private final int NUM_MEMES = 18;
     private List<Meme> memes;
     private List<Tag> tags;
-
-    private int[] memeIDs = {R.drawable.pff_guy,
-            R.drawable.fuck_yea,
+    private int[] memeResourceIDs = {
+            R.drawable.pff_guy,
+            R.drawable.frick_yea,
             R.drawable.questioning_face,
             R.drawable.mother_of_god,
             R.drawable.me_gusta,
             R.drawable.lol,
             R.drawable.lololol,
             R.drawable.you_dont_say,
-            R.drawable.are_you_fucking_kidding_me,
+            R.drawable.are_you_flipping_kidding_me,
             R.drawable.forever_alone,
             R.drawable.genius,
             R.drawable.happy_guy_rage_face,
@@ -44,14 +37,14 @@ public class MemesPersistenceStub implements MemesPersistence {
             R.drawable.y_u_no
     };
     private String[] memeNames = {"Pff Guy",
-            "Fuck Yea",
+            "Frick Yea",
             "Questioning Face",
             "Mother of God",
             "Me Gusta",
             "LOL",
             "LOLOLOL",
             "You Don't Say",
-            "Are You Fucking Kidding Me",
+            "Are You Flipping Kidding Me",
             "Forever Alone",
             "Genius",
             "Happy Guy Rage Face",
@@ -65,15 +58,24 @@ public class MemesPersistenceStub implements MemesPersistence {
             "Y U NO"
     };
 
+    //**************************************************
+    // Constructor
+    //**************************************************
+
     public MemesPersistenceStub() {
         this.memes = new ArrayList<>();
         this.tags = Services.getTagsPersistence().getTags();
 
-        for(int i = 0 ; i < NUM_MEMES ; i++) {
-            memes.add(new ImageMeme(memeNames[i], ("android.resource://com.nitrogen.myme/"
-                                    + memeIDs[i]), randomTags(i)));
+        for(int i = 0 ; i < memeResourceIDs.length ; i++) {
+            Meme newMeme = new ImageMeme(memeNames[i], ("android.resource://com.nitrogen.myme/" + memeResourceIDs[i]));
+            newMeme.setTags(randomTags(i));
+            memes.add(newMeme);
         }
     }
+
+    //**************************************************
+    // Methods
+    //**************************************************
 
     /* randomTags
      *
@@ -104,29 +106,14 @@ public class MemesPersistenceStub implements MemesPersistence {
     }
 
     @Override
-    public List<Meme> getMemeSequential() {
-
+    public List<Meme> getMemes() {
         return Collections.unmodifiableList(memes);
-    }
-
-    @Override
-    public List<Meme> getMemeRandom(Meme currentMeme) {
-        List<Meme> newMemes = new ArrayList<>();
-        int index;
-
-        index = memes.indexOf(currentMeme);
-        if (index >= 0) {
-            newMemes.add(memes.get(index));
-        }
-        return newMemes;
     }
 
     /* insertMeme
      *
      * purpose: Insert a meme into the database.
-     *          The meme must have a unique name.
-     *
-     *          returns True if the meme was added and False otherwise.
+     *          Returns True if the meme was added and False otherwise.
      */
     @Override
     public boolean insertMeme(Meme meme) {
@@ -137,9 +124,14 @@ public class MemesPersistenceStub implements MemesPersistence {
             memes.add(meme);
             memeInserted = true;
         }
+
         return memeInserted;
     }
 
+    /* deleteMeme
+     *
+     * purpose: Delete a meme from the database.
+     */
     @Override
     public Meme deleteMeme(Meme meme) {
         int index;
@@ -147,8 +139,9 @@ public class MemesPersistenceStub implements MemesPersistence {
         index = memes.indexOf(meme);
         if (index >= 0) {
             memes.remove(index);
-
         }
+
         return meme;
     }
+
 }

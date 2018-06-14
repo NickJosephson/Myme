@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_drag_handle"></ImageView>
+            android:src="@drawable/ic_drag_handle"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/drag_name"
@@ -29,9 +29,8 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:background="@drawable/bottom_border"
-            android:fontFamily="cursive"
             android:text="Name"
-            android:textSize="32pt"
+            android:textSize="20pt"
             android:textStyle="bold" />
     </RelativeLayout>
 
@@ -45,7 +44,6 @@
         <TextView
             android:layout_width="90dp"
             android:layout_height="110dp"
-            android:fontFamily="cursive"
             android:text="@string/tags_label"
             android:layout_marginStart="16dp"
             android:textSize="30sp" />
@@ -55,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:layout_marginStart="90dp" />
+            android:layout_marginStart="106dp" />
     </RelativeLayout>
 
     <RelativeLayout
