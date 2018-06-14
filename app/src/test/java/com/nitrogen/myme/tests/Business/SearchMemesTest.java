@@ -82,11 +82,7 @@ public class SearchMemesTest {
         // Non-empty Meme db with no memes under the given name
         System.out.print("Testing getMemesByName() with a name we know is not in the database");
         String noName = "testName";
-        try {
-            assertNotNull(searchMemes.getMemesRelatedTo(noName));
-        } catch (Exception e) {
-            System.out.println(" (\"" + noName + "\"" + " does not exist)");
-        }
+        assertNotNull(searchMemes.getMemesRelatedTo(noName));
     }
 
     /* getMemesByTags(String[] tags) */
