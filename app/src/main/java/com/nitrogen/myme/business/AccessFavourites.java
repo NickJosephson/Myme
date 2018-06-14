@@ -26,7 +26,7 @@ public class AccessFavourites {
         memes = new ArrayList<Meme>();
 
         for (Meme meme : memePersistence.getMemeSequential()) {
-            if (meme.getIsFavourite()) {
+            if (meme.isFavourite()) {
                 memes.add(meme);
             }
         }

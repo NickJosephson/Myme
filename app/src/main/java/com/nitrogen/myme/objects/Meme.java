@@ -1,67 +1,150 @@
 package com.nitrogen.myme.objects;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
+/* Meme
+ *
+ * purpose: This abstract class provides a base of metadata and functionality
+ *          for subclass implementations of a specific media format (e.g. ImageMeme)
+ */
 public abstract class Meme {
     private String name;
     private String description;
     private Author author;
     private Date creationDate;
     private List<Tag> tags;
-    private int memeID;
-    private static int lastMemeID = 0;
     private boolean isFavourite = false;
-    public abstract String getThumbnailPath();
+    private int memeID = lastMemeID++; //unique ID
 
-    public Meme(final String name, final List<Tag> tags) {
+    private static int lastMemeID = 0; //used to ensure all memes have a unique ID
+
+    //**************************************************
+    // Constructors
+    //**************************************************
+
+    public Meme(String name) {
         this.name = name;
-        this.description = null;
-        this.author = null;
+        this.description = "";
+        this.author = new Author();
         this.creationDate = new Date();
-        this.tags = tags;
-        this.memeID = lastMemeID++;
+        this.tags = new ArrayList<Tag>();
     }
 
-    // accessors
-    public String getName() { return name; }
+    public Meme(String name, String description, Author author) {
+        this.name = name;
+        this.description = description;
+        this.author = author;
+        this.creationDate = new Date();
+        this.tags = new ArrayList<Tag>();
+    }
 
-    public int getMemeID() { return memeID; }
+    public Meme(String name, String description, Author author, Date creationDate) {
+        this.name = name;
+        this.description = description;
+        this.author = author;
+        this.creationDate = creationDate;
+        this.tags = new ArrayList<Tag>();
+    }
 
-    public boolean getIsFavourite() { return isFavourite; }
+    public Meme(String name, String description, Author author, Date creationDate, List<Tag> tags) {
+        this.name = name;
+        this.description = description;
+        this.author = author;
+        this.creationDate = creationDate;
+        this.tags = tags;
+    }
 
-    public List<Tag> getTags() { return this.tags; }
+    //**************************************************
+    // Abstract Methods
+    //**************************************************
+
+    /* getThumbnailPath
+     *
+     * purpose: A method to be implemented by subclasses to allow for the displaying
+     *          of a thumbnail of this meme by providing a path to an image.
+     */
+    public abstract String getThumbnailPath();
+
+    //**************************************************
+    // Helper Methods
+    //**************************************************
 
     /* hasTag
      *
-     * purpose: check if this meme has a certain tag.
+     * purpose: To check if this meme has a given tag.
      */
     public boolean hasTag(Tag tag) {
         return tags.contains(tag);
     }
 
-    /* equals
+    /* addTag
      *
-     * purpose: override Object's equals method so equality is validated by meme name
+     * purpose: To add a tag to this meme.
      */
+    public boolean addTag(Tag tag) {
+        return tags.add(tag);
+    }
+
+    /* removeTag
+     *
+     * purpose: To remove a tag from this meme.
+     */
+    public boolean removeTag(Tag tag) {
+        return tags.remove(tag);
+    }
+
     @Override
-    public boolean equals(Object meme) {
-        return this.name.equalsIgnoreCase(((Meme)meme).getName());
-    }
-
-    public List<String> getStringTags() {
-        List<String> temp = new ArrayList<>();
-        for(int i = 0; i<tags.size();i++) {
-            temp.add(tags.get(i).getTagName());
+    public boolean equals(Object otherMeme) {
+        if (otherMeme instanceof Meme) {
+            return memeID == ((Meme) otherMeme).getMemeID();
+        } else {
+            return false;
         }
-        return temp;
     }
-
-    public void setIsFavourite(boolean isFavourite) { this.isFavourite = isFavourite; }
 
     @Override
     public String toString() {
-        return name;
+        return "Meme{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", author=" + author +
+                ", creationDate=" + creationDate +
+                ", tags=" + tags +
+                ", isFavourite=" + isFavourite +
+                ", memeID=" + memeID +
+                '}';
     }
+
+    //**************************************************
+    // Mutator Methods
+    //**************************************************
+
+    public void setName(String name) { this.name = name; }
+
+    public void setDescription(String description) { this.description = description; }
+
+    public void setFavourite(boolean favourite) { isFavourite = favourite; }
+
+    public void setTags(List<Tag> tags) { this.tags = tags; }
+
+    //**************************************************
+    // Accessor Methods
+    //**************************************************
+
+    public String getName() { return name; }
+
+    public String getDescription() { return description; }
+
+    public Author getAuthor() { return author; }
+
+    public Date getCreationDate() { return creationDate; }
+
+    public boolean isFavourite() { return isFavourite; }
+
+    public int getMemeID() { return memeID; }
+
+    public List<Tag> getTags() { return this.tags; }
+
 }

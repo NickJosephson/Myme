@@ -1,20 +1,43 @@
 package com.nitrogen.myme.objects;
-import java.util.List;
 
+/* ImageMeme
+ *
+ * purpose: This class implements a single image format Meme.
+ */
 public class ImageMeme extends Meme {
-    String imagePath;
+    private String imagePath;
 
-    public ImageMeme(String name, String source, final List<Tag> tags) {
-        super(name,tags);
+    //**************************************************
+    // Constructor
+    //**************************************************
+
+    public ImageMeme(String name, String source) {
+        super(name);
         imagePath = source;
     }
+
+    //**************************************************
+    // Required Meme Method
+    //**************************************************
 
     @Override
     public String getThumbnailPath() {
         return imagePath;
     }
 
+    //**************************************************
+    // Mutator Method
+    //**************************************************
+
+    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
+
+
+    //**************************************************
+    // Accessor Method
+    //**************************************************
+
     public String getImagePath() {
         return imagePath;
     }
+
 }

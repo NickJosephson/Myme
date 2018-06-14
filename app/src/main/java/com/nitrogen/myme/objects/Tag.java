@@ -1,24 +1,47 @@
 package com.nitrogen.myme.objects;
 
+/* Tag
+ *
+ * purpose: This class represents a tag for use in classifying Memes.
+ */
 public class Tag {
     private String name;
+    private int tagID = lastTagID++; //unique ID
 
-    public Tag (final String name) {
+    private static int lastTagID = 0; //used to ensure all tags have a unique ID
+
+    //**************************************************
+    // Constructor
+    //**************************************************
+
+    public Tag (String name) {
         this.name = name;
     }
 
-    // accessor
-    public String getTagName () {
+    //**************************************************
+    // Helper Methods
+    //**************************************************
+
+    @Override
+    public boolean equals(Object otherTag) {
+        if (otherTag instanceof Tag) {
+            return tagID == ((Tag) otherTag).getTagID();
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public String toString() {
         return name;
     }
 
+    //**************************************************
+    // Accessor Methods
+    //**************************************************
 
-    /* equals
-     *
-     * purpose: override Object's equals method so equality is validated by tag names
-     */
-    @Override
-    public boolean equals(Object tag) {
-        return this.name.equals( ((Tag)tag).getTagName());
-    }
+    public String getName() { return name; }
+
+    public int getTagID() { return tagID; }
+
 }

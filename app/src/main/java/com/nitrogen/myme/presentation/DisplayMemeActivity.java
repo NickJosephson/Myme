@@ -17,6 +17,7 @@ import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.objects.ImageMeme;
 import com.nitrogen.myme.objects.Meme;
+import com.nitrogen.myme.objects.Tag;
 
 public class DisplayMemeActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE_MEME_ID = "com.nitrogen.myme.MESSAGE_MEME_ID";
@@ -52,13 +53,13 @@ public class DisplayMemeActivity extends AppCompatActivity {
         grid.setNumColumns(3);
         grid.setHorizontalSpacing(-245);
         grid.setVerticalSpacing(30);
-        ArrayAdapter<String> namesAdaptor = new ArrayAdapter<String>(this, R.layout.sliding_panel_tags, meme.getStringTags());
+        ArrayAdapter<Tag> namesAdaptor = new ArrayAdapter<Tag>(this, R.layout.sliding_panel_tags, meme.getTags());
 
         grid.setAdapter(namesAdaptor);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        boolean fav = meme.getIsFavourite();
+        boolean fav = meme.isFavourite();
 
         if (fav) {
             fab.setImageResource(R.drawable.heart_on);
@@ -70,8 +71,8 @@ public class DisplayMemeActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                meme.setIsFavourite(!meme.getIsFavourite());
-                boolean fav = meme.getIsFavourite();
+                meme.setFavourite(!meme.isFavourite());
+                boolean fav = meme.isFavourite();
                 FloatingActionButton button = (FloatingActionButton) view;
 
                 if (fav) {
