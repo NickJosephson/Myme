@@ -1,8 +1,8 @@
 package com.nitrogen.myme.business;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.objects.Meme;
@@ -10,19 +10,25 @@ import com.nitrogen.myme.persistence.MemesPersistence;
 
 public class AccessFavourites {
     private MemesPersistence memePersistence;
-    private List<Meme> memes;
-    private Meme meme;
-    private int currentMeme;
+
+    //**************************************************
+    // Constructor
+    //**************************************************
 
     public AccessFavourites() {
         memePersistence = Services.getMemesPersistence();
-        memes = null;
-        meme = null;
-        currentMeme = 0;
     }
 
+    //**************************************************
+    // Methods
+    //**************************************************
+
+    /* getMemes
+     *
+     * purpose: Return a list of all memes that are favourites.
+     */
     public List<Meme> getMemes() {
-        memes = new ArrayList<Meme>();
+        List<Meme> memes = new ArrayList<Meme>();
 
         for (Meme meme : memePersistence.getMemes()) {
             if (meme.isFavourite()) {

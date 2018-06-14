@@ -16,7 +16,6 @@ import android.widget.SearchView;
 
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessFavourites;
-import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.business.SearchMemes;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
@@ -158,7 +157,7 @@ public class FavouritesActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_explore:
                     //mTextMessage.setText(R.string.title_home);
-                    startActivity(new Intent(FavouritesActivity.this, MemesActivity.class));
+                    startActivity(new Intent(FavouritesActivity.this, ExploreActivity.class));
                     finish();
                     return true;
                 case R.id.navigation_favourites:

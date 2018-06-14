@@ -23,7 +23,7 @@ import com.nitrogen.myme.objects.Tag;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemesActivity extends AppCompatActivity {
+public class ExploreActivity extends AppCompatActivity {
     private AccessMemes accessMemes;
     private List<Meme> memes;
     private MemesRecyclerAdapter adapter;
@@ -87,7 +87,7 @@ public class MemesActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_favourites:
                     //mTextMessage.setText(R.string.title_dashboard);
-                    startActivity(new Intent(MemesActivity.this, FavouritesActivity.class));
+                    startActivity(new Intent(ExploreActivity.this, FavouritesActivity.class));
                     finish();
                     return true;
 //                case R.id.navigation_studio:
