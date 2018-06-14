@@ -11,10 +11,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemes;
@@ -76,6 +78,7 @@ public class ExploreActivity extends AppCompatActivity {
 
         MenuItem searchIcon = menu.findItem(R.id.search);
         SearchView searchView = (SearchView)searchIcon.getActionView();
+        searchView.setQueryHint("enter a name or tag");
 
         // handle input from the user
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -197,6 +200,13 @@ public class ExploreActivity extends AppCompatActivity {
      */
     private void handleSearch(String input) {
         memes = searchMemes.getMemesRelatedTo(input);
+
+        if(memes.size() == 0) {
+            Toast toast = Toast.makeText(this, "Whoops! No results found.", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        }
+
         displayMemes(memes);
     }
 

@@ -14,21 +14,27 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
 public class AccessFavouritesTest {
+    private AccessFavourites accessFavourites;
+
     @Before
     public void setUp() {
         System.out.println("Starting tests for AccessFavourites...");
+        accessFavourites = new AccessFavourites();
+        assertNotNull(accessFavourites);
+    }
+
+    /* Method: getMemes() */
+    @Test
+    public void testGetMemes_allFavouritedMemes() {
+        // Retrieve all favourited memes in the database
+        System.out.println("Testing getMemes(), getting all favourited memes in the database");
+        assertTrue(accessFavourites.getMemes().size() >= 0);
     }
 
     @Test
-    public void testGetMemes() {
-        // Retrieve all favourited memes in the database
-        System.out.println("...Testing getMemes()");
-        AccessFavourites accessFavourites = new AccessFavourites();
-        assertNotNull(accessFavourites);
-        assertTrue(accessFavourites.getMemes().size() >= 0);
-
+    public void testGetMemes_validateFavouritedMemes() {
         // Ensure memes are actually favourited
-        System.out.println("...Validating favourites list");
+        System.out.println("Testing getMemes(), validating favourites list");
         List<Meme> favouritedMemes = accessFavourites.getMemes();
         for(int i = 0; i < favouritedMemes.size(); i++){
             assertTrue(favouritedMemes.get(i).isFavourite());

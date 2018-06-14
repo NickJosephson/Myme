@@ -29,22 +29,17 @@ public class SearchTags {
      */
     public List<Tag> getTagsFromMemes(List<Meme> memes) {
         List<Tag> result = new ArrayList<>();
-
-        Meme currMeme;
-        Tag currTag;
-        List<Tag> existingTags = tagsPersistence.getTags();
         boolean foundTag;
 
         // look for an occurrence of an existing tag
         // if we come across a meme that has this tag, we will add it to the list
-        for(int t = 0 ; t < existingTags.size() ; t++) {
-            currTag = existingTags.get(t);
+        for(Tag tag : tagsPersistence.getTags()) {
             foundTag = false;
 
             // check if a meme in the list has this tag
             for(int m = 0 ; m < memes.size() && !foundTag ; m++ ) {
-                if(memes.get(m).hasTag(currTag)) {
-                    result.add(currTag);
+                if(memes.get(m).hasTag(tag)) {
+                    result.add(tag);
                     foundTag = true;
                 }
             }

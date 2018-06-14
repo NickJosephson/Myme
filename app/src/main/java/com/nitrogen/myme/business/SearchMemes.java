@@ -28,13 +28,25 @@ public class SearchMemes {
 
     /* getMemesRelatedTo
      *
-     * purpose: Filters through the meme database to return a list of Memes related to the
+     * purpose: Filters through the meme database to return a list of Memes
+     *          related to the given query.
      */
     public List<Meme> getMemesRelatedTo(String query) {
+        String[] keys = query.trim().toLowerCase().split(" ");
+
+        return getMemesRelatedTo(keys);
+    }
+
+    /* getMemesRelatedTo
+     *
+     * purpose: Filters through the meme database to return a list of Memes
+     *          related to the keys given.
+     */
+    public List<Meme> getMemesRelatedTo(String[] keys) {
         Set<Meme> combinedMemes = new HashSet<>();
 
-        combinedMemes.addAll(getMemesByTagName(query));
-        combinedMemes.addAll(getMemesByName(query));
+        combinedMemes.addAll(getMemesByTags(keys));
+        combinedMemes.addAll(getMemesByNames(keys));
 
         return new ArrayList<>(combinedMemes);
     }
@@ -42,12 +54,10 @@ public class SearchMemes {
     /* getMemesByName
      *
      * purpose: Filters through the meme database to return a list of Memes where each
-     *          Meme has a similar name to the provided.
+     *          Meme has a similar name to the keys provided.
      */
-    public List<Meme> getMemesByName(String name) {
+    public List<Meme> getMemesByNames(String[] keys) {
         List<Meme> result = new ArrayList<>();
-
-        String[] keys = name.trim().toLowerCase().split(" ");
 
         // search through all memes
         for (int i = 0; i < memesPersistence.getMemes().size(); i++) {
@@ -72,55 +82,27 @@ public class SearchMemes {
         return result;
     }
 
-    /* getMemesByTagName
-     *
-     * purpose: Filters through the meme database to return a list of Memes where each
-     *          Meme has a tag similar to the tag name provided.
-     */
-    public List<Meme> getMemesByTagName(String input) {
-        List<Meme> result = new ArrayList<>();
-
-        String[] strings = input.split("\\s");
-        List<Tag> tags = new ArrayList<>();
-
-        for (String str : strings) {
-            tags.add(new Tag(str));
-        }
-
-        List<Meme> memes = getMemesByTags(tags);
-
-        return memes;
-    }
-
 
     /* getMemesByTags
      *
      * purpose: Filters through the meme database to return a list of Memes where each
      *          Meme has one or more of the tags in the list of tags provided.
      */
-    public List<Meme> getMemesByTags(List<Tag> tags) {
+    public List<Meme> getMemesByTags(String[] tags) {
         List<Meme> result = new ArrayList<>();
 
-        Meme currMeme;
-        List<Tag> currMemeTags;
-
         // search through all memes
-        for (int i = 0; i < memesPersistence.getMemes().size(); i++) {
-            // examine a meme
-            currMeme = memesPersistence.getMemes().get(i);
-
-            // get the tags associated with the current meme
-            currMemeTags = currMeme.getTags();
-
-            // add current meme to the list if it has a tag we're looking for
-            for (int j = 0; j < tags.size(); j++) {
-                if (currMemeTags.contains(tags.get(j)) && !(result.contains(currMeme))) {
-                    result.add(currMeme);
+        for(Meme meme : memesPersistence.getMemes()) {
+            // check if the current meme has any of the tags we're looking for
+            for(Tag tag : meme.getTags()) {
+                for(String inputTag : tags) {
+                    if (tag.getName().equalsIgnoreCase(inputTag) && !result.contains(meme))
+                        result.add(meme);
                 }
             }
         }
-
-        return result;
+        return Collections.unmodifiableList(result);
     }
+
 
 }

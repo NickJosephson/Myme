@@ -1,8 +1,10 @@
 package com.nitrogen.myme.persistence.stubs;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
 import com.nitrogen.myme.persistence.MemesPersistence;
 import com.nitrogen.myme.application.Services;
@@ -14,49 +16,7 @@ import com.nitrogen.myme.R;
 public class MemesPersistenceStub implements MemesPersistence {
     private List<Meme> memes;
     private List<Tag> tags;
-    private int[] memeResourceIDs = {
-            R.drawable.pff_guy,
-            R.drawable.frick_yea,
-            R.drawable.questioning_face,
-            R.drawable.mother_of_god,
-            R.drawable.me_gusta,
-            R.drawable.lol,
-            R.drawable.lololol,
-            R.drawable.you_dont_say,
-            R.drawable.are_you_flipping_kidding_me,
-            R.drawable.forever_alone,
-            R.drawable.genius,
-            R.drawable.happy_guy_rage_face,
-            R.drawable.herp_derp,
-            R.drawable.okay_guy,
-            R.drawable.poker_face,
-            R.drawable.rage_face,
-            R.drawable.staring_face,
-            R.drawable.thumbs_up,
-            R.drawable.troll_face,
-            R.drawable.y_u_no
-    };
-    private String[] memeNames = {"Pff Guy",
-            "Frick Yea",
-            "Questioning Face",
-            "Mother of God",
-            "Me Gusta",
-            "LOL",
-            "LOLOLOL",
-            "You Don't Say",
-            "Are You Flipping Kidding Me",
-            "Forever Alone",
-            "Genius",
-            "Happy Guy Rage Face",
-            "Herp Derp",
-            "Okay Guy",
-            "Poker Face",
-            "Rage Face",
-            "Staring Face",
-            "Thumbs Up",
-            "Troll Face",
-            "Y U NO"
-    };
+    private Map<String,Integer> memeMap = new HashMap<String,Integer>();
 
     //**************************************************
     // Constructor
@@ -66,9 +26,11 @@ public class MemesPersistenceStub implements MemesPersistence {
         this.memes = new ArrayList<>();
         this.tags = Services.getTagsPersistence().getTags();
 
-        for(int i = 0 ; i < memeResourceIDs.length ; i++) {
-            Meme newMeme = new ImageMeme(memeNames[i], ("android.resource://com.nitrogen.myme/" + memeResourceIDs[i]));
-            newMeme.setTags(randomTags(i));
+        createMemeMap();
+
+        for(String name : memeMap.keySet()) {
+            Meme newMeme = new ImageMeme(name, ("android.resource://com.nitrogen.myme/" + memeMap.get(name)));
+            newMeme.setTags(randomTags(memeMap.get(name)));
             memes.add(newMeme);
         }
     }
@@ -76,6 +38,33 @@ public class MemesPersistenceStub implements MemesPersistence {
     //**************************************************
     // Methods
     //**************************************************
+
+    /* createMemeMap
+     *
+     * purpose: Create stub memes. Each resource has a name associated with it
+     */
+    private void createMemeMap () {
+        memeMap.put("Pff Guy", R.drawable.pff_guy);
+        memeMap.put("Frick Yea", R.drawable.frick_yea);
+        memeMap.put("Questioning Face", R.drawable.questioning_face);
+        memeMap.put("Mother of God", R.drawable.mother_of_god);
+        memeMap.put("Me Gusta", R.drawable.me_gusta);
+        memeMap.put("LOL", R.drawable.lol);
+        memeMap.put("LOLOLOL", R.drawable.lololol);
+        memeMap.put("You Don't Say", R.drawable.you_dont_say);
+        memeMap.put("Are You Flipping Kidding Me", R.drawable.are_you_flipping_kidding_me);
+        memeMap.put("Forever Alone", R.drawable.forever_alone);
+        memeMap.put("Genius", R.drawable.genius);
+        memeMap.put("Happy Guy Rage Face", R.drawable.happy_guy_rage_face);
+        memeMap.put("Herp Derp", R.drawable.herp_derp);
+        memeMap.put("Okay Guy", R.drawable.okay_guy);
+        memeMap.put("Poker Face", R.drawable.poker_face);
+        memeMap.put("Rage Face", R.drawable.rage_face);
+        memeMap.put("Staring Face", R.drawable.staring_face);
+        memeMap.put("Thumbs Up", R.drawable.thumbs_up);
+        memeMap.put("Troll Face", R.drawable.troll_face);
+        memeMap.put("Y U NO", R.drawable.y_u_no);
+    }
 
     /* randomTags
      *
@@ -93,7 +82,7 @@ public class MemesPersistenceStub implements MemesPersistence {
             result.add(tags.get(1));
         }
         if(num%2 == 1) {
-            result.add(tags.get(0));
+            result.add(tags.get(4));
         }
         if(num%5 == 0) {
             result.add(tags.get(2));
