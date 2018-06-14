@@ -50,7 +50,7 @@ public class DisplayMemeActivity extends AppCompatActivity {
 
         GridView grid = (GridView) findViewById(R.id.panelTags);
         grid.setNumColumns(3);
-        grid.setHorizontalSpacing(-300);
+        grid.setHorizontalSpacing(-245);
         grid.setVerticalSpacing(30);
         ArrayAdapter<String> namesAdaptor = new ArrayAdapter<String>(this, R.layout.sliding_panel_tags, meme.getStringTags());
 
