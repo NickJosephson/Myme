@@ -31,7 +31,7 @@ public class AccessFavouritesTest {
         System.out.println("...Validating favourites list");
         List<Meme> favouritedMemes = accessFavourites.getMemes();
         for(int i = 0; i < favouritedMemes.size(); i++){
-            assertTrue(favouritedMemes.get(i).getIsFavourite());
+            assertTrue(favouritedMemes.get(i).isFavourite());
         }
     }
 

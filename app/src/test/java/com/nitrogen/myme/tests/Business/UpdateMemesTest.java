@@ -27,7 +27,9 @@ public class UpdateMemesTest {
     private Meme createMeme(String name) {
         List<Tag> tags = new ArrayList<>();
         tags.add(new Tag("test_tag"));
-        return new ImageMeme( name, ("android.resource://com.nitrogen.myme/"+ R.drawable.meme1), tags);
+        Meme newMeme = new ImageMeme( name, ("android.resource://com.nitrogen.myme/"+ R.drawable.lololol));
+        newMeme.setTags(tags);
+        return newMeme;
     }
 
     @Before
@@ -77,8 +79,11 @@ public class UpdateMemesTest {
         // Insert multiple memes
         System.out.println("...Insert memes into a non-empty database");
         int initialSize = accessMemes.getMemes().size();
+        ArrayList<Meme> memes = new ArrayList<>();
         for(int i = 0 ; i < NUM_MEMES ; i++) {
-            updateMemes.insertMeme(createMeme("test_meme_"+i));
+            Meme newMeme = createMeme("test_meme_"+i);
+            memes.add(newMeme);
+            updateMemes.insertMeme(newMeme);
         }
         assertEquals(initialSize + NUM_MEMES, accessMemes.getMemes().size());
 
@@ -86,7 +91,7 @@ public class UpdateMemesTest {
         System.out.println("...Insert memes with the same names");
         initialSize = accessMemes.getMemes().size();
         for(int i = 0 ; i < NUM_MEMES ; i++) {
-            updateMemes.insertMeme(createMeme("test_meme_"+i));
+            updateMemes.insertMeme(memes.get(i));
         }
         assertEquals(initialSize, accessMemes.getMemes().size());
 

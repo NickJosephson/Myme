@@ -6,9 +6,6 @@ package com.nitrogen.myme.objects;
  */
 public class Tag {
     private String name;
-    private final int tagID = lastTagID++; //unique ID
-
-    private static int lastTagID = 0; //used to ensure all tags have a unique ID
 
     //**************************************************
     // Constructor
@@ -24,7 +21,7 @@ public class Tag {
 
     @Override
     public boolean equals(Object otherTag) {
-        return otherTag instanceof Tag && tagID == ((Tag) otherTag).getTagID();
+        return otherTag instanceof Tag && name.equals(((Tag) otherTag).getName());
     }
 
     @Override
@@ -37,7 +34,5 @@ public class Tag {
     //**************************************************
 
     public String getName() { return name; }
-
-    public int getTagID() { return tagID; }
 
 }
