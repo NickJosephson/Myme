@@ -11,9 +11,17 @@ import java.util.List;
 public class SearchTags {
     private TagsPersistence tagsPersistence;
 
+    //**************************************************
+    // Constructor
+    //**************************************************
+
     public SearchTags() {
         this.tagsPersistence = Services.getTagsPersistence();
     }
+
+    //**************************************************
+    // Methods
+    //**************************************************
 
     /* getTagsFromMemes
      *

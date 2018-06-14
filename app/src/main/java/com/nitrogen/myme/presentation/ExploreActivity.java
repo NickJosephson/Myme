@@ -1,5 +1,8 @@
 package com.nitrogen.myme.presentation;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,86 +21,56 @@ import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.business.SearchMemes;
 import com.nitrogen.myme.objects.Meme;
-import com.nitrogen.myme.objects.Tag;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ExploreActivity extends AppCompatActivity {
     private AccessMemes accessMemes;
     private List<Meme> memes;
     private MemesRecyclerAdapter adapter;
     private RecyclerView rvMemes;
+    private SearchMemes searchMemes = new SearchMemes();;
     private boolean layoutAsGrid = true;
-    private SearchMemes searchMemes;
 
-
+    //**************************************************
+    // Activity Lifecycle
+    //**************************************************
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.grid_toggle:
-                // User chose the "Settings" item, show the app settings UI...
-                layoutAsGrid = !layoutAsGrid;
-                setRVLayout(layoutAsGrid);
-                setRVLayoutIcon(layoutAsGrid, item);
-                return true;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_memes);
 
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
+        // Setup toolbar
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
-        }
-    }
+        // Set up bottom navigation
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        Menu bottomNavMenu = navigation.getMenu();
+        MenuItem item = bottomNavMenu.getItem(0);
+        item.setChecked(true);
 
-    private void setRVLayout(boolean asGrid) {
-        int numberOfColumns = 3;
+        // Initialize memes
+        accessMemes = new AccessMemes();
+        memes = accessMemes.getMemes();
 
-        if (layoutAsGrid) {
-            rvMemes.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
-        } else {
-            rvMemes.setLayoutManager(new LinearLayoutManager(this));
-        }
-    }
-
-    private void setRVLayoutIcon(boolean asGrid, MenuItem item) {
-        if (layoutAsGrid) {
-            item.setIcon(R.drawable.list_icon);
-        } else {
-            item.setIcon(R.drawable.grid_icon);
-        }
+        // Setup recycler view
+        setupRV();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
+        //data may have changed (e.g. some meme is now a favorite)
         rvMemes.getAdapter().notifyDataSetChanged();
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    //**************************************************
+    // Activity Events
+    //**************************************************
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_explore:
-                    //mTextMessage.setText(R.string.title_home);
-                    return true;
-                case R.id.navigation_favourites:
-                    //mTextMessage.setText(R.string.title_dashboard);
-                    startActivity(new Intent(ExploreActivity.this, FavouritesActivity.class));
-                    finish();
-                    return true;
-//                case R.id.navigation_studio:
-//                    //mTextMessage.setText(R.string.title_notifications);
-//                    return true;
-            }
-            return false;
-        }
-    };
-
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_bar, menu);
@@ -135,28 +108,52 @@ public class ExploreActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_memes);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.grid_toggle:
+                // User chose the grid toggle item
+                layoutAsGrid = !layoutAsGrid;
+                setRVLayout(layoutAsGrid);
+                setRVLayoutIcon(layoutAsGrid, item);
+                return true;
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
-        //mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    //**************************************************
+    // Navigation Events
+    //**************************************************
 
-        Menu bottomNavMenu = navigation.getMenu();
-        MenuItem item = bottomNavMenu.getItem(0);
-        item.setChecked(true);
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_explore:
+                    return true;
+                case R.id.navigation_favourites:
+                    startActivity(new Intent(ExploreActivity.this, FavouritesActivity.class));
+                    finish(); //end this activity
+                    return true;
+            }
+            return false;
+        }
+    };
 
+    //**************************************************
+    // Helper Methods
+    //**************************************************
 
+    /* setupRV
+     *
+     * purpose: Setup the recycler view to display the list of memes.
+     */
+    private void setupRV() {
         // Lookup the recycler view in activity layout
         rvMemes = (RecyclerView) findViewById(R.id.rvMemes);
-
-        // Initialize memes
-        accessMemes = new AccessMemes();
-        memes = accessMemes.getMemes();
 
         // Create adapter passing in the sample user data
         adapter = new MemesRecyclerAdapter(memes);
@@ -166,38 +163,50 @@ public class ExploreActivity extends AppCompatActivity {
 
         // Set layout manager to position the items
         setRVLayout(layoutAsGrid);
+    }
 
-        searchMemes = new SearchMemes();
+    /* setRVLayout
+     *
+     * purpose: Set the recycler view to layout as gird or list.
+     */
+    private void setRVLayout(boolean asGrid) {
+        int numberOfColumns = 3;
+
+        if (layoutAsGrid) {
+            rvMemes.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+        } else {
+            rvMemes.setLayoutManager(new LinearLayoutManager(this));
+        }
+    }
+
+    /* setRVLayoutIcon
+     *
+     * purpose: Set the given grid view toggle icon.
+     */
+    private void setRVLayoutIcon(boolean asGrid, MenuItem item) {
+        if (layoutAsGrid) {
+            item.setIcon(R.drawable.list_icon);
+        } else {
+            item.setIcon(R.drawable.grid_icon);
+        }
     }
 
     /* handleSearch
      *
-     * purpose: take the user's input (the name of a tag) and perform a query to retrieve a
-     *          list of memes with that tag.
-     *
-    */
+     * purpose: Take the user's input and perform a query to retrieve a
+     *          list of memes related to the query.
+     */
     private void handleSearch(String input) {
-        String[] strings = input.split("\\s");
-        List<Tag> tags = new ArrayList<>();
-
-        for(int i = 0 ; i < strings.length; i ++) {
-            tags.add(new Tag(strings[i]));
-        }
-
-        memes = searchMemes.getMemesByTags(tags);
-        
-        if (memes.size() <= 0) {
-            memes = searchMemes.getMemesByName(input);
-        }
-
+        memes = searchMemes.getMemesRelatedTo(input);
         displayMemes(memes);
     }
 
     /* displayMemes
      *
      * purpose: update the memes displayed on the screen.
-    */
+     */
     private void displayMemes(List<Meme> memes) {
         adapter.updateMemeList(memes);
     }
+
 }

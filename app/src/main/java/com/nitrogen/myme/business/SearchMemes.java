@@ -7,42 +7,36 @@ import com.nitrogen.myme.persistence.MemesPersistence;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SearchMemes {
     private MemesPersistence memesPersistence;
+
+    //**************************************************
+    // Constructor
+    //**************************************************
 
     public SearchMemes() {
         this.memesPersistence = Services.getMemesPersistence();
     }
 
-    /* getMemesByTags
+    //**************************************************
+    // Methods
+    //**************************************************
+
+    /* getMemesRelatedTo
      *
-     * purpose: Filters through the meme database to return a list of Memes where each
-     *          Meme has one or more of the tags in the list of tags provided.
+     * purpose: Filters through the meme database to return a list of Memes related to the
      */
-    public List<Meme> getMemesByTags(List<Tag> tags) {
-        List<Meme> result = new ArrayList<>();
+    public List<Meme> getMemesRelatedTo(String query) {
+        Set<Meme> combinedMemes = new HashSet<>();
 
-        Meme currMeme;
-        List<Tag> currMemeTags;
+        combinedMemes.addAll(getMemesByTagName(query));
+        combinedMemes.addAll(getMemesByName(query));
 
-        // search through all memes
-        for (int i = 0; i < memesPersistence.getMemes().size(); i++) {
-            // examine a meme
-            currMeme = memesPersistence.getMemes().get(i);
-
-            // get the tags associated with the current meme
-            currMemeTags = currMeme.getTags();
-
-            // add current meme to the list if it has a tag we're looking for
-            for (int j = 0; j < tags.size(); j++) {
-                if (currMemeTags.contains(tags.get(j)) && !(result.contains(currMeme))) {
-                    result.add(currMeme);
-                }
-            }
-        }
-        return Collections.unmodifiableList(result);
+        return new ArrayList<>(combinedMemes);
     }
 
     /* getMemesByName
@@ -75,7 +69,58 @@ public class SearchMemes {
             }
         }
 
-        return Collections.unmodifiableList(result);
+        return result;
+    }
+
+    /* getMemesByTagName
+     *
+     * purpose: Filters through the meme database to return a list of Memes where each
+     *          Meme has a tag similar to the tag name provided.
+     */
+    public List<Meme> getMemesByTagName(String input) {
+        List<Meme> result = new ArrayList<>();
+
+        String[] strings = input.split("\\s");
+        List<Tag> tags = new ArrayList<>();
+
+        for (String str : strings) {
+            tags.add(new Tag(str));
+        }
+
+        List<Meme> memes = getMemesByTags(tags);
+
+        return memes;
+    }
+
+
+    /* getMemesByTags
+     *
+     * purpose: Filters through the meme database to return a list of Memes where each
+     *          Meme has one or more of the tags in the list of tags provided.
+     */
+    public List<Meme> getMemesByTags(List<Tag> tags) {
+        List<Meme> result = new ArrayList<>();
+
+        Meme currMeme;
+        List<Tag> currMemeTags;
+
+        // search through all memes
+        for (int i = 0; i < memesPersistence.getMemes().size(); i++) {
+            // examine a meme
+            currMeme = memesPersistence.getMemes().get(i);
+
+            // get the tags associated with the current meme
+            currMemeTags = currMeme.getTags();
+
+            // add current meme to the list if it has a tag we're looking for
+            for (int j = 0; j < tags.size(); j++) {
+                if (currMemeTags.contains(tags.get(j)) && !(result.contains(currMeme))) {
+                    result.add(currMeme);
+                }
+            }
+        }
+
+        return result;
     }
 
 }

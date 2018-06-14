@@ -7,9 +7,17 @@ import com.nitrogen.myme.persistence.MemesPersistence;
 public class UpdateMemes {
     private MemesPersistence memesPersistence;
 
+    //**************************************************
+    // Constructor
+    //**************************************************
+
     public UpdateMemes() {
         this.memesPersistence = Services.getMemesPersistence();
     }
+
+    //**************************************************
+    // Methods
+    //**************************************************
 
     public boolean insertMeme(Meme meme) {
         return memesPersistence.insertMeme(meme);
