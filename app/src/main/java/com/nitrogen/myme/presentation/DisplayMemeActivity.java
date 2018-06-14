@@ -45,11 +45,11 @@ public class DisplayMemeActivity extends AppCompatActivity {
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        int message = intent.getIntExtra(EXTRA_MESSAGE_MEME_ID, 0);
+        int memeID = intent.getIntExtra(EXTRA_MESSAGE_MEME_ID, 0);
 
         AccessMemes accessMemes = new AccessMemes();
 
-        meme = (ImageMeme) accessMemes.getMemes().get(message);
+        meme = (ImageMeme) accessMemes.getMemeByID(memeID);
         ImageView imageView = findViewById(R.id.imageView);
 
         TextView textView = findViewById(R.id.panelName);
