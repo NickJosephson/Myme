@@ -4,6 +4,7 @@ import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.business.AccessTags;
 import com.nitrogen.myme.business.SearchTags;
 import com.nitrogen.myme.objects.Meme;
+import com.nitrogen.myme.objects.Tag;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,39 +18,63 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class SearchTagsTest {
-    // Get the memes from the database
-    AccessMemes accessMemes = new AccessMemes();
-    List<Meme> memes = accessMemes.getMemes();
+    private AccessMemes accessMemes;
+    private AccessTags accessTags;
+    private SearchTags searchTags;
 
     @Before
     public void setUp() {
         System.out.println("Starting tests for SearchTags.\n");
+        accessMemes = new AccessMemes();
+        accessTags = new AccessTags();
+        searchTags = new SearchTags();
+        assertNotNull(accessMemes);
+        assertNotNull(accessTags);
+        assertNotNull(searchTags);
+    }
 
-        assertNotNull(memes);
-        assertTrue(memes.size() > 0);
+    /* getTagsFromMemes(List<Meme> memes) */
+
+    @Test
+    public void testGetTagsFromMemes_allMemes() {
+        // Non-empty tag database where there are no orphan tags (tags that aren't assigned to any memes)
+        System.out.println("Testing getTagsFromMemes() with all memes in the database");
+        assertEquals(accessTags.getTags().size(), searchTags.getTagsFromMemes(accessMemes.getMemes()).size());
     }
 
     @Test
-    public void testGetTagsFromMemes() {
-        System.out.println("Testing getTagsFromMemes()...");
-        SearchTags searchTags = new SearchTags();
-        assertNotNull(searchTags);
-
-        AccessTags accessTags = new AccessTags();
-
-        // Meme database where each tag appears at least once
-        System.out.println("...Standard case");
-        assertEquals(accessTags.getTags().size(), searchTags.getTagsFromMemes(memes).size());
-
+    public void testGetTagsFromMemes_emptyMemeList() {
         // Non-empty tag database where meme list is empty
-        System.out.println("...Empty meme list");
+        System.out.println("Testing getTagsFromMemes() with an empty meme list");
         assertEquals(0, searchTags.getTagsFromMemes(new ArrayList<Meme>()).size());
+    }
 
-        // Non-empty tag database with meme list of size 1 with its only meme having one or more tags that we know are present
-        System.out.println("...One meme with existing tag(s)");
-        List<Meme> oneMeme = memes.subList(0,1);
+    @Test
+    public void testGetTagsFromMemes_oneMeme() {
+        // Non-empty tag database with meme list of size 1 where its only meme has one or more tags that we know exist in the tag db
+        System.out.println("Testing getTagsFromMemes() one meme with at least 1 existing tag");
+
+        // generate random index for memes
+        final int M_INDEX = (int)(Math.random() * (accessMemes.getMemes().size() - 1));
+
+        List<Meme> oneMeme = new ArrayList<>(); // implementation specific
+        oneMeme.add(accessMemes.getMemes().get(M_INDEX));
         assertTrue(searchTags.getTagsFromMemes(oneMeme).size() > 0);
         assertTrue(searchTags.getTagsFromMemes(oneMeme).size() <= accessTags.getTags().size());
+
+
+        // check that the tags returned are the ones in the meme
+        List<Tag> result = searchTags.getTagsFromMemes(oneMeme);
+        Meme meme = oneMeme.get(0);
+        boolean tagFound = false;
+
+        for(Tag tag : result) {
+            if(meme.getTags().contains(tag)) {
+                tagFound = true;
+                break;
+            }
+        }
+        assertTrue(tagFound);
     }
 
     @After

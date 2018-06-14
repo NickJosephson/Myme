@@ -9,17 +9,21 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class AccessTagsTest {
+    private AccessTags accessTags;
+
     @Before
     public void setUp() {
         System.out.println("Starting tests for AccessTags...");
+        accessTags = new AccessTags();
+        assertNotNull(accessTags);
     }
+
+    /* Method: getTags() */
 
     @Test
     public void testGetTags() {
         // Retrieve all tags in the database
         System.out.println("...Testing getTags()");
-        AccessTags accessTags = new AccessTags();
-        assertNotNull(accessTags);
         assertTrue(accessTags.getTags().size() >= 0);
     }
 

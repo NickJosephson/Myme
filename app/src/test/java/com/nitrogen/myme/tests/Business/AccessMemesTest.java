@@ -11,18 +11,21 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
 public class AccessMemesTest {
+    private AccessMemes accessMemes;
 
     @Before
     public void setUp() {
         System.out.println("Starting tests for AccessMemes...");
+        accessMemes = new AccessMemes();
+        assertNotNull(accessMemes);
     }
+
+    /* Method: getMemes() */
 
     @Test
     public void testGetMemes() {
         // Retrieve all memes in the database
         System.out.println("...Testing getMemes()");
-        AccessMemes accessMemes = new AccessMemes();
-        assertNotNull(accessMemes);
         assertTrue(accessMemes.getMemes().size() >= 0);
     }
 
