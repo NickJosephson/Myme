@@ -2,6 +2,7 @@ package com.nitrogen.myme.presentation;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -135,6 +136,10 @@ public class ExploreActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_explore:
+                    return true;
+                case R.id.navigation_studio:
+                    startActivity(new Intent(ExploreActivity.this, CreateActivity.class));
+                    finish(); //end this activity
                     return true;
                 case R.id.navigation_favourites:
                     startActivity(new Intent(ExploreActivity.this, FavouritesActivity.class));
