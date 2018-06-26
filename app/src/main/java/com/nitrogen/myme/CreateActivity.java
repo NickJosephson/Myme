@@ -9,6 +9,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.nitrogen.myme.textEditor.Font;
@@ -19,7 +20,9 @@ import com.nitrogen.myme.textEditor.TextEditorDialogFragment;
 import com.nitrogen.myme.textEditor.TextEntity;
 import com.nitrogen.myme.textEditor.TextLayer;
 
-public class CreateActivity extends AppCompatActivity {
+import java.util.List;
+
+public class CreateActivity extends AppCompatActivity implements TextEditorDialogFragment.OnTextLayerCallback {
 
     protected MotionView motionView;
     protected View textEntityEditPanel;
@@ -79,8 +82,14 @@ public class CreateActivity extends AppCompatActivity {
         motionView = (MotionView) findViewById(R.id.main_motion_view);
         textEntityEditPanel = findViewById(R.id.main_motion_text_entity_edit_panel);
         motionView.setMotionViewCallback(motionViewCallback);
-        // should be called on press of a button
-        addTextSticker();
+
+        // add text sticker button listener
+        final Button addTextButton = findViewById(R.id.add_text_button);
+        addTextButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                addTextSticker();
+            }
+        });
     }
 
     // text editing
@@ -136,5 +145,18 @@ public class CreateActivity extends AppCompatActivity {
         }
 
         return textLayer;
+    }
+
+    @Override
+    public void textChanged(@NonNull String text) {
+        TextEntity textEntity = currentTextEntity();
+        if (textEntity != null) {
+            TextLayer textLayer = textEntity.getLayer();
+            if (!text.equals(textLayer.getText())) {
+                textLayer.setText(text);
+                textEntity.updateEntity();
+                motionView.invalidate();
+            }
+        }
     }
 }
