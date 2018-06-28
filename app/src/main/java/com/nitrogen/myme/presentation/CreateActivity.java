@@ -115,7 +115,9 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
     private void saveMeme () {
 
-        // open new activity
+        // open SaveMeme activity
+        startActivity(new Intent(CreateActivity.this, SaveMemeActivity.class));
+        finish(); //end this activity
 
     }
 
