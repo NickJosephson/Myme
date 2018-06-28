@@ -1,5 +1,6 @@
 package com.nitrogen.myme.presentation;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PointF;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,11 +22,14 @@ import com.nitrogen.myme.BuildConfig;
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.textEditor.Font;
 import com.nitrogen.myme.textEditor.FontProvider;
+import com.nitrogen.myme.textEditor.FontsAdapter;
 import com.nitrogen.myme.textEditor.MotionEntity;
 import com.nitrogen.myme.textEditor.MotionView;
 import com.nitrogen.myme.textEditor.TextEditorDialogFragment;
 import com.nitrogen.myme.textEditor.TextEntity;
 import com.nitrogen.myme.textEditor.TextLayer;
+
+import java.util.List;
 
 
 public class CreateActivity extends AppCompatActivity implements TextEditorDialogFragment.OnTextLayerCallback {
@@ -32,6 +37,8 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     private ImageView uploadedImage;
     private Button uploadImagebutton;
     private Button rotateImagebutton;
+    private Button addTextButton;
+    private Button saveMemeButton;
     private static final int PICK_IMAGE = 100; // can be any value
     private Uri imageURI;
 
@@ -60,21 +67,14 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         // initializing globals
         this.fontProvider = new FontProvider(getResources());
         motionView = (MotionView) findViewById(R.id.main_motion_view);
+        motionView.setVisibility(View.VISIBLE);
         textEntityEditPanel = findViewById(R.id.main_motion_text_entity_edit_panel);
+        textEntityEditPanel.setVisibility(View.GONE);
         motionView.setMotionViewCallback(motionViewCallback);
-
-        // add text sticker button listener
-        final Button addTextButton = findViewById(R.id.add_text_button);
-        addTextButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                addTextSticker();
-            }
-        });
-
     }
 
     private void initializeButtons() {
-        uploadImagebutton = (Button)findViewById(R.id.galleryButton);
+        uploadImagebutton = (Button)findViewById(R.id.gallery_button);
 
         uploadImagebutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +94,44 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
             }
         });
 
+        // add text button
+        addTextButton = findViewById(R.id.add_text_button);
+        addTextButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                addTextSticker();
+            }
+        });
+
+        // save meme button
+        saveMemeButton = findViewById(R.id.save_meme_button);
+        saveMemeButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                saveMeme();
+            }
+        });
+
+        initTextEntitiesListeners();
+    }
+
+    private void saveMeme () {
+
+        // open new activity
+
+    }
+
+    private void initTextEntitiesListeners() {
+        findViewById(R.id.text_entity_font_change).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeTextEntityFont();
+            }
+        });
+        findViewById(R.id.text_entity_edit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startTextEntityEditing();
+            }
+        });
     }
 
     // reference: https://www.youtube.com/watch?v=OPnusBmMQTw
@@ -134,6 +172,25 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
             startTextEntityEditing();
         }
     };
+
+    private void changeTextEntityFont() {
+        final List<String> fonts = fontProvider.getFontNames();
+        FontsAdapter fontsAdapter = new FontsAdapter(this, fonts, fontProvider);
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.select_font)
+                .setAdapter(fontsAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        TextEntity textEntity = currentTextEntity();
+                        if (textEntity != null) {
+                            textEntity.getLayer().getFont().setTypeface(fonts.get(which));
+                            textEntity.updateEntity();
+                            motionView.invalidate();
+                        }
+                    }
+                })
+                .show();
+    }
 
     protected void addTextSticker() {
         TextLayer textLayer = createTextLayer();

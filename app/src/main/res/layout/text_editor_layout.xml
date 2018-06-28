@@ -12,14 +12,14 @@
 
     <EditText
         android:id="@+id/edit_text_view"
-        android:layout_width="1dp"
-        android:layout_height="1dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:alpha="0"
         android:background="@color/transparent"
         android:gravity="top"
         android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
         android:textSize="1sp"
-        tools:ignore="SmallSp"/>
+        tools:ignore="SmallSp" />
 
 </RelativeLayout>
 
