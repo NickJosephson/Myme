@@ -11,15 +11,19 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nitrogen.myme.BuildConfig;
 import com.nitrogen.myme.R;
+import com.nitrogen.myme.business.AccessMemeTemplates;
+import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.textEditor.Font;
 import com.nitrogen.myme.textEditor.FontProvider;
 import com.nitrogen.myme.textEditor.FontsAdapter;
@@ -34,13 +38,17 @@ import java.util.List;
 
 public class CreateActivity extends AppCompatActivity implements TextEditorDialogFragment.OnTextLayerCallback {
 
-    private ImageView uploadedImage;
+    private ImageView canvas;
     private Button rotateImageButton;
     private static final int PICK_IMAGE = 100; // can be any value
+    private static final int PICK_TEMPLATE = 200;
 
     protected MotionView motionView;
     protected View textEntityEditPanel;
     private FontProvider fontProvider;
+
+    // Variable for templates
+    private AccessMemeTemplates accessMemeTemplates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +62,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         MenuItem item = bottomNavMenu.getItem(1);
         item.setChecked(true);
 
-        uploadedImage = (ImageView)findViewById(R.id.imageView1);
+        canvas = (ImageView)findViewById(R.id.imageView1);
         initializeButtons();
 
         // initializing globals
@@ -73,7 +81,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         Button saveMemeButton;
         Button fromTemplateButton;
 
-//         upload image button
+        // upload image button
         uploadImageButton = (Button)findViewById(R.id.gallery_button);
         uploadImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +95,8 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         rotateImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(uploadedImage != null) {
-                    uploadedImage.setRotation(uploadedImage.getRotation() + 90);
+                if(canvas != null) {
+                    canvas.setRotation(canvas.getRotation() + 90);
                 }
             }
         });
@@ -122,6 +130,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                 startTextEntityEditing();
             }
         });
+
         // select template button
         fromTemplateButton = findViewById(R.id.from_template_button);
         fromTemplateButton.setOnClickListener(new View.OnClickListener() {
@@ -147,26 +156,36 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     }
 
     private void openTemplates() {
-//        Intent templates = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-//        startActivityForResult(templates, PICK_IMAGE);
         Intent templates = new Intent(CreateActivity.this, SelectTemplateActivity.class);
-        startActivity(templates);
-        finish();
-
-
+        startActivityForResult(templates, PICK_TEMPLATE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK && requestCode == PICK_IMAGE){
-            Uri imageURI = data.getData();
-            uploadedImage.setImageURI(imageURI);
 
-            if(!rotateImageButton.isShown()) {
-                rotateImageButton.setVisibility(View.VISIBLE);
+        if(resultCode == RESULT_OK) {
+            switch(requestCode) {
+                case PICK_IMAGE:
+                    Uri imageURI = data.getData();
+                    canvas.setImageURI(imageURI);
+
+                    if(!rotateImageButton.isShown()) {
+                        rotateImageButton.setVisibility(View.VISIBLE);
+                    }
+                    break;
+                case PICK_TEMPLATE:
+                    int templateID = data.getIntExtra("templateID", -1);
+                    if(templateID != -1) {
+                        canvas.setImageURI(imageURI); //TODO: MemeTemplatePersistence
+                    } else {
+                        Toast toast = Toast.makeText(this, "Sorry, it looks like that template isn't available.", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
             }
         }
+
     }
 
     //**************************************************
