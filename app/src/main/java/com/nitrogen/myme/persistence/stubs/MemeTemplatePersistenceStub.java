@@ -12,10 +12,7 @@ import java.util.Map;
 
 import com.nitrogen.myme.objects.TemplateMeme;
 import com.nitrogen.myme.persistence.MemeTemplatePersistence;
-import com.nitrogen.myme.persistence.MemesPersistence;
-import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.objects.Meme;
-import com.nitrogen.myme.objects.ImageMeme;
 import com.nitrogen.myme.objects.Tag;
 import com.nitrogen.myme.R;
 
@@ -30,24 +27,15 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
 
     public MemeTemplatePersistenceStub() {
         this.memes = new ArrayList<>();
-        this.tags = Services.getTagsPersistence().getTags();
 
         createMemeMap();
 
-        BitmapFactory.Options dimensions = new BitmapFactory.Options();
-        dimensions.inJustDecodeBounds = true;
-
-
         for(String name : memeMap.keySet()) {
-            Bitmap mBitmap = BitmapFactory.decodeFile("android.resource://com.nitrogen.myme/" + memeMap.get(name), dimensions);
-            int height = dimensions.outHeight;
-            int width =  dimensions.outWidth;
-
-            PointF points[] = { new PointF((float)(width*0.5), (float)(height*0.3)),
-                                new PointF((float)(width*0.5), (float)(height*0.6))};
+            PointF points[] = { new PointF(0.0f , 0.0f),
+                                new PointF(0.0f , 0.0f)};
 
             TemplateMeme newMeme = new TemplateMeme(name, ("android.resource://com.nitrogen.myme/" + memeMap.get(name)), points);
-            newMeme.setTags(randomTags(memeMap.get(name)));
+//            newMeme.setTags(randomTags(memeMap.get(name)));
             memes.add(newMeme);
         }
     }
@@ -61,9 +49,9 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
      * purpose: Create stub memes. Each resource has a name associated with it
      */
     private void createMemeMap () {
-        memeMap.put("Pff Guy", R.drawable.pff_guy);
-        memeMap.put("Frick Yea", R.drawable.frick_yea);
-        memeMap.put("Questioning Face", R.drawable.questioning_face);
+        memeMap.put("Forever Alone Template", R.drawable.template_forever_alone);
+        memeMap.put("Frick Yea", R.drawable.template_frick_yea);
+        memeMap.put("Mother Of God", R.drawable.template_mother_of_god);
     }
 
     /* randomTags

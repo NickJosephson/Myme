@@ -21,6 +21,8 @@ public class TemplateMeme extends Meme {
     public TemplateMeme(String name, String source, PointF points[]) {
         super(name);
         imagePath = source;
+        captions = new ArrayList<>();
+
         for(int i = 0 ; i < points.length ; i++) {
             captions.add(new Placeholder(points[i]));
         }
