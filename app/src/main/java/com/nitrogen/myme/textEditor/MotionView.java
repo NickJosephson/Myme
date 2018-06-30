@@ -20,13 +20,11 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.nitrogen.myme.multitouch.MoveGestureDetector;
-import com.nitrogen.myme.multitouch.RotateGestureDetector;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.nitrogen.myme.R;
-import com.nitrogen.myme.multitouch.RotateGestureDetector;
 
 /**
  * Created on 9/29/16.
@@ -58,7 +56,6 @@ public class MotionView extends FrameLayout {
 
     // gesture detection
     private ScaleGestureDetector scaleGestureDetector;
-    private RotateGestureDetector rotateGestureDetector;
     private MoveGestureDetector moveGestureDetector;
     private GestureDetectorCompat gestureDetectorCompat;
 
@@ -95,7 +92,6 @@ public class MotionView extends FrameLayout {
 
         // init listeners
         this.scaleGestureDetector = new ScaleGestureDetector(context, new ScaleListener());
-        this.rotateGestureDetector = new RotateGestureDetector(context, new RotateListener());
         this.moveGestureDetector = new MoveGestureDetector(context, new MoveListener());
         this.gestureDetectorCompat = new GestureDetectorCompat(context, new TapsListener());
 
@@ -315,14 +311,12 @@ public class MotionView extends FrameLayout {
     }
 
     // gesture detectors
-
     private final View.OnTouchListener onTouchListener = new View.OnTouchListener() {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             if (scaleGestureDetector != null) {
                 scaleGestureDetector.onTouchEvent(event);
-                rotateGestureDetector.onTouchEvent(event);
                 moveGestureDetector.onTouchEvent(event);
                 gestureDetectorCompat.onTouchEvent(event);
             }
@@ -357,17 +351,6 @@ public class MotionView extends FrameLayout {
             if (selectedEntity != null) {
                 float scaleFactorDiff = detector.getScaleFactor();
                 selectedEntity.getLayer().postScale(scaleFactorDiff - 1.0F);
-                updateUI();
-            }
-            return true;
-        }
-    }
-
-    private class RotateListener extends RotateGestureDetector.SimpleOnRotateGestureListener {
-        @Override
-        public boolean onRotate(RotateGestureDetector detector) {
-            if (selectedEntity != null) {
-                selectedEntity.getLayer().postRotate(-detector.getRotationDegreesDelta());
                 updateUI();
             }
             return true;

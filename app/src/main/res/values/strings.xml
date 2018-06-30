@@ -22,5 +22,6 @@
     <string name="save_meme">Save Meme</string>
     <string name="text_entity_font_change_description">font change button</string>
     <string name="text_entity_edit">edit text button</string>
+    <string name="delete_text_button">delete text button</string>
     <string name="default_meme_name">Name</string>
 </resources>

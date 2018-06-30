@@ -80,19 +80,19 @@ public abstract class MotionEntity {
     }
 
     /**
-     * S - scale matrix, R - rotate matrix, T - translate matrix,
+     * S - scale matrix, T - translate matrix,
      * L - result transformation matrix
      * <p>
      * The correct order of applying transformations is : L = S * R * T
      * <p>
      * See more info: <a href="http://gamedev.stackexchange.com/questions/29260/transform-matrix-multiplication-order">Game Dev: Transform Matrix multiplication order</a>
      * <p>
-     * Preconcat works like M` = M * S, so we apply preScale -> preRotate -> preTranslate
+     * Preconcat works like M` = M * S, so we apply preScale -> preTranslate
      * the result will be the same: L = S * R * T
      * <p>
      * NOTE: postconcat (postScale, etc.) works the other way : M` = S * M, in order to use it
      * we'd need to reverse the order of applying
-     * transformations : post holy scale ->  postTranslate -> postRotate -> postScale
+     * transformations : post holy scale ->  postTranslate -> postScale
      */
     protected void updateMatrix() {
         // init matrix to E - identity matrix
@@ -105,22 +105,13 @@ public abstract class MotionEntity {
         float centerY = topLeftY + getHeight() * holyScale * 0.5F;
 
         // calculate params
-        float rotationInDegree = layer.getRotationInDegrees();
         float scaleX = layer.getScale();
         float scaleY = layer.getScale();
-        if (layer.isFlipped()) {
-            // flip (by X-coordinate) if needed
-            rotationInDegree *= -1.0F;
-            scaleX *= -1.0F;
-        }
 
         // applying transformations : L = S * R * T
 
         // scale
         matrix.preScale(scaleX, scaleY, centerX, centerY);
-
-        // rotate
-        matrix.preRotate(rotationInDegree, centerX, centerY);
 
         // translate
         matrix.preTranslate(topLeftX, topLeftY);
