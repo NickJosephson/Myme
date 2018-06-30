@@ -3,6 +3,8 @@ package com.nitrogen.myme.objects;
 import android.graphics.Point;
 import android.graphics.PointF;
 
+import java.util.ArrayList;
+
 /* TemplateMeme
  *
  * purpose: This class creates a meme with a predefined image and
@@ -10,15 +12,33 @@ import android.graphics.PointF;
  */
 public class TemplateMeme extends Meme {
     private String imagePath;
-    private Placeholder[] captions;
+    private ArrayList<Placeholder> captions;
 
     //**************************************************
     // Constructor
     //**************************************************
 
-    public TemplateMeme(String name, String source) {
+    public TemplateMeme(String name, String source, PointF points[]) {
         super(name);
         imagePath = source;
+        for(int i = 0 ; i < points.length ; i++) {
+            captions.add(new Placeholder(points[i]));
+        }
+    }
+
+    // accessors
+    public ArrayList<Placeholder> getCaptions() { return this.captions; }
+
+    public void updateCaptionText(Placeholder caption, final String text) {
+        caption.updateText(text);
+    }
+
+    public void updateCaptionPos(Placeholder caption, final PointF position) {
+        caption.updatePosition(position.x, position.y);
+    }
+
+    public void updateCaptionPos(Placeholder caption, final float posX, final float posY) {
+        caption.updatePosition(posX, posY);
     }
 
     //**************************************************
@@ -53,12 +73,20 @@ public class TemplateMeme extends Meme {
      *           to the user where they are able to put text based on the general layout
      * */
     private class Placeholder {
+        private final String DEFAULT_TEXT = "Place text here";
         private PointF position;
         private String text;
 
-        public Placeholder(final float posX, final float posY, final String text) {
+        // Constructor 1 - Takes in a PointF
+        public Placeholder(final PointF position) {
+            this.position = position;
+            this.text = DEFAULT_TEXT;
+        }
+
+        // Constructor 2 - Takes in an x and y coordinate
+        public Placeholder(final float posX, final float posY) {
             this.position = new PointF(posX, posY);
-            this.text = text;
+            this.text = DEFAULT_TEXT;
         }
 
         // accessors
@@ -77,7 +105,7 @@ public class TemplateMeme extends Meme {
         /* updatePosition
          *
          *  purpose: Reposition the text
-         *  
+         *
          * */
         public void updatePosition(final float newX, final float newY) {
             position.set(newX, newY);
