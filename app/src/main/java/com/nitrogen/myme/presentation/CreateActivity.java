@@ -64,13 +64,16 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         textEntityEditPanel = findViewById(R.id.main_motion_text_entity_edit_panel);
         textEntityEditPanel.setVisibility(View.GONE);
         motionView.setMotionViewCallback(motionViewCallback);
+
     }
 
     private void initializeButtons() {
         Button uploadImageButton;
         Button addTextButton;
         Button saveMemeButton;
+        Button fromTemplateButton;
 
+//         upload image button
         uploadImageButton = (Button)findViewById(R.id.gallery_button);
         uploadImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +82,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
             }
         });
 
+        // rotate image button
         rotateImageButton = (Button)findViewById(R.id.rotateImgButton);
         rotateImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +122,14 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                 startTextEntityEditing();
             }
         });
+        // select template button
+        fromTemplateButton = findViewById(R.id.from_template_button);
+        fromTemplateButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                openTemplates();
+            }
+        });
+
     }
 
     private void saveMeme () {
@@ -132,6 +144,16 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     private void openGallery() {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
+    }
+
+    private void openTemplates() {
+//        Intent templates = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+//        startActivityForResult(templates, PICK_IMAGE);
+        Intent templates = new Intent(CreateActivity.this, SelectTemplateActivity.class);
+        startActivity(templates);
+        finish();
+
+
     }
 
     @Override
