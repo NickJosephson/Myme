@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import java.util.List;
 
 import com.nitrogen.myme.R;
+import com.nitrogen.myme.business.ImageSaver;
 import com.nitrogen.myme.objects.Meme;
 
 // Note that we specify the custom ViewHolder which gives us access to our views
@@ -51,6 +53,11 @@ public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdap
             Intent intent = new Intent(view.getContext(), DisplayMemeActivity.class);
             intent.putExtra(DisplayMemeActivity.EXTRA_MESSAGE_MEME_ID, meme.getMemeID());
             view.getContext().startActivity(intent);
+
+            new ImageSaver(view.getContext()).
+                    setFileName("myImage.png").
+                    setDirectoryName("myme_images").
+                    save(ImageSaver.drawableToBitmap(ContextCompat.getDrawable(view.getContext(),R.drawable.are_you_flipping_kidding_me)));
         }
 
     }

@@ -1,6 +1,10 @@
 package com.nitrogen.myme.presentation;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +19,7 @@ import android.widget.TextView;
 
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemes;
+import com.nitrogen.myme.business.ImageSaver;
 import com.nitrogen.myme.objects.ImageMeme;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
@@ -87,6 +92,8 @@ public class DisplayMemeActivity extends AppCompatActivity {
         grid.setAdapter(namesAdaptor);
     }
 
+
+
     /* setupFavoriteButton
      *
      * purpose: Setup the favorite button.
@@ -107,6 +114,7 @@ public class DisplayMemeActivity extends AppCompatActivity {
                 meme.setFavourite(!meme.isFavourite());
                 boolean fav = meme.isFavourite();
                 FloatingActionButton button = (FloatingActionButton) view;
+
 
                 if (fav) {
                     button.setImageResource(R.drawable.heart_on);
