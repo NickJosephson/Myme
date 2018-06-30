@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="bottom"
-            sothree:umanoPanelHeight="90dp"
+            sothree:umanoPanelHeight="100dp"
             sothree:umanoShadowHeight="4dp">
 
             <RelativeLayout
@@ -56,7 +56,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
                 android:gravity="center|top">
                 <include layout="@layout/display_meme_sliding_panel"/>
             </RelativeLayout>

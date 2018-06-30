@@ -50,6 +50,7 @@ public class DisplayMemeActivity extends AppCompatActivity {
         // Set the meme for this view with memeID
         meme = (ImageMeme) accessMemes.getMemeByID(memeID);
 
+        toolbar.setTitle(meme.getName());
         setupView();
         setupFavoriteButton();
     }
