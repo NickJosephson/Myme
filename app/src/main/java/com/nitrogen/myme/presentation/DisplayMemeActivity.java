@@ -15,14 +15,13 @@ import android.widget.TextView;
 
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemes;
-import com.nitrogen.myme.objects.ImageMeme;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
 
 public class DisplayMemeActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE_MEME_ID = "com.nitrogen.myme.MESSAGE_MEME_ID";
     AccessMemes accessMemes = new AccessMemes();
-    private ImageMeme meme;
+    private Meme meme;
 
     //**************************************************
     // Activity Lifecycle
@@ -48,8 +47,9 @@ public class DisplayMemeActivity extends AppCompatActivity {
         int memeID = intent.getIntExtra(EXTRA_MESSAGE_MEME_ID, 0);
 
         // Set the meme for this view with memeID
-        meme = (ImageMeme) accessMemes.getMemeByID(memeID);
+        meme = accessMemes.getMemeByID(memeID);
 
+        toolbar.setTitle(meme.getName());
         setupView();
         setupFavoriteButton();
     }
