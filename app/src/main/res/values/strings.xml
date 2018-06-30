@@ -13,4 +13,13 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="select_font">Select font</string>
+    <string name="header_save_meme">Meme Info:</string>
+    <string name="name_hint">Name</string>
+    <string name="select_tags">Select Tags:</string>
+    <string name="rotate">Rotate</string>
+    <string name="pick_image">Pick Image</string>
+    <string name="add_text">Add Text</string>
+    <string name="save_meme">Save Meme</string>
+    <string name="text_entity_font_change_description">font change button</string>
+    <string name="text_entity_edit">edit text button</string>
 </resources>

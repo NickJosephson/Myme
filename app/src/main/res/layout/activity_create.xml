@@ -12,8 +12,7 @@
         android:src="@android:drawable/ic_menu_gallery"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/imageView1"
-        />
+        android:id="@+id/imageView1" />
     <TextView
         android:id="@+id/imageOrientation"
         android:layout_width="wrap_content"
@@ -25,7 +24,7 @@
         android:id="@+id/rotateImgButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rotate"
+        android:text="@string/rotate"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         android:visibility="gone"
         />
@@ -54,9 +53,9 @@
             android:id="@+id/gallery_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="400dp"
+            android:layout_marginEnd="400dp"
             android:layout_weight="1"
-            android:text="Pick Image" />
+            android:text="@string/pick_image" />
 
         <Button
             android:id="@+id/add_text_button"
@@ -65,15 +64,15 @@
             android:layout_marginLeft="200dp"
             android:layout_marginRight="200dp"
             android:layout_weight="1"
-            android:text="Add Text" />
+            android:text="@string/add_text" />
 
         <Button
             android:id="@+id/save_meme_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="400dp"
+            android:layout_marginStart="400dp"
             android:layout_weight="1"
-            android:text="Save Meme" />
+            android:text="@string/save_meme" />
 
     </com.nitrogen.myme.textEditor.MotionView>
 
@@ -90,6 +89,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:contentDescription="@string/text_entity_font_change_description"
             android:src="@drawable/ic_text_fields" />
 
         <ImageButton
@@ -97,6 +97,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:contentDescription="@string/text_entity_edit"
             android:src="@drawable/ic_mode_edit" />
 
     </LinearLayout>

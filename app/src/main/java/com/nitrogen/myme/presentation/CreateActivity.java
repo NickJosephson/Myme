@@ -35,14 +35,8 @@ import java.util.List;
 public class CreateActivity extends AppCompatActivity implements TextEditorDialogFragment.OnTextLayerCallback {
 
     private ImageView uploadedImage;
-    private Button uploadImagebutton;
-    private Button rotateImagebutton;
-    private Button addTextButton;
-    private Button saveMemeButton;
+    private Button rotateImageButton;
     private static final int PICK_IMAGE = 100; // can be any value
-    private Uri imageURI;
-
-    private TextView orientation;
 
     protected MotionView motionView;
     protected View textEntityEditPanel;
@@ -62,7 +56,6 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
         uploadedImage = (ImageView)findViewById(R.id.imageView1);
         initializeButtons();
-        orientation = (TextView)findViewById(R.id.imageOrientation);
 
         // initializing globals
         this.fontProvider = new FontProvider(getResources());
@@ -74,18 +67,20 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     }
 
     private void initializeButtons() {
-        uploadImagebutton = (Button)findViewById(R.id.gallery_button);
+        Button uploadImageButton;
+        Button addTextButton;
+        Button saveMemeButton;
 
-        uploadImagebutton.setOnClickListener(new View.OnClickListener() {
+        uploadImageButton = (Button)findViewById(R.id.gallery_button);
+        uploadImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openGallery();
             }
         });
 
-        rotateImagebutton = (Button)findViewById(R.id.rotateImgButton);
-
-        rotateImagebutton.setOnClickListener(new View.OnClickListener() {
+        rotateImageButton = (Button)findViewById(R.id.rotateImgButton);
+        rotateImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(uploadedImage != null) {
@@ -110,18 +105,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
             }
         });
 
-        initTextEntitiesListeners();
-    }
-
-    private void saveMeme () {
-
-        // open SaveMeme activity
-        startActivity(new Intent(CreateActivity.this, SaveMemeActivity.class));
-        finish(); //end this activity
-
-    }
-
-    private void initTextEntitiesListeners() {
+        // text editing buttons
         findViewById(R.id.text_entity_font_change).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,6 +120,14 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         });
     }
 
+    private void saveMeme () {
+
+        // open SaveMeme activity
+        startActivity(new Intent(CreateActivity.this, SaveMemeActivity.class));
+        finish(); //end this activity
+
+    }
+
     // reference: https://www.youtube.com/watch?v=OPnusBmMQTw
     private void openGallery() {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
@@ -146,11 +138,11 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK && requestCode == PICK_IMAGE){
-            imageURI = data.getData();
+            Uri imageURI = data.getData();
             uploadedImage.setImageURI(imageURI);
 
-            if(!rotateImagebutton.isShown()) {
-                rotateImagebutton.setVisibility(View.VISIBLE);
+            if(!rotateImageButton.isShown()) {
+                rotateImageButton.setVisibility(View.VISIBLE);
             }
         }
     }
