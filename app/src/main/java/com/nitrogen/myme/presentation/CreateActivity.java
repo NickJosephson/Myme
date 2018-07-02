@@ -22,8 +22,11 @@ import android.widget.Toast;
 
 import com.nitrogen.myme.BuildConfig;
 import com.nitrogen.myme.R;
+import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.business.AccessMemeTemplates;
 import com.nitrogen.myme.business.AccessMemes;
+import com.nitrogen.myme.objects.Meme;
+import com.nitrogen.myme.objects.TemplateMeme;
 import com.nitrogen.myme.textEditor.Font;
 import com.nitrogen.myme.textEditor.FontProvider;
 import com.nitrogen.myme.textEditor.FontsAdapter;
@@ -175,9 +178,18 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                     }
                     break;
                 case PICK_TEMPLATE:
-                    int templateID = data.getIntExtra("templateID", -1);
-                    if(templateID != -1) {
-//                        canvas.setImageURI(imageURI); //TODO: MemeTemplatePersistence
+
+                    String templatePath = null;
+                    Bundle extras = data.getExtras();
+                    if(extras != null) {
+                        templatePath = extras.getString("template");
+                    }
+
+                    if(templatePath != null) {
+                      canvas.setImageURI(Uri.parse(templatePath)); //TODO: MemeTemplatePersistence
+//                        Toast toast = Toast.makeText(this, "I GOT IT! ID = "+templatePath, Toast.LENGTH_SHORT);
+//                        toast.setGravity(Gravity.CENTER, 0, 0);
+//                        toast.show();
                     } else {
                         Toast toast = Toast.makeText(this, "Sorry, it looks like that template isn't available.", Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.CENTER, 0, 0);

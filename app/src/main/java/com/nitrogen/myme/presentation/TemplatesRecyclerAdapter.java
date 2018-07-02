@@ -16,6 +16,7 @@ import java.util.List;
 
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.objects.Meme;
+import com.nitrogen.myme.objects.TemplateMeme;
 
 // Note that we specify the custom ViewHolder which gives us access to our views
 public class TemplatesRecyclerAdapter extends RecyclerView.Adapter<TemplatesRecyclerAdapter.ViewHolder> {
@@ -53,14 +54,8 @@ public class TemplatesRecyclerAdapter extends RecyclerView.Adapter<TemplatesRecy
 
         @Override
         public void onClick(View view) {
-//            Intent intent = new Intent(view.getContext(), DisplayMemeActivity.class);
-//            intent.putExtra(DisplayMemeActivity.EXTRA_MESSAGE_MEME_ID, meme.getMemeID());
-//            view.getContext().startActivity(intent);
-            mCallback.getID(meme.getMemeID());
-            Toast toast = Toast.makeText(view.getContext(), "We will select template "+ meme.getName(), Toast.LENGTH_SHORT);
-//            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-
+            if(meme instanceof TemplateMeme)
+                mCallback.getSource(((TemplateMeme)meme).getImagePath());
         }
 
     }

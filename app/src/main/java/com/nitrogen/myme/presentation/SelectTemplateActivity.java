@@ -224,11 +224,24 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
         adapter.updateMemeList(memes);
     }
 
+    /* displayMemes
+     *
+     * purpose: get the id of the template the user selected and return it to its parent activity.
+     */
     @Override
-    public void getID(int id) {
-        Toast toast = Toast.makeText(this, "Received id = "+id, Toast.LENGTH_SHORT);
+    public void getSource(String source) {
+        Toast toast = Toast.makeText(this, "Received id = "+source, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
+
+        Intent data = new Intent();
+        data.putExtra("template", source);
+
+        // Activity finished ok, return the data
+        setResult(RESULT_OK, data);
+        finish();
     }
+
+
 
 }
