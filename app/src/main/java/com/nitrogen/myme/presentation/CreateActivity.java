@@ -177,7 +177,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                 case PICK_TEMPLATE:
                     int templateID = data.getIntExtra("templateID", -1);
                     if(templateID != -1) {
-                        canvas.setImageURI(imageURI); //TODO: MemeTemplatePersistence
+//                        canvas.setImageURI(imageURI); //TODO: MemeTemplatePersistence
                     } else {
                         Toast toast = Toast.makeText(this, "Sorry, it looks like that template isn't available.", Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.CENTER, 0, 0);

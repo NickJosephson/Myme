@@ -25,10 +25,10 @@ import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.business.SearchMemes;
 import com.nitrogen.myme.objects.Meme;
 
-public class SelectTemplateActivity extends AppCompatActivity {
+public class SelectTemplateActivity extends AppCompatActivity implements OnItemClick{
     private AccessMemeTemplates accessMemeTemplates;
     private List<Meme> memes;
-    private MemesRecyclerAdapter adapter;
+    private TemplatesRecyclerAdapter adapter;
     private RecyclerView rvMemes;
     private SearchMemes searchMemes = new SearchMemes();;
     private boolean layoutAsGrid = true;
@@ -164,7 +164,7 @@ public class SelectTemplateActivity extends AppCompatActivity {
         rvMemes = (RecyclerView) findViewById(R.id.rvMemes);
 
         // Create adapter passing in the sample user data
-        adapter = new MemesRecyclerAdapter(memes);
+        adapter = new TemplatesRecyclerAdapter(memes, this);
 
         // Attach the adapter to the recycler view to populate items
         rvMemes.setAdapter(adapter);
@@ -222,6 +222,13 @@ public class SelectTemplateActivity extends AppCompatActivity {
      */
     private void displayMemes(List<Meme> memes) {
         adapter.updateMemeList(memes);
+    }
+
+    @Override
+    public void getID(int id) {
+        Toast toast = Toast.makeText(this, "Received id = "+id, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
 }
