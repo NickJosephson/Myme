@@ -53,11 +53,6 @@ public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdap
             Intent intent = new Intent(view.getContext(), DisplayMemeActivity.class);
             intent.putExtra(DisplayMemeActivity.EXTRA_MESSAGE_MEME_ID, meme.getMemeID());
             view.getContext().startActivity(intent);
-
-            new ImageSaver(view.getContext()).
-                    setFileName("myImage.png").
-                    setDirectoryName("myme_images").
-                    save(ImageSaver.drawableToBitmap(ContextCompat.getDrawable(view.getContext(),R.drawable.are_you_flipping_kidding_me)));
         }
 
     }

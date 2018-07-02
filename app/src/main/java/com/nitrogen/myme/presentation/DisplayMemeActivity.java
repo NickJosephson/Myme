@@ -9,12 +9,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.nitrogen.myme.R;
@@ -23,6 +29,9 @@ import com.nitrogen.myme.business.ImageSaver;
 import com.nitrogen.myme.objects.ImageMeme;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class DisplayMemeActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE_MEME_ID = "com.nitrogen.myme.MESSAGE_MEME_ID";
@@ -67,6 +76,42 @@ public class DisplayMemeActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp(){
         finish();
         return true;
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.display_meme_activity_bar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.export_meme:
+
+                Uri the_uri = Uri.parse(meme.getImagePath());
+                Drawable drawable;
+
+                try {
+                    InputStream inputStream = getContentResolver().openInputStream(the_uri);
+                    drawable = Drawable.createFromStream(inputStream, the_uri.toString() );
+                } catch (FileNotFoundException e) {
+                    Log.e("exportDrawable:",e.getMessage());
+                    drawable = ContextCompat.getDrawable(findViewById(R.id.display_meme).getContext(),R.drawable.troll_face);
+                }
+
+                new ImageSaver(findViewById(R.id.display_meme).getContext()).
+                        setFileName(meme.getName()+".png").
+                        setDirectoryName("myme_images").
+                        setExternal(true).
+                        save(ImageSaver.drawableToBitmap(drawable));
+
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     //**************************************************

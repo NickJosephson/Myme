@@ -1,19 +1,28 @@
 package com.nitrogen.myme.business;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import static android.app.PendingIntent.getActivity;
+import static android.support.v4.app.ActivityCompat.requestPermissions;
+import static java.security.AccessController.getContext;
 
 public class ImageSaver {
 
@@ -66,12 +75,14 @@ public class ImageSaver {
         File directory;
         if(external){
             directory = getAlbumStorageDir(directoryName);
+            Log.e("ExternalDirectory", directory.toString());
+            directory.mkdirs();
         }
         else {
             directory = context.getDir(directoryName, Context.MODE_PRIVATE);
             Log.e("Directory Name:", directoryName);
         }
-        if(!directory.exists() && !directory.mkdirs()){
+        if(!directory.exists()){//&&!directory.mkdirs()
             Log.e("ImageSaver","Error creating directory " + directory);
         }
 
@@ -138,4 +149,5 @@ public class ImageSaver {
         drawable.draw(canvas);
         return bitmap;
     }
+
 }
