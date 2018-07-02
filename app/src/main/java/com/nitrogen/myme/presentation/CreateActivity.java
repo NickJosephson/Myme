@@ -16,19 +16,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.nitrogen.myme.BuildConfig;
 import com.nitrogen.myme.R;
-import com.nitrogen.myme.textEditor.Font;
-import com.nitrogen.myme.textEditor.FontProvider;
-import com.nitrogen.myme.textEditor.FontsAdapter;
-import com.nitrogen.myme.textEditor.Layer;
-import com.nitrogen.myme.textEditor.MotionEntity;
-import com.nitrogen.myme.textEditor.MotionView;
-import com.nitrogen.myme.textEditor.TextEditorDialogFragment;
-import com.nitrogen.myme.textEditor.TextEntity;
-import com.nitrogen.myme.textEditor.TextLayer;
+import com.nitrogen.myme.presentation.textEditor.Font;
+import com.nitrogen.myme.presentation.textEditor.FontProvider;
+import com.nitrogen.myme.presentation.textEditor.FontsAdapter;
+import com.nitrogen.myme.presentation.textEditor.MotionEntity;
+import com.nitrogen.myme.presentation.textEditor.MotionView;
+import com.nitrogen.myme.presentation.textEditor.TextEditorDialogFragment;
+import com.nitrogen.myme.presentation.textEditor.TextEntity;
+import com.nitrogen.myme.presentation.textEditor.TextLayer;
 
 import java.util.List;
 

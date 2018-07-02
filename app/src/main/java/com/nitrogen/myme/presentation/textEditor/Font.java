@@ -1,4 +1,4 @@
-package com.nitrogen.myme.textEditor;
+package com.nitrogen.myme.presentation.textEditor;
 
 public class Font {
 

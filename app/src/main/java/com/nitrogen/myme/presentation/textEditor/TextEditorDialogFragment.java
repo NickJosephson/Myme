@@ -1,4 +1,4 @@
-package com.nitrogen.myme.textEditor;
+package com.nitrogen.myme.presentation.textEditor;
 
 import android.app.Activity;
 import android.app.Dialog;

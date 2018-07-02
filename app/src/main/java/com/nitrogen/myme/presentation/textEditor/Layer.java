@@ -1,6 +1,4 @@
-package com.nitrogen.myme.textEditor;
-
-import android.support.annotation.FloatRange;
+package com.nitrogen.myme.presentation.textEditor;
 
 public class Layer {
 

@@ -1,4 +1,4 @@
-package com.nitrogen.myme.multitouch;
+package com.nitrogen.myme.presentation.touchDetection;
 
 import android.content.Context;
 import android.view.MotionEvent;

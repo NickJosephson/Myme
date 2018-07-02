@@ -1,4 +1,4 @@
-package com.nitrogen.myme.textEditor;
+package com.nitrogen.myme.presentation.textEditor;
 
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -7,9 +7,6 @@ import android.graphics.PointF;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import com.nitrogen.myme.textEditor.MathUtils;
-import com.nitrogen.myme.textEditor.Layer;
 
 @SuppressWarnings({"WeakerAccess"})
 public abstract class MotionEntity {

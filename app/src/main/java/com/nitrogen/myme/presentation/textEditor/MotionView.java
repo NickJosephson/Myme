@@ -1,4 +1,4 @@
-package com.nitrogen.myme.textEditor;
+package com.nitrogen.myme.presentation.textEditor;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -19,7 +19,7 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.nitrogen.myme.multitouch.MoveGestureDetector;
+import com.nitrogen.myme.presentation.touchDetection.MoveGestureDetector;
 
 import java.util.ArrayList;
 import java.util.List;
