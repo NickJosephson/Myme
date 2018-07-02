@@ -2,17 +2,9 @@ package com.nitrogen.myme.presentation.textEditor;
 
 public class Font {
 
-    /**
-     * color value (ex: 0xFF00FF)
-     */
+    //color value (ex: 0xFF00FF)
     private int color;
-    /**
-     * name of the font
-     */
     private String typeface;
-    /**
-     * size of the font, relative to parent
-     */
     private float size;
 
     public Font() {

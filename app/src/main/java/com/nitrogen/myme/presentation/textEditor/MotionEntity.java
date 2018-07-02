@@ -11,49 +11,28 @@ import android.support.annotation.Nullable;
 @SuppressWarnings({"WeakerAccess"})
 public abstract class MotionEntity {
 
-    /**
-     * data
-     */
     @NonNull
     protected final Layer layer;
-
-    /**
-     * transformation matrix for the entity
-     */
     protected final Matrix matrix = new Matrix();
-    /**
-     * true - entity is selected and need to draw it's border
-     * false - not selected, no need to draw it's border
-     */
     private boolean isSelected;
-
-    /**
-     * maximum scale of the initial image, so that
-     * the entity still fits within the parent canvas
-     */
+    // maximum scale of the initial image
     protected float holyScale;
 
-    /**
-     * width of canvas the entity is drawn in
-     */
     @IntRange(from = 0)
     protected int canvasWidth;
-    /**
-     * height of canvas the entity is drawn in
-     */
     @IntRange(from = 0)
     protected int canvasHeight;
 
-    /**
+    /*
      * Destination points of the entity
      * 5 points. Size of array - 10; Starting upper left corner, clockwise
      * last point is the same as first to close the circle
      * NOTE: saved as a field variable in order to avoid creating array in draw()-like methods
      */
     private final float[] destPoints = new float[10]; // x0, y0, x1, y1, x2, y2, x3, y3, x0, y0
-    /**
+    /*
      * Initial points of the entity
-     * @see #destPoints
+     * similar to destPoints
      */
     protected final float[] srcPoints = new float[10];  // x0, y0, x1, y1, x2, y2, x3, y3, x0, y0
 
@@ -76,17 +55,18 @@ public abstract class MotionEntity {
         this.isSelected = isSelected;
     }
 
-    /**
+    /* updateMatrix
+     *
+     * purpose: apply position & scale changes to matrix
+     *
      * S - scale matrix, T - translate matrix,
      * L - result transformation matrix
-     * <p>
      * The correct order of applying transformations is : L = S * R * T
-     * <p>
-     * See more info: <a href="http://gamedev.stackexchange.com/questions/29260/transform-matrix-multiplication-order">Game Dev: Transform Matrix multiplication order</a>
-     * <p>
+     *
+     * For more info: <a href="http://gamedev.stackexchange.com/questions/29260/transform-matrix-multiplication-order">Game Dev: Transform Matrix multiplication order</a>
+     *
      * Preconcat works like M` = M * S, so we apply preScale -> preTranslate
      * the result will be the same: L = S * R * T
-     * <p>
      * NOTE: postconcat (postScale, etc.) works the other way : M` = S * M, in order to use it
      * we'd need to reverse the order of applying
      * transformations : post holy scale ->  postTranslate -> postScale
@@ -153,13 +133,15 @@ public abstract class MotionEntity {
     private final PointF pC = new PointF();
     private final PointF pD = new PointF();
 
-    /**
+    /* pointInLayerRect
+     *
+     * purpose: return true if point (x, y) is inside the triangle
+     *
      * For more info:
      * <a href="http://math.stackexchange.com/questions/190111/how-to-check-if-a-point-is-inside-a-rectangle">StackOverflow: How to check point is in rectangle</a>
-     * <p>NOTE: it's easier to apply the same transformation matrix (calculated before) to the original source points, rather than
-     * calculate the result points ourselves
-     * @param point point
-     * @return true if point (x, y) is inside the triangle
+     *
+     * NOTE: it's easier to apply the same transformation matrix (calculated before) to the
+     * original source points, rather than calculate the result points ourselves
      */
     public boolean pointInLayerRect(PointF point) {
 
@@ -179,11 +161,12 @@ public abstract class MotionEntity {
         return MathUtils.pointInTriangle(point, pA, pB, pC) || MathUtils.pointInTriangle(point, pA, pD, pC);
     }
 
-    /**
-     * http://judepereira.com/blog/calculate-the-real-scale-factor-and-the-angle-of-rotation-from-an-android-matrix/
+    /* draw
      *
-     * @param canvas Canvas to draw
-     * @param drawingPaint Paint to use during drawing
+     * purpose: draw on canvas
+     *
+     * For more info:
+     * http://judepereira.com/blog/calculate-the-real-scale-factor-and-the-angle-of-rotation-from-an-android-matrix/
      */
     public final void draw(@NonNull Canvas canvas, @Nullable Paint drawingPaint) {
 

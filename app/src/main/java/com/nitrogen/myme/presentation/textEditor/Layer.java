@@ -3,17 +3,11 @@ package com.nitrogen.myme.presentation.textEditor;
 public class Layer {
 
     private float scale;
-    /**
-     * top left X coordinate, relative to parent canvas
-     */
+    // top left X coordinate, relative to parent canvas
     private float x;
-    /**
-     * top left Y coordinate, relative to parent canvas
-     */
+    // top left Y coordinate, relative to parent canvas
     private float y;
-    /**
-     * is layer flipped horizontally (by X-coordinate)
-     */
+    // is layer flipped horizontally (by X-coordinate)
     private boolean isFlipped;
 
     public Layer() {

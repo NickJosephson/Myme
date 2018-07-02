@@ -26,13 +26,7 @@ import java.util.List;
 
 import com.nitrogen.myme.R;
 
-/**
- * Created on 9/29/16.
- */
-
 public class MotionView extends FrameLayout {
-
-    private static final String TAG = MotionView.class.getSimpleName();
 
     public interface Constants {
         float SELECTED_LAYER_ALPHA = 0.15F;
@@ -83,7 +77,6 @@ public class MotionView extends FrameLayout {
     }
 
     private void init(@NonNull Context context) {
-        // I fucking love Android
         setWillNotDraw(false);
 
         selectedLayerPaint = new Paint();
@@ -100,7 +93,7 @@ public class MotionView extends FrameLayout {
         updateUI();
     }
 
-    public MotionEntity getSelectedEntity() {
+    public @Nullable MotionEntity getSelectedEntity() {
         return selectedEntity;
     }
 
@@ -158,9 +151,9 @@ public class MotionView extends FrameLayout {
         super.onDraw(canvas);
     }
 
-    /**
-     * draws all entities on the canvas
-     * @param canvas Canvas where to draw all entities
+    /* drawAllEntities
+     *
+     * purpose: draws all entities on the canvas
      */
     private void drawAllEntities(Canvas canvas) {
         for (int i = 0; i < entities.size(); i++) {
@@ -168,9 +161,10 @@ public class MotionView extends FrameLayout {
         }
     }
 
-    /**
-     * as a side effect - the method deselects Entity (if any selected)
-     * @return bitmap with all the Entities at their current positions
+    /* getThumbnailImage
+     *
+     * Note: as a side effect - the method deselects Entity (if any selected)
+     * purpose: return bitmap with all the Entities at their current positions
      */
     public Bitmap getThumbnailImage() {
         selectEntity(null, false);

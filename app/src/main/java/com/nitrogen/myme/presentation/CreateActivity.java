@@ -19,6 +19,8 @@ import android.widget.ImageView;
 
 import com.nitrogen.myme.BuildConfig;
 import com.nitrogen.myme.R;
+import com.nitrogen.myme.persistence.MemesPersistence;
+import com.nitrogen.myme.persistence.stubs.MemesPersistenceStub;
 import com.nitrogen.myme.presentation.textEditor.Font;
 import com.nitrogen.myme.presentation.textEditor.FontProvider;
 import com.nitrogen.myme.presentation.textEditor.FontsAdapter;

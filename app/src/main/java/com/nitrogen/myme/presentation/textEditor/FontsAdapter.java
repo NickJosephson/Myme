@@ -44,11 +44,10 @@ public class FontsAdapter extends ArrayAdapter<String> {
     }
 
     private static class ViewHolder {
-
         TextView textView;
 
         ViewHolder(View rootView) {
-            textView = (TextView) rootView.findViewById(android.R.id.text1);
+            textView = rootView.findViewById(android.R.id.text1);
         }
     }
 }
