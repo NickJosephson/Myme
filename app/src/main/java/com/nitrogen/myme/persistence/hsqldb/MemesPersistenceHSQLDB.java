@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Map;
 
 public class MemesPersistenceHSQLDB  implements MemesPersistence{
 
-    private List<Meme> memes;
+    private List<Meme> memes = new ArrayList<Meme>() ;
     private Map<String,Integer> memeMap = new HashMap<String,Integer>();
     private Connection c ;
 
@@ -33,18 +34,18 @@ public class MemesPersistenceHSQLDB  implements MemesPersistence{
         }
 
     }
-    private Meme fromResultSet(final ResultSet rs) throws SQLException{
-        final String courseID = rs.getString("name");
-        final String courseName = rs.getString("source");
-        return new Meme(courseID,"android.resource://com.nitrogen.myme/" + courseName);
 
+    private Meme fromResultSet(final ResultSet rs) throws SQLException{
+        final String name = rs.getString("name");
+        final String sourceRef = rs.getString("source");
+        return new Meme(name,"android.resource://com.nitrogen.myme/" + sourceRef);
     }
 
     private void createMemeMap () {
         try
         {
             final Statement st = c.createStatement();
-            final ResultSet rs = st.executeQuery("SELECT * FROM ");
+            final ResultSet rs = st.executeQuery("SELECT * FROM MEME");
             while (rs.next())
             {
                 final Meme newMeme = fromResultSet(rs);
