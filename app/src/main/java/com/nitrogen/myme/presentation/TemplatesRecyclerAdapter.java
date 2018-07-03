@@ -25,9 +25,8 @@ public class TemplatesRecyclerAdapter extends RecyclerView.Adapter<TemplatesRecy
     // Used to cache the views within the item layout for fast access
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // Views in row and it's data
-        public ImageView memeImageView;
-        public ImageView favouriteIconView;
-        public Meme meme;
+        public ImageView templateImageView;
+        public TemplateMeme template;
         private OnItemClick mCallback;
 
         //**************************************************
@@ -40,8 +39,7 @@ public class TemplatesRecyclerAdapter extends RecyclerView.Adapter<TemplatesRecy
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-            memeImageView = (ImageView) itemView.findViewById(R.id.meme_image);
-            favouriteIconView = (ImageView) itemView.findViewById(R.id.heartIcon);
+            templateImageView = (ImageView) itemView.findViewById(R.id.template_image);
             mCallback = listener;
 
             //set method to handle click events
@@ -54,23 +52,22 @@ public class TemplatesRecyclerAdapter extends RecyclerView.Adapter<TemplatesRecy
 
         @Override
         public void onClick(View view) {
-            if(meme instanceof TemplateMeme)
-                mCallback.getSource(((TemplateMeme)meme).getImagePath());
+            mCallback.getSource(template.getImagePath());
         }
 
     }
 
-    // Store a member variable for the memes
-    private List<Meme> memes;
+    // Store a member variable for the templates
+    private List<TemplateMeme> templates;
     private OnItemClick mCallback;
 
     //**************************************************
     // Constructor
     //**************************************************
 
-    // Pass in the meme array into the constructor
-    public TemplatesRecyclerAdapter(List<Meme> memes, OnItemClick listener) {
-        this.memes = memes;
+    // Pass in the template array into the constructor
+    public TemplatesRecyclerAdapter(List<TemplateMeme> templates, OnItemClick listener) {
+        this.templates = templates;
         this.mCallback = listener;
     }
 
@@ -86,36 +83,34 @@ public class TemplatesRecyclerAdapter extends RecyclerView.Adapter<TemplatesRecy
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View memeView = inflater.inflate(R.layout.item_meme_thumbnail, parent, false);
+        View templateView = inflater.inflate(R.layout.item_template_thumbnail, parent, false);
 
         // Return a new holder instance
-        return new ViewHolder(memeView, mCallback);
+        return new ViewHolder(templateView, mCallback);
     }
 
     // Populate data into the item through holder
     @Override
     public void onBindViewHolder(@NonNull TemplatesRecyclerAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
-        Meme meme = memes.get(position);
+        TemplateMeme template = templates.get(position);
 
         // Set item views based on your views and data model
-        ImageView imageView = viewHolder.memeImageView;
-        viewHolder.meme = meme;
+        ImageView imageView = viewHolder.templateImageView;
+        viewHolder.template = template;
 
-        imageView.setImageURI(Uri.parse(meme.getThumbnailPath()));
-        int vis = (meme.isFavourite()) ? View.VISIBLE : View.INVISIBLE;
-        viewHolder.favouriteIconView.setVisibility(vis);
+        imageView.setImageURI(Uri.parse(template.getImagePath()));
     }
 
     // Returns the total count of items in the list
     @Override
     public int getItemCount() {
-        return memes.size();
+        return templates.size();
     }
 
-    // mutator to update the memes that will be displayed
-    public void updateMemeList(List<Meme> newMemeList) {
-        this.memes = newMemeList;
+    // mutator to update the templates that will be displayed
+    public void updateTemplateList(List<TemplateMeme> newTemplateList) {
+        this.templates = newTemplateList;
         notifyDataSetChanged();
     }
 

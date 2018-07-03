@@ -17,26 +17,24 @@ import com.nitrogen.myme.objects.Tag;
 import com.nitrogen.myme.R;
 
 public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
-    private List<Meme> memes;
-    private List<Tag> tags;
-    private Map<String,Integer> memeMap = new HashMap<String,Integer>();
+    private List<TemplateMeme> templates;
+    private Map<String,Integer> templateMap = new HashMap<String,Integer>();
 
     //**************************************************
     // Constructor
     //**************************************************
 
     public MemeTemplatePersistenceStub() {
-        this.memes = new ArrayList<>();
+        this.templates = new ArrayList<>();
 
-        createMemeMap();
+        createTemplateMap();
 
-        for(String name : memeMap.keySet()) {
+        for(String name : templateMap.keySet()) {
             PointF points[] = { new PointF(0.0f , 0.0f),
                                 new PointF(0.0f , 0.0f)};
 
-            TemplateMeme newMeme = new TemplateMeme(name, ("android.resource://com.nitrogen.myme/" + memeMap.get(name)), points);
-//            newMeme.setTags(randomTags(memeMap.get(name)));
-            memes.add(newMeme);
+            TemplateMeme newMeme = new TemplateMeme(name, ("android.resource://com.nitrogen.myme/" + templateMap.get(name)), points);
+            templates.add(newMeme);
         }
     }
 
@@ -44,65 +42,37 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
     // Methods
     //**************************************************
 
-    /* createMemeMap
+    /* createTemplateMap
      *
      * purpose: Create stub memes. Each resource has a name associated with it
      */
-    private void createMemeMap () {
-        memeMap.put("Forever Alone Template", R.drawable.template_forever_alone);
-        memeMap.put("Frick Yea", R.drawable.template_frick_yea);
-        memeMap.put("Mother Of God", R.drawable.template_mother_of_god);
-    }
-
-    /* randomTags
-     *
-     * purpose: Assign pseudo-random tags to a meme.
-     *          This ensures each meme has at least 1 tag.
-     *
-     */
-    private ArrayList<Tag> randomTags(int num) {
-        ArrayList<Tag> result = new ArrayList<>();
-
-        if(num%3 == 0) {
-            result.add(tags.get(0));
-        }
-        if(num%2 == 0) {
-            result.add(tags.get(1));
-        }
-        if(num%2 == 1) {
-            result.add(tags.get(4));
-        }
-        if(num%5 == 0) {
-            result.add(tags.get(2));
-        }
-        if(num%7 == 0) {
-            result.add(tags.get(3));
-        }
-
-        return result;
+    private void createTemplateMap () {
+        templateMap.put("Forever Alone Template", R.drawable.template_forever_alone);
+        templateMap.put("Frick Yea", R.drawable.template_frick_yea);
+        templateMap.put("Mother Of God", R.drawable.template_mother_of_god);
     }
 
     @Override
-    public List<Meme> getMemes() {
-        return Collections.unmodifiableList(memes);
+    public List<TemplateMeme> getTemplates() {
+        return Collections.unmodifiableList(templates);
     }
 
-    /* insertMeme
+    /* insertTemplate
      *
-     * purpose: Insert a meme into the database.
-     *          Returns True if the meme was added and False otherwise.
+     * purpose: Insert a template into the database.
+     *          Returns True if the template was added and False otherwise.
      */
     @Override
-    public boolean insertMeme(Meme meme) {
-        boolean memeInserted = false;
+    public boolean insertTemplate(TemplateMeme template) {
+        boolean templateInserted = false;
 
         // don't add duplicates
-        if(!memes.contains(meme)) {
-            memes.add(meme);
-            memeInserted = true;
+        if(!templates.contains(template)) {
+            templates.add(template);
+            templateInserted = true;
         }
 
-        return memeInserted;
+        return templateInserted;
     }
 
     /* deleteMeme
@@ -110,15 +80,29 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
      * purpose: Delete a meme from the database.
      */
     @Override
-    public Meme deleteMeme(Meme meme) {
+    public TemplateMeme deleteTemplate(TemplateMeme template) {
         int index;
 
-        index = memes.indexOf(meme);
+        index = templates.indexOf(template);
         if (index >= 0) {
-            memes.remove(index);
+            templates.remove(index);
         }
 
-        return meme;
+        return template;
+    }
+
+    /* getTemplate
+     *
+     * purpose: Return a meme template by id
+     */
+    public TemplateMeme getTemplate(int id) {
+
+        for(TemplateMeme template: templates){
+            if(template.getTemplateID() == id) {
+                return template;
+            }
+        }
+        return null; // TODO: Violates Liskov
     }
 
 }

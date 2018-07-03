@@ -24,13 +24,14 @@ import com.nitrogen.myme.business.AccessMemeTemplates;
 import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.business.SearchMemes;
 import com.nitrogen.myme.objects.Meme;
+import com.nitrogen.myme.objects.TemplateMeme;
 
 public class SelectTemplateActivity extends AppCompatActivity implements OnItemClick{
     private AccessMemeTemplates accessMemeTemplates;
-    private List<Meme> memes;
+    private List<TemplateMeme> templates;
     private TemplatesRecyclerAdapter adapter;
-    private RecyclerView rvMemes;
-    private SearchMemes searchMemes = new SearchMemes();;
+    private RecyclerView rvTemplates;
+    private SearchMemes searchMemes = new SearchMemes();
     private boolean layoutAsGrid = true;
 
     //**************************************************
@@ -55,7 +56,7 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
 
         // Initialize memes
         accessMemeTemplates = new AccessMemeTemplates();
-        memes = accessMemeTemplates.getMemes();
+        templates = accessMemeTemplates.getTemplates();
 
         // Setup recycler view
         setupRV();
@@ -66,7 +67,7 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
         super.onResume();
 
         //data may have changed (e.g. some meme is now a favorite)
-        rvMemes.getAdapter().notifyDataSetChanged();
+        rvTemplates.getAdapter().notifyDataSetChanged();
     }
 
     //**************************************************
@@ -87,7 +88,7 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
             @Override
             public boolean onQueryTextSubmit(String userInput) {
                 // filter through meme db
-                handleSearch(userInput);
+//                handleSearch(userInput);
                 return false;
             }
 
@@ -102,7 +103,7 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                displayMemes(accessMemeTemplates.getMemes());
+                displayTemplates(accessMemeTemplates.getTemplates());
                 return false;
             }
         });
@@ -161,13 +162,13 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
      */
     private void setupRV() {
         // Lookup the recycler view in activity layout
-        rvMemes = (RecyclerView) findViewById(R.id.rvMemes);
+        rvTemplates = (RecyclerView) findViewById(R.id.rvMemes);
 
         // Create adapter passing in the sample user data
-        adapter = new TemplatesRecyclerAdapter(memes, this);
+        adapter = new TemplatesRecyclerAdapter(templates, this);
 
         // Attach the adapter to the recycler view to populate items
-        rvMemes.setAdapter(adapter);
+        rvTemplates.setAdapter(adapter);
 
         // Set layout manager to position the items
         setRVLayout(layoutAsGrid);
@@ -181,9 +182,9 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
         int numberOfColumns = 3;
 
         if (layoutAsGrid) {
-            rvMemes.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+            rvTemplates.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
         } else {
-            rvMemes.setLayoutManager(new LinearLayoutManager(this));
+            rvTemplates.setLayoutManager(new LinearLayoutManager(this));
         }
     }
 
@@ -202,29 +203,30 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
     /* handleSearch
      *
      * purpose: Take the user's input and perform a query to retrieve a
-     *          list of memes related to the query.
-     */
+     *          list of templates related to the query.
+     *
     private void handleSearch(String input) {
-        memes = searchMemes.getMemesRelatedTo(input);
+        templates = searchTemplates.getTemplatesRelatedTo(input);
 
-        if(memes.size() == 0) {
+        if(templates.size() == 0) {
             Toast toast = Toast.makeText(this, "Whoops! No results found.", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
 
-        displayMemes(memes);
+        displayTemplates(templates);
     }
+    */
 
-    /* displayMemes
+    /* displayTemplates
      *
      * purpose: update the memes displayed on the screen.
      */
-    private void displayMemes(List<Meme> memes) {
-        adapter.updateMemeList(memes);
+    private void displayTemplates(List<TemplateMeme> template) {
+        adapter.updateTemplateList(templates);
     }
 
-    /* displayMemes
+    /* getSource
      *
      * purpose: get the id of the template the user selected and return it to its parent activity.
      */
@@ -242,6 +244,20 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
         finish();
     }
 
+    @Override
+    public void getID(int id) {
+        Toast toast = Toast.makeText(this, "Received id = "+id, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+
+        Intent data = new Intent();
+        data.putExtra("template", id);
+
+        // Activity finished ok, return the data
+        setResult(RESULT_OK, data);
+        finish();
+
+    }
 
 
 }

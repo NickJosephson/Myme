@@ -18,20 +18,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nitrogen.myme.BuildConfig;
 import com.nitrogen.myme.R;
-import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.business.AccessMemeTemplates;
-import com.nitrogen.myme.business.AccessMemes;
-import com.nitrogen.myme.objects.Meme;
-import com.nitrogen.myme.objects.TemplateMeme;
 
-
-import com.nitrogen.myme.persistence.MemesPersistence;
-import com.nitrogen.myme.persistence.stubs.MemesPersistenceStub;
 import com.nitrogen.myme.presentation.textEditor.Font;
 import com.nitrogen.myme.presentation.textEditor.FontProvider;
 import com.nitrogen.myme.presentation.textEditor.FontsAdapter;
@@ -40,7 +32,6 @@ import com.nitrogen.myme.presentation.textEditor.MotionView;
 import com.nitrogen.myme.presentation.textEditor.TextEditorDialogFragment;
 import com.nitrogen.myme.presentation.textEditor.TextEntity;
 import com.nitrogen.myme.presentation.textEditor.TextLayer;
-
 
 import java.util.List;
 
@@ -201,10 +192,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                     }
 
                     if(templatePath != null) {
-                      canvas.setImageURI(Uri.parse(templatePath)); //TODO: MemeTemplatePersistence
-//                        Toast toast = Toast.makeText(this, "I GOT IT! ID = "+templatePath, Toast.LENGTH_SHORT);
-//                        toast.setGravity(Gravity.CENTER, 0, 0);
-//                        toast.show();
+                        canvas.setImageURI(Uri.parse(templatePath));
                     } else {
                         Toast toast = Toast.makeText(this, "Sorry, it looks like that template isn't available.", Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.CENTER, 0, 0);

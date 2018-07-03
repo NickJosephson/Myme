@@ -1,13 +1,14 @@
 package com.nitrogen.myme.persistence;
 
 import com.nitrogen.myme.objects.Meme;
+import com.nitrogen.myme.objects.TemplateMeme;
 
 import java.util.List;
 
 public interface MemeTemplatePersistence {
-    List<Meme> getMemes();
+    List<TemplateMeme> getTemplates();
 
-    boolean insertMeme(Meme currentMeme);
+    boolean insertTemplate(TemplateMeme template);
 
-    Meme deleteMeme(Meme currentMeme);
+    TemplateMeme deleteTemplate(TemplateMeme template);
 }

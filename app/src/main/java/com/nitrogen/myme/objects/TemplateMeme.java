@@ -2,34 +2,89 @@ package com.nitrogen.myme.objects;
 
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.os.Parcel;
+import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /* TemplateMeme
  *
  * purpose: This class creates a meme with a predefined image and
  *          text positions.
  */
-public class TemplateMeme extends Meme {
+public class TemplateMeme {
+
+    private String name;
     private String imagePath;
     private ArrayList<Placeholder> captions;
+    private float coordinates[][];
+
+    private final int templateID = lastTemplateID++; //unique ID
+    private static int lastTemplateID = 0; //used to ensure all memes have a unique ID
 
     //**************************************************
     // Constructor
     //**************************************************
 
     public TemplateMeme(String name, String source, PointF points[]) {
-        super(name);
-        imagePath = source;
+        this.name = name;
+        this.imagePath = source;
+
         captions = new ArrayList<>();
 
         for(int i = 0 ; i < points.length ; i++) {
             captions.add(new Placeholder(points[i]));
         }
+
+        coordinates = pointsToInt(points);
     }
 
-    // accessors
+    //**************************************************
+    // Mutator Methods
+    //**************************************************
+    public void setName(String name) { this.name = name; }
+
+    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
+
+
+    //**************************************************
+    // Accessor Methods
+    //**************************************************
+
+    public String getName() { return name; }
+
+    public int getTemplateID() { return templateID; }
+
+    public float[][] getTags() { return this.coordinates; }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
     public ArrayList<Placeholder> getCaptions() { return this.captions; }
+
+    //**************************************************
+    // Instance Methods
+    //**************************************************
+
+    /* pointsToInt
+     *
+     * purpose: Converts a PointF array into a 2D float array.
+     *
+     * */
+    private float[][] pointsToInt(PointF points[]){
+        float coordinates[][] = new float[points.length][2];
+
+        for(int i = 0 ; i < coordinates.length ; i++) {
+            coordinates[i][0] = points[i].x;
+            coordinates[i][1] = points[i].y;
+        }
+
+        return coordinates;
+    }
 
     public void updateCaptionText(Placeholder caption, final String text) {
         caption.updateText(text);
@@ -43,30 +98,16 @@ public class TemplateMeme extends Meme {
         caption.updatePosition(posX, posY);
     }
 
-    //**************************************************
-    // Required Meme Method
-    //**************************************************
-
-    @Override
-    public String getThumbnailPath() {
-        return imagePath;
+    public String toString() {
+        return "Template{" +
+                "name='" + name + '\'' +
+                ", templateID=" + templateID +
+                '}';
     }
 
     //**************************************************
-    // Mutator Method
+    // Private Class
     //**************************************************
-
-    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
-
-
-    //**************************************************
-    // Accessor Method
-    //**************************************************
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
 
     /* Placeholder
      *  //TODO
