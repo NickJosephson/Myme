@@ -1,4 +1,4 @@
-package com.nitrogen.myme.textEditor;
+package com.nitrogen.myme.presentation.textEditor;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -11,9 +11,6 @@ import android.support.annotation.Nullable;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
-
-import com.nitrogen.myme.textEditor.FontProvider;
-import com.nitrogen.myme.textEditor.TextLayer;
 
 public class TextEntity extends MotionEntity {
 
@@ -94,7 +91,6 @@ public class TextEntity extends MotionEntity {
         textPaint.setColor(textLayer.getFont().getColor());
         textPaint.setTypeface(fontProvider.getTypeface(textLayer.getFont().getTypeface()));
 
-        // drawing text guide : http://ivankocijan.xyz/android-drawing-multiline-text-on-canvas/
         // Static layout which will be drawn on canvas
         StaticLayout sl = new StaticLayout(
                 textLayer.getText(), // - text which will be drawn

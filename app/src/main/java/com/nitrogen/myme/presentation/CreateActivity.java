@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,14 +28,19 @@ import com.nitrogen.myme.business.AccessMemeTemplates;
 import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.TemplateMeme;
-import com.nitrogen.myme.textEditor.Font;
-import com.nitrogen.myme.textEditor.FontProvider;
-import com.nitrogen.myme.textEditor.FontsAdapter;
-import com.nitrogen.myme.textEditor.MotionEntity;
-import com.nitrogen.myme.textEditor.MotionView;
-import com.nitrogen.myme.textEditor.TextEditorDialogFragment;
-import com.nitrogen.myme.textEditor.TextEntity;
-import com.nitrogen.myme.textEditor.TextLayer;
+
+
+import com.nitrogen.myme.persistence.MemesPersistence;
+import com.nitrogen.myme.persistence.stubs.MemesPersistenceStub;
+import com.nitrogen.myme.presentation.textEditor.Font;
+import com.nitrogen.myme.presentation.textEditor.FontProvider;
+import com.nitrogen.myme.presentation.textEditor.FontsAdapter;
+import com.nitrogen.myme.presentation.textEditor.MotionEntity;
+import com.nitrogen.myme.presentation.textEditor.MotionView;
+import com.nitrogen.myme.presentation.textEditor.TextEditorDialogFragment;
+import com.nitrogen.myme.presentation.textEditor.TextEntity;
+import com.nitrogen.myme.presentation.textEditor.TextLayer;
+
 
 import java.util.List;
 
@@ -49,6 +55,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     protected MotionView motionView;
     protected View textEntityEditPanel;
     private FontProvider fontProvider;
+    private TextEditorDialogFragment fragment;
 
     // Variable for templates
     private AccessMemeTemplates accessMemeTemplates;
@@ -121,13 +128,13 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         });
 
         // text editing buttons
-        findViewById(R.id.text_entity_font_change).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.text_entity_font_change_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 changeTextEntityFont();
             }
         });
-        findViewById(R.id.text_entity_edit).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.text_entity_edit_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startTextEntityEditing();
@@ -139,6 +146,14 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         fromTemplateButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 openTemplates();
+            }
+        });
+
+
+        findViewById(R.id.delete_text_entity_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteTextEntity();
             }
         });
 
@@ -239,6 +254,14 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                 .show();
     }
 
+    private void deleteTextEntity() {
+        // delete TextEntity
+        motionView.deletedSelectedEntity();
+
+        // remove text editor buttons
+        textEntityEditPanel.setVisibility(View.GONE);
+    }
+
     protected void addTextSticker() {
         TextLayer textLayer = createTextLayer();
         TextEntity textEntity = new TextEntity(textLayer, motionView.getWidth(),
@@ -268,7 +291,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     private void startTextEntityEditing() {
         TextEntity textEntity = currentTextEntity();
         if (textEntity != null) {
-            TextEditorDialogFragment fragment = TextEditorDialogFragment.getInstance(textEntity.getLayer().getText());
+            fragment = TextEditorDialogFragment.getInstance(textEntity.getLayer().getText());
             fragment.show(getFragmentManager(), TextEditorDialogFragment.class.getName());
         }
     }

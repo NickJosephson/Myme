@@ -1,11 +1,12 @@
-package com.nitrogen.myme.textEditor;
+package com.nitrogen.myme.presentation.textEditor;
 
 import android.graphics.PointF;
 import android.support.annotation.NonNull;
 
 public class MathUtils {
 
-    /**
+    /* pointInTriangle
+     *
      * For more info:
      * <a href="http://math.stackexchange.com/questions/190111/how-to-check-if-a-point-is-inside-a-rectangle">StackOverflow: How to check point is in rectangle</a>
      *
@@ -13,7 +14,8 @@ public class MathUtils {
      * @param v1 vertex 1 of the triangle
      * @param v2 vertex 2 of the triangle
      * @param v3 vertex 3 of the triangle
-     * @return true if point (x, y) is inside the triangle
+     *
+     * purpose: return true if point (x, y) is inside the triangle
      */
     public static boolean pointInTriangle(@NonNull PointF pt, @NonNull PointF v1,
                                           @NonNull PointF v2, @NonNull PointF v3) {
@@ -25,20 +27,19 @@ public class MathUtils {
         return (b1 == b2) && (b2 == b3);
     }
 
-    /**
-     * calculates cross product of vectors AB and AC
+    /* crossProduct
      *
      * @param a beginning of 2 vectors
      * @param b end of vector 1
      * @param c enf of vector 2
-     * @return cross product AB * AC
+     *
+     * purpose: calculates cross product of vectors AB and AC
      */
     private static float crossProduct(@NonNull PointF a, @NonNull PointF b, @NonNull PointF c) {
         return crossProduct(a.x, a.y, b.x, b.y, c.x, c.y);
     }
 
-    /**
-     * calculates cross product of vectors AB and AC
+    /* crossProduct
      *
      * @param ax X coordinate of point A
      * @param ay Y coordinate of point A
@@ -46,7 +47,8 @@ public class MathUtils {
      * @param by Y coordinate of point B
      * @param cx X coordinate of point C
      * @param cy Y coordinate of point C
-     * @return cross product AB * AC
+     *
+     * purpose calculate cross product of vectors AB * AC
      */
     private static float crossProduct(float ax, float ay, float bx, float by, float cx, float cy) {
         return (ax - cx) * (by - cy) - (bx - cx) * (ay - cy);

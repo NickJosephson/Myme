@@ -42,7 +42,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/navigation" />
 
-    <com.nitrogen.myme.textEditor.MotionView
+    <com.nitrogen.myme.presentation.textEditor.MotionView
         android:id="@+id/main_motion_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -82,7 +82,7 @@
                 android:text="@string/save_meme" />
         </LinearLayout>
 
-    </com.nitrogen.myme.textEditor.MotionView>
+    </com.nitrogen.myme.presentation.textEditor.MotionView>
 
     <LinearLayout
         android:id="@+id/main_motion_text_entity_edit_panel"
@@ -93,7 +93,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/text_entity_font_change"
+            android:id="@+id/text_entity_font_change_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -101,12 +101,20 @@
             android:src="@drawable/ic_text_fields" />
 
         <ImageButton
-            android:id="@+id/text_entity_edit"
+            android:id="@+id/text_entity_edit_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:contentDescription="@string/text_entity_edit"
             android:src="@drawable/ic_mode_edit" />
+
+        <ImageButton
+            android:id="@+id/delete_text_entity_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:contentDescription="@string/delete_text_button"
+            android:src="@drawable/ic_trash" />
 
     </LinearLayout>
 

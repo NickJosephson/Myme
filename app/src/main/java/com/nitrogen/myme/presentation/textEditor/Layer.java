@@ -1,27 +1,13 @@
-package com.nitrogen.myme.textEditor;
-
-import android.support.annotation.FloatRange;
+package com.nitrogen.myme.presentation.textEditor;
 
 public class Layer {
 
-    /**
-     * rotation relative to the layer center, in degrees
-     */
-    @FloatRange(from = 0.0F, to = 360.0F)
-    private float rotationInDegrees;
-
     private float scale;
-    /**
-     * top left X coordinate, relative to parent canvas
-     */
+    // top left X coordinate, relative to parent canvas
     private float x;
-    /**
-     * top left Y coordinate, relative to parent canvas
-     */
+    // top left Y coordinate, relative to parent canvas
     private float y;
-    /**
-     * is layer flipped horizontally (by X-coordinate)
-     */
+    // is layer flipped horizontally (by X-coordinate)
     private boolean isFlipped;
 
     public Layer() {
@@ -29,7 +15,6 @@ public class Layer {
     }
 
     protected void reset() {
-        this.rotationInDegrees = 0.0F;
         this.scale = 1.0F;
         this.isFlipped = false;
         this.x = 0.0F;
@@ -51,11 +36,6 @@ public class Layer {
         return Limits.MIN_SCALE;
     }
 
-    public void postRotate(float rotationInDegreesDiff) {
-        this.rotationInDegrees += rotationInDegreesDiff;
-        this.rotationInDegrees %= 360.0F;
-    }
-
     public void postTranslate(float dx, float dy) {
         this.x += dx;
         this.y += dy;
@@ -67,14 +47,6 @@ public class Layer {
 
     public float initialScale() {
         return Limits.INITIAL_ENTITY_SCALE;
-    }
-
-    public float getRotationInDegrees() {
-        return rotationInDegrees;
-    }
-
-    public void setRotationInDegrees(@FloatRange(from = 0.0, to = 360.0) float rotationInDegrees) {
-        this.rotationInDegrees = rotationInDegrees;
     }
 
     public float getScale() {

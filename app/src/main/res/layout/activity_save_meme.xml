@@ -27,6 +27,7 @@
                 android:textSize="64sp" />
 
             <EditText
+                android:id="@+id/edit_text_meme_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/name_hint"
