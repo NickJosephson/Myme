@@ -58,7 +58,7 @@ public class TemplateMeme {
 
     public int getTemplateID() { return templateID; }
 
-    public float[][] getTags() { return this.coordinates; }
+    public float[][] getCoordinates() { return this.coordinates; }
 
     public String getImagePath() {
         return imagePath;

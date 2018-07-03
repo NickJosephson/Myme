@@ -30,8 +30,8 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
         createTemplateMap();
 
         for(String name : templateMap.keySet()) {
-            PointF points[] = { new PointF(0.0f , 0.0f),
-                                new PointF(0.0f , 0.0f)};
+            PointF points[] = { new PointF(100.0f , 100.0f),
+                                new PointF(100.0f , 500.0f)};
 
             TemplateMeme newMeme = new TemplateMeme(name, ("android.resource://com.nitrogen.myme/" + templateMap.get(name)), points);
             templates.add(newMeme);

@@ -2,7 +2,6 @@ package com.nitrogen.myme.presentation;
 
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,12 +20,10 @@ import android.widget.Toast;
 
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemeTemplates;
-import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.business.SearchMemes;
-import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.TemplateMeme;
 
-public class SelectTemplateActivity extends AppCompatActivity implements OnItemClick{
+public class SelectTemplateActivity extends AppCompatActivity implements OnItemClick {
     private AccessMemeTemplates accessMemeTemplates;
     private List<TemplateMeme> templates;
     private TemplatesRecyclerAdapter adapter;
@@ -250,8 +247,15 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
 
+        TemplateMeme template = accessMemeTemplates.getTemplateByID(id);
+
         Intent data = new Intent();
-        data.putExtra("template", id);
+        data.putExtra("templatePath", template.getImagePath());
+
+        Bundle mBundle = new Bundle();
+        mBundle.putSerializable("templateCoordinates", template.getCoordinates());
+
+        data.putExtras(mBundle);
 
         // Activity finished ok, return the data
         setResult(RESULT_OK, data);

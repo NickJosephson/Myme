@@ -48,9 +48,6 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     private FontProvider fontProvider;
     private TextEditorDialogFragment fragment;
 
-    // Variable for templates
-    private AccessMemeTemplates accessMemeTemplates;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,9 +183,22 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                 case PICK_TEMPLATE:
 
                     String templatePath = null;
+                    float coordinates[][];
+
+                    Object temp[];
                     Bundle extras = data.getExtras();
+
+
                     if(extras != null) {
-                        templatePath = extras.getString("template");
+                        templatePath = extras.getString("templatePath");
+                        temp = (Object[])extras.getSerializable("templateCoordinates");
+
+                        if(temp != null) {
+                            coordinates = new float[temp.length][2];
+                            for(int i = 0 ; i < temp.length ; i++) {
+                                coordinates[i] = (float[]) temp[i];
+                            }
+                        }
                     }
 
                     if(templatePath != null) {
