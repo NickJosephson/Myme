@@ -1,6 +1,8 @@
 package com.nitrogen.myme.presentation;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
@@ -9,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -99,11 +102,20 @@ public class DisplayMemeActivity extends AppCompatActivity {
                     drawable = ContextCompat.getDrawable(findViewById(R.id.display_meme).getContext(),R.drawable.troll_face);
                 }
 
-                new ImageSaver(findViewById(R.id.display_meme).getContext()).
-                        setFileName(meme.getName()+".png").
-                        setDirectoryName("myme_images").
-                        setExternal(true).
-                        save(ImageSaver.drawableToBitmap(drawable));
+                if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                }
+                int result = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (result == 0){
+                    new ImageSaver(findViewById(R.id.display_meme).getContext()).
+                            setFileName(meme.getName()+".png").
+                            setDirectoryName("myme_images").
+                            setExternal(true).
+                            save(ImageSaver.drawableToBitmap(drawable));
+
+                }
+
+
 
                 return true;
 

@@ -52,6 +52,7 @@ public class ImageSaver {
 
     public void save(Bitmap bitmapImage) {
         FileOutputStream fileOutputStream = null;
+
         try {
             fileOutputStream = new FileOutputStream(createFile());
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
