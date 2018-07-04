@@ -38,6 +38,7 @@ import com.nitrogen.myme.presentation.textEditor.TextEntity;
 import com.nitrogen.myme.presentation.textEditor.TextLayer;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -178,21 +179,24 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         Bitmap bitmap = saveScreenBitmap();
 
         // save uri
-        writeMemeToFile(bitmap);
+        String fileName = writeMemeToFile(bitmap);
+
+        Intent intent = new Intent(CreateActivity.this, SaveMemeActivity.class);
+        intent.putExtra(SaveMemeActivity.EXTRA_MESSAGE_FILE_NAME, fileName);
 
         // open SaveMeme activity
-        startActivity(new Intent(CreateActivity.this, SaveMemeActivity.class));
+        startActivity(intent);
         finish(); //end this activity
-
     }
 
-    private void writeMemeToFile (Bitmap bitmap) {
+    private String writeMemeToFile (Bitmap bitmap) {
         ImageSaver savior = new ImageSaver(CreateActivity.this);
-
+        String name = "meme" + (new Date()).toString() + ".png";
         savior.setExternal(false);
         savior.setDirectoryName("db");
-        savior.setFileName("1234567.png");
+        savior.setFileName(name);
         savior.save(bitmap);
+        return name;
     }
 
     private Bitmap saveScreenBitmap () {
