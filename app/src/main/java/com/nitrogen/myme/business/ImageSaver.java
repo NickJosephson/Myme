@@ -20,7 +20,7 @@ import java.io.IOException;
 
 public class ImageSaver {
 
-    private String directoryName="myme_images";
+    private String directoryName;
     private String fileName="img1.png";
     private Context context;
     private boolean external;

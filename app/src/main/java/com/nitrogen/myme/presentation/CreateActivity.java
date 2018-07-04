@@ -2,6 +2,8 @@ package com.nitrogen.myme.presentation;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +25,8 @@ import android.widget.Toast;
 import com.nitrogen.myme.BuildConfig;
 import com.nitrogen.myme.R;
 
+import com.nitrogen.myme.application.Main;
+import com.nitrogen.myme.business.ImageSaver;
 import com.nitrogen.myme.objects.Placeholder;
 import com.nitrogen.myme.presentation.textEditor.Font;
 import com.nitrogen.myme.presentation.textEditor.FontProvider;
@@ -33,6 +37,8 @@ import com.nitrogen.myme.presentation.textEditor.TextEditorDialogFragment;
 import com.nitrogen.myme.presentation.textEditor.TextEntity;
 import com.nitrogen.myme.presentation.textEditor.TextLayer;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -171,11 +177,35 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     }
 
     private void saveMeme () {
+        Bitmap bitmap = saveScreenBitmap();
+
+        // save uri
+        writeMemeToFile(bitmap);
 
         // open SaveMeme activity
         startActivity(new Intent(CreateActivity.this, SaveMemeActivity.class));
         finish(); //end this activity
 
+    }
+
+    private void writeMemeToFile (Bitmap bitmap) {
+        ImageSaver savior = new ImageSaver(CreateActivity.this);
+
+        savior.setExternal(false);
+        savior.setDirectoryName(Main.getDBPathName());
+        savior.setFileName("1234567");
+        savior.save(bitmap);
+    }
+
+    private Bitmap saveScreenBitmap () {
+        View view = getWindow().getDecorView().getRootView();
+
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(),
+                view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+
+        return bitmap;
     }
 
     /* openGallery

@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.nitrogen.myme.application.Main;
 import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.business.Exceptions.InvalidMemeException;
 import com.nitrogen.myme.business.MemeValidator;
@@ -81,7 +82,7 @@ public class SaveMemeActivity extends AppCompatActivity {
 
         // picture is defaults to trash
         // this will change when we can save memes
-        picturePath = "android.resource://com.nitrogen.myme/" + R.drawable.ic_trash;
+        picturePath = Main.getDBPathName() + "/1234567";//"android.resource://com.nitrogen.myme/" + R.drawable.ic_trash;
 
         // create new Meme object
         newMeme = new Meme(name, picturePath);
