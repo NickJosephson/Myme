@@ -217,7 +217,7 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
 
     /* displayTemplates
      *
-     * purpose: update the memes displayed on the screen.
+     * purpose: update the templates displayed on the screen.
      */
     private void displayTemplates(List<TemplateMeme> template) {
         adapter.updateTemplateList(templates);
