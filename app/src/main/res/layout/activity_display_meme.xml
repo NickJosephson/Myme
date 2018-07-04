@@ -26,6 +26,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/PopupOverlay"
+            app:menu="@menu/display_meme_activity_bar"
             />
 
         </android.support.design.widget.AppBarLayout>
@@ -43,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="bottom"
-            sothree:umanoPanelHeight="90dp"
+            sothree:umanoPanelHeight="100dp"
             sothree:umanoShadowHeight="4dp">
 
             <RelativeLayout
@@ -51,12 +52,14 @@
                 android:layout_height="match_parent"
                 android:gravity="center">
 
-                <include layout="@layout/content_display_meme" />
+                <include
+                    android:id="@+id/display_meme"
+                    layout="@layout/content_display_meme" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
                 android:gravity="center|top">
                 <include layout="@layout/display_meme_sliding_panel"/>
             </RelativeLayout>

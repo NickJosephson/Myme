@@ -33,6 +33,7 @@ public class AccessFavourites {
         for (Meme meme : memePersistence.getMemes()) {
             if (meme.isFavourite()) {
                 memes.add(meme);
+
             }
         }
 

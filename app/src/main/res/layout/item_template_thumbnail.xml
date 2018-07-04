@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/template_image"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1:1"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
+        app:srcCompat="@android:drawable/ic_dialog_alert"
+        android:background="@drawable/grid_image_border"/>
+
+
+</android.support.constraint.ConstraintLayout>

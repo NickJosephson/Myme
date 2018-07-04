@@ -9,7 +9,6 @@ import java.util.Map;
 import com.nitrogen.myme.persistence.MemesPersistence;
 import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.objects.Meme;
-import com.nitrogen.myme.objects.ImageMeme;
 import com.nitrogen.myme.objects.Tag;
 import com.nitrogen.myme.R;
 
@@ -29,7 +28,7 @@ public class MemesPersistenceStub implements MemesPersistence {
         createMemeMap();
 
         for(String name : memeMap.keySet()) {
-            Meme newMeme = new ImageMeme(name, ("android.resource://com.nitrogen.myme/" + memeMap.get(name)));
+            Meme newMeme = new Meme(name, ("android.resource://com.nitrogen.myme/" + memeMap.get(name)));
             newMeme.setTags(randomTags(memeMap.get(name)));
             memes.add(newMeme);
         }

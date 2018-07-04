@@ -42,7 +42,7 @@ public class FavouritesActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         Menu bottomNavMenu = navigation.getMenu();
-        MenuItem item = bottomNavMenu.getItem(1);
+        MenuItem item = bottomNavMenu.getItem(2);
         item.setChecked(true);
 
         // Initialize memes
@@ -105,6 +105,10 @@ public class FavouritesActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_explore:
                     startActivity(new Intent(FavouritesActivity.this, ExploreActivity.class));
+                    finish(); //end this activity
+                    return true;
+                case R.id.navigation_studio:
+                    startActivity(new Intent(FavouritesActivity.this, CreateActivity.class));
                     finish(); //end this activity
                     return true;
                 case R.id.navigation_favourites:
