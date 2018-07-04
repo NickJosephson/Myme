@@ -10,9 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -31,7 +29,7 @@ public class SearchMemesTest {
      * helper method to determine if a meme has a specific tag
      */
     private boolean hasTag(String tag, Meme meme) {
-        boolean hasTag = true;
+        boolean hasTag = false;
         for(Tag t : meme.getTags()) {
             if(t.getName().equals(tag)) {
                 hasTag = true;

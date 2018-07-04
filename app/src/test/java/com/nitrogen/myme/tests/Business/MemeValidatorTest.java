@@ -1,12 +1,11 @@
 package com.nitrogen.myme.tests.Business;
 
-import android.util.Log;
-
 import com.nitrogen.myme.business.Exceptions.InvalidMemeException;
 import com.nitrogen.myme.business.MemeValidator;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -117,5 +116,10 @@ public class MemeValidatorTest {
 
         // should throw expected exception
         memeValidator.validateTags(badMeme);
+    }
+
+    @After
+    public void tearDown() {
+        System.out.println("\nFinished tests.\n");
     }
 }
