@@ -137,6 +137,10 @@ public class ExploreActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_explore:
                     return true;
+                case R.id.navigation_studio:
+                    startActivity(new Intent(ExploreActivity.this, CreateActivity.class));
+                    finish(); //end this activity
+                    return true;
                 case R.id.navigation_favourites:
                     startActivity(new Intent(ExploreActivity.this, FavouritesActivity.class));
                     finish(); //end this activity
