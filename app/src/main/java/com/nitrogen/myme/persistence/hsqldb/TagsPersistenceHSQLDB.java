@@ -13,28 +13,32 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.sql.PreparedStatement;
 
 public class TagsPersistenceHSQLDB implements TagsPersistence {
 
     private List<Tag> tags;
-    private Connection c ;
+    private final String dbPath;
 
     //**************************************************
     // Constructor
     //**************************************************
 
     public TagsPersistenceHSQLDB(String dbPath) {
+        this.dbPath = dbPath;
         this.tags = new ArrayList<>();
         defaultTags(dbPath);
     }
 
+    private Connection connect() throws SQLException{
+        return DriverManager.getConnection("jdbc:hsqldb:file:" + dbPath +";shutdown=true", "SA","");
+    }
+
     private void defaultTags(String dbPath){
-        try{
-            this.c = DriverManager.getConnection("jdbc:hsqldb:file:" + dbPath , "SA","");
+        try(Connection c = connect()){
             final Statement st = c.createStatement();
-            final ResultSet rs = st.executeQuery("SELECT * FROM TAGS");
-            while (rs.next())
-            {
+            final ResultSet rs = st.executeQuery("SELECT * FROM TAG");
+            while (rs.next()) {
                 tags.add(new Tag(rs.getString("tagname")));
             }
             rs.close();
@@ -42,7 +46,7 @@ public class TagsPersistenceHSQLDB implements TagsPersistence {
 
         }
         catch (final SQLException e){
-            Log.e("Connect SQL1",e.getMessage()+ e.getSQLState());
+            Log.e("Connect SQL",e.getMessage()+ e.getSQLState());
 
         }
     }
@@ -65,10 +69,34 @@ public class TagsPersistenceHSQLDB implements TagsPersistence {
     @Override
     public boolean insertTag(Tag tag) {
         boolean tagAdded = false;
+        try(Connection c = connect()){
 
-        if(!tags.contains(tag)) {
-            tags.add(tag);
-            tagAdded = true;
+            if(!tags.contains(tag)) {
+                tagAdded = true;
+            }
+            else {
+                final PreparedStatement st = c.prepareStatement("SELECT * FROM MEMETAGS WHERE name=?");
+                st.setString(1, "Pff guy");
+                final ResultSet rs = st.executeQuery();
+                while (rs.next()) {
+                    if (rs.getString("tagname").equals(tag.getName())){
+                        tagAdded = true;
+                    }
+                }
+                rs.close();
+                st.close();
+
+            }
+            if(tagAdded){
+                final PreparedStatement in = c.prepareStatement("INSERT INTO memetags VALUES(? , ?)");
+                in.setString(1,"Pff guy");
+                in.setString(2, "lol");
+                in.executeUpdate();
+            }
+
+        }
+        catch (final SQLException e){
+            Log.e("Connect SQL",e.getMessage()+ e.getSQLState());
         }
 
         return tagAdded;
