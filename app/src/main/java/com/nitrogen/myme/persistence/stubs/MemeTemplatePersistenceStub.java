@@ -1,24 +1,15 @@
 package com.nitrogen.myme.persistence.stubs;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.graphics.PointF;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Map;
 
 import com.nitrogen.myme.objects.Placeholder;
 import com.nitrogen.myme.objects.TemplateMeme;
 import com.nitrogen.myme.persistence.MemeTemplatePersistence;
-import com.nitrogen.myme.objects.Meme;
-import com.nitrogen.myme.objects.Tag;
 import com.nitrogen.myme.R;
-
-import org.json.JSONObject;
 
 public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
     private List<TemplateMeme> templates;
@@ -111,12 +102,16 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
         int width = 800;
         int height = 200;
 
+        Placeholder p;
         for(int i = 0 ; i < positions.length ; i++){
-            placeholders.add(new Placeholder(width, height, true, positions[i]));
+            p = new Placeholder(positions[i]);
+            p.setWidth(width);
+            p.setHeight(height);
+            p.setMultiLine();
+
+            placeholders.add(p);
         }
-
         templates.add(new TemplateMeme("Two Buttons Template",PATH+R.drawable.template_two_buttons, placeholders));
-
     }
 
     private void createTemplateGru(){
@@ -133,10 +128,15 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
         int width = 800;
         int height = 200;
 
+        Placeholder p;
         for(int i = 0 ; i < positions.length ; i++){
-            placeholders.add(new Placeholder(width, height, true, positions[i]));
-        }
+            p = new Placeholder(positions[i]);
+            p.setWidth(width);
+            p.setHeight(height);
+            p.setMultiLine();
 
+            placeholders.add(p);
+        }
         templates.add(new TemplateMeme("Gru Template",PATH+R.drawable.template_gru, placeholders));
     }
 
@@ -149,10 +149,15 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
         int width = 1500;
         int height = 800;
 
+        Placeholder p;
         for(int i = 0 ; i < positions.length ; i++){
-            placeholders.add(new Placeholder(width, height, false, positions[i]));
-        }
+            p = new Placeholder(positions[i]);
+            p.setWidth(width);
+            p.setHeight(height);
+            p.setFontName("Impact");
 
+            placeholders.add(p);
+        }
         templates.add(new TemplateMeme("Think About It Template",PATH+R.drawable.template_think_about_it, placeholders));
     }
 

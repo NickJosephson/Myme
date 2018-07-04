@@ -10,25 +10,27 @@ import android.os.Parcelable;
  *
  * */
 public class Placeholder implements Parcelable{
-    private final String DEFAULT_TEXT = "Place text here";
-    private final String DEFAULT_TEXT_MULTILINE = "Place\ntext\nhere";
+    private final String DEFAULT_SINGLELINE = "Place text here";
+    private final String DEFAULT_MULTILINE = "Place\ntext\nhere";
+    private final int DEFAULT_WIDTH = 600;
+    private final int DEFAULT_HEIGHT = 1200;
+    private final String DEFAULT_FONT = "Helvetica";
+
     private PointF position;
     private String text;
     private int width, height;
+    private String fontName;
 
     //**************************************************
     // Constructors
     //**************************************************
 
-    public Placeholder(final int width, final int height, final boolean multiline, final PointF position) {
-        this.width = width;
-        this.height = height;
+    public Placeholder(final PointF position) {
         this.position = position;
-        if(multiline) {
-            this.text = DEFAULT_TEXT_MULTILINE;
-        } else {
-            this.text = DEFAULT_TEXT;
-        }
+        this.text = DEFAULT_SINGLELINE;
+        this.width = DEFAULT_WIDTH;
+        this.height = DEFAULT_HEIGHT;
+        this.fontName = DEFAULT_FONT;
     }
 
     protected Placeholder(Parcel in) {
@@ -36,6 +38,7 @@ public class Placeholder implements Parcelable{
         text = in.readString();
         width = in.readInt();
         height = in.readInt();
+        fontName = in.readString();
     }
 
     //**************************************************
@@ -62,6 +65,19 @@ public class Placeholder implements Parcelable{
     public int getHeight() { return this.height; }
     public PointF getPosition() { return this.position; }
     public String getText() { return this.text; }
+    public String getFontName() { return this.fontName; }
+
+    //**************************************************
+    // Mutators
+    //**************************************************
+
+    public void setWidth(final int width) { this.width = width; }
+    public void setHeight(final int height) { this.height = height; }
+    public void setPosition(final PointF p) { position.set(p.x, p.y); }
+    public void setText(final String text) { this.text = text; }
+    public void setFontName(final String fontName) { this.fontName = fontName; }
+    public void setMultiLine() { this.text = DEFAULT_MULTILINE; }
+    public void setSingleLine() { this.text = DEFAULT_MULTILINE; }
 
     //**************************************************
     // Methods
@@ -72,29 +88,17 @@ public class Placeholder implements Parcelable{
      *  purpose: Determine if the placeholder has multiple lines.
      *
      * */
-    public boolean isMultiline() { return this.text.equals(DEFAULT_TEXT_MULTILINE);}
+    public boolean isMultiLine() { return this.text.equals(DEFAULT_MULTILINE);}
 
     @Override
     public Placeholder clone(){
-        return new Placeholder(this.width, this.height, this.isMultiline(), this.position);
-    }
+        Placeholder p = new Placeholder(this.position);
+        p.setWidth(this.width);
+        p.setHeight(this.height);
+        p.setText(this.text);
+        p.setFontName(this.fontName);
 
-    /* updateText
-     *
-     *  purpose: Change the text.
-     *
-     * */
-    public void updateText(final String updated) {
-        this.text = updated;
-    }
-
-    /* updatePosition
-     *
-     *  purpose: Reposition the text.
-     *
-     * */
-    public void updatePosition(final float newX, final float newY) {
-        position.set(newX, newY);
+        return p;
     }
 
     @Override
@@ -108,5 +112,6 @@ public class Placeholder implements Parcelable{
         dest.writeString(text);
         dest.writeInt(width);
         dest.writeInt(height);
+        dest.writeString(fontName);
     }
 }

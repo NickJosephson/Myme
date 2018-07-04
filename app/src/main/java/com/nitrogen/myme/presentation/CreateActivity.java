@@ -208,8 +208,6 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
      *
      */
     private void loadTemplate(Bundle template) {
-        TextLayer textLayer;
-        TextEntity textEntity;
         String templatePath;
 
         // get the image path
@@ -223,18 +221,35 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
         // render placeholders
         for(Placeholder p : placeholders) {
-            // create the text
-            textLayer = createTextLayer();
-            textLayer.setText(p.getText());
-            textEntity = new TextEntity(textLayer, p.getWidth(), p.getHeight(), fontProvider);
-            motionView.addEntityAndPosition(textEntity);
+            renderPlaceholder(p);
 
-            // move it to its correct position
-            textEntity.moveCenterTo(p.getPosition());
-
-            // redraw
-            motionView.invalidate();
         }
+    }
+
+    /* renderPlaceholder
+     *
+     * purpose: Render a placeholder on the screen for the user to edit.
+     *
+     */
+    private void renderPlaceholder(Placeholder p) {
+        TextLayer textLayer;
+        TextEntity textEntity;
+
+        textLayer = createTextLayer();
+        textLayer.setText(p.getText());
+
+        if(fontProvider.getFontNames().contains(p.getFontName())) {
+            textLayer.getFont().setTypeface(p.getFontName());
+        }
+
+        textEntity = new TextEntity(textLayer, p.getWidth(), p.getHeight(), fontProvider);
+        motionView.addEntityAndPosition(textEntity);
+
+        // move it to its correct position
+        textEntity.moveCenterTo(p.getPosition());
+
+        // redraw
+        motionView.invalidate();
     }
 
     @Override
