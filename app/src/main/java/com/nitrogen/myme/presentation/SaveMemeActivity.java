@@ -93,7 +93,7 @@ public class SaveMemeActivity extends AppCompatActivity {
         picturePath = "/data/user/0/com.nitrogen.myme/app_db/"+fileName;
 
         // create new Meme object
-        
+
         newMeme = new Meme(name, picturePath);
 
         // add tags based on checkboxes

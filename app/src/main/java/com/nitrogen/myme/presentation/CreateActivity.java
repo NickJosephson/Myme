@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -200,14 +201,33 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     }
 
     private Bitmap saveScreenBitmap () {
-        View view = getWindow().getDecorView().getRootView();
+        for (MotionEntity entity: motionView.getEntities()) {
+            if (entity instanceof TextEntity) {
+                ((TextEntity) entity).setIsSelected(false);
+            }
+        }
 
+
+        View view = getWindow().getDecorView().getRootView();
+        ImageView imageView = getWindow().getDecorView().findViewById(R.id.imageView1);
         Bitmap bitmap = Bitmap.createBitmap(view.getWidth(),
                 view.getHeight(), Bitmap.Config.ARGB_8888);
+
+
         Canvas canvas = new Canvas(bitmap);
         view.draw(canvas);
 
-        return bitmap;
+
+        Rect rect = new Rect();
+
+        imageView.getGlobalVisibleRect(rect);
+
+        //  Create our resulting image (150--50),(75--25) = 200x100px
+        Bitmap resultBmp = Bitmap.createBitmap(rect.width(), rect.height(), Bitmap.Config.ARGB_8888);
+        //  draw source bitmap into resulting image at given position:
+        new Canvas(resultBmp).drawBitmap(bitmap, -rect.left, -rect.top, null);
+
+        return resultBmp;
     }
 
     /* openGallery
