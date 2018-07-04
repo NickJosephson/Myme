@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -76,34 +77,9 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_bar, menu);
 
+        // Remove searching for now
         MenuItem searchIcon = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView)searchIcon.getActionView();
-        searchView.setQueryHint("enter a name or tag");
-
-        // handle input from the user
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String userInput) {
-                // filter through meme db
-//                handleSearch(userInput);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String userInput) {
-                // do nothing (this method definition is required by the constructor)
-                return false;
-            }
-        });
-
-        // if the user cancels their search, go back to initial meme list
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                displayTemplates(accessMemeTemplates.getTemplates());
-                return false;
-            }
-        });
+        searchIcon.setVisible(false);
 
         setRVLayoutIcon(layoutAsGrid, menu.findItem(R.id.grid_toggle));
         return super.onCreateOptionsMenu(menu);
@@ -196,24 +172,6 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
             item.setIcon(R.drawable.grid_icon);
         }
     }
-
-    /* handleSearch
-     *
-     * purpose: Take the user's input and perform a query to retrieve a
-     *          list of templates related to the query.
-     *
-    private void handleSearch(String input) {
-        templates = searchTemplates.getTemplatesRelatedTo(input);
-
-        if(templates.size() == 0) {
-            Toast toast = Toast.makeText(this, "Whoops! No results found.", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-        }
-
-        displayTemplates(templates);
-    }
-    */
 
     /* displayTemplates
      *
