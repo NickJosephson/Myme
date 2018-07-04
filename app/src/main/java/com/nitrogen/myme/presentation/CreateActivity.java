@@ -27,12 +27,14 @@ import com.nitrogen.myme.business.AccessMemeTemplates;
 import com.nitrogen.myme.presentation.textEditor.Font;
 import com.nitrogen.myme.presentation.textEditor.FontProvider;
 import com.nitrogen.myme.presentation.textEditor.FontsAdapter;
+import com.nitrogen.myme.presentation.textEditor.Layer;
 import com.nitrogen.myme.presentation.textEditor.MotionEntity;
 import com.nitrogen.myme.presentation.textEditor.MotionView;
 import com.nitrogen.myme.presentation.textEditor.TextEditorDialogFragment;
 import com.nitrogen.myme.presentation.textEditor.TextEntity;
 import com.nitrogen.myme.presentation.textEditor.TextLayer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -181,33 +183,52 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                     }
                     break;
                 case PICK_TEMPLATE:
-
-                    String templatePath = null;
-                    float coordinates[][];
-
-                    Object temp[];
                     Bundle extras = data.getExtras();
+                    if(extras != null && extras.getString("templatePath") != null) {
+                        // first clear the canvas by removing all text entities
+                        deleteAllTextEntities();
 
-
-                    if(extras != null) {
-                        templatePath = extras.getString("templatePath");
-                        temp = (Object[])extras.getSerializable("templateCoordinates");
-
-                        if(temp != null) {
-                            coordinates = new float[temp.length][2];
-                            for(int i = 0 ; i < temp.length ; i++) {
-                                coordinates[i] = (float[]) temp[i];
-                            }
-                        }
-                    }
-
-                    if(templatePath != null) {
-                        canvas.setImageURI(Uri.parse(templatePath));
+                        // then load the template
+                        loadTemplate(extras);
                     } else {
                         Toast toast = Toast.makeText(this, "Sorry, it looks like that template isn't available.", Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
                     }
+                    break;
+
+            }
+        }
+
+    }
+
+    private void loadTemplate(Bundle template) {
+        String templatePath;
+        Object temp[]; // required to get serializable data
+        float coordinates[][];
+        float x, y;
+        int width, height;
+
+        // get the image path
+        templatePath = template.getString("templatePath");
+
+        // display the template
+        canvas.setImageURI(Uri.parse(templatePath));
+
+        // get the coordinates of where the text should be
+        temp = (Object[])template.getSerializable("templateCoordinates");
+        if(temp != null) {
+            coordinates = new float[temp.length][2];
+            for(int i = 0 ; i < temp.length ; i++) {
+                coordinates[i] = (float[]) temp[i];
+
+                x = coordinates[i][0];
+                y = coordinates[i][1];
+                width = 200;
+                height = 800;
+
+                // add text to the template
+                addTextSticker(x, y, width, height);
             }
         }
 
@@ -271,10 +292,35 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         center.y = center.y * 0.5F;
         textEntity.moveCenterTo(center);
 
+
+
         // redraw
         motionView.invalidate();
 
         startTextEntityEditing();
+    }
+
+    protected void addTextSticker(float x, float y, int width, int height) {
+        List<MotionEntity> entities = motionView.getEntities();
+        TextLayer textLayer = createTextLayer();
+
+        // if the width is smaller than the length of the default "Sample Text"
+        if(width <= 200);
+            textLayer.setText("Sample\nText");
+
+        TextEntity textEntity = new TextEntity(textLayer, motionView.getWidth(), motionView.getHeight(), fontProvider);
+        motionView.addEntityAndPosition(textEntity);
+
+        // move text sticker up so that its not hidden under keyboard
+        PointF center = textEntity.absoluteCenter();
+        center.x = x;
+        center.y = y;
+        textEntity.moveCenterTo(center);
+
+        // redraw
+        motionView.invalidate();
+
+//        startTextEntityEditing();
     }
 
     @Nullable
@@ -322,6 +368,10 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                 motionView.invalidate();
             }
         }
+    }
+
+    public void deleteAllTextEntities(){
+        motionView.release();
     }
 
     //**************************************************

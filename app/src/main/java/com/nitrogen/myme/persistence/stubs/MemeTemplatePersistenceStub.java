@@ -2,6 +2,7 @@ package com.nitrogen.myme.persistence.stubs;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.graphics.PointF;
 
 import java.util.HashMap;
@@ -16,9 +17,14 @@ import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
 import com.nitrogen.myme.R;
 
+import org.json.JSONObject;
+
 public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
     private List<TemplateMeme> templates;
     private Map<String,Integer> templateMap = new HashMap<String,Integer>();
+    private List<JSONObject> templateObjs;
+
+    private final String PATH = "android.resource://com.nitrogen.myme/";
 
     //**************************************************
     // Constructor
@@ -27,15 +33,16 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
     public MemeTemplatePersistenceStub() {
         this.templates = new ArrayList<>();
 
-        createTemplateMap();
+        createTemplates();
+//        createTemplateMap();
 
-        for(String name : templateMap.keySet()) {
-            PointF points[] = { new PointF(100.0f , 100.0f),
-                                new PointF(100.0f , 500.0f)};
-
-            TemplateMeme newMeme = new TemplateMeme(name, ("android.resource://com.nitrogen.myme/" + templateMap.get(name)), points);
-            templates.add(newMeme);
-        }
+//        for(String name : templateMap.keySet()) {
+//            PointF points[] = { new PointF(800.0f , 800.0f),
+//                                new PointF(1000.0f , 1000.0f)};
+//
+//            TemplateMeme newMeme = new TemplateMeme(name, ("android.resource://com.nitrogen.myme/" + templateMap.get(name)), points);
+//            templates.add(newMeme);
+//        }
     }
 
     //**************************************************
@@ -47,9 +54,35 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
      * purpose: Create stub memes. Each resource has a name associated with it
      */
     private void createTemplateMap () {
-        templateMap.put("Forever Alone Template", R.drawable.template_forever_alone);
-        templateMap.put("Frick Yea", R.drawable.template_frick_yea);
-        templateMap.put("Mother Of God", R.drawable.template_mother_of_god);
+        templateMap.put("Two Buttons Template", R.drawable.template_two_buttons);
+        templateMap.put("Gru Template", R.drawable.template_gru);
+        templateMap.put("Think About It Template", R.drawable.template_think_about_it);
+    }
+
+    private void createTemplates () {
+        PointF points1[] = new PointF[1];
+        PointF points2[] = new PointF[2];
+        PointF points3[] = new PointF[3];
+        PointF points4[] = new PointF[4];
+
+
+        TemplateMeme newTemplate;
+
+        points2[0] = new PointF(600.0f, 300.0f);
+        points2[1] = new PointF(1200.0f, 1200.0f);
+        newTemplate = new TemplateMeme("Two Buttons Template",PATH+R.drawable.template_two_buttons, points2);
+        templates.add(newTemplate);
+
+        points4[0] = new PointF(448.7607f, 728.03955f);
+        points4[1] = new PointF(1059.5837f, 728.03955f);
+        points4[2] = new PointF(448.7607f, 1121.40272f);
+        points4[3] = new PointF(1059.5837f, 1121.40272f);
+        newTemplate = new TemplateMeme("Gru Template",PATH+R.drawable.template_gru, points4);
+        templates.add(newTemplate);
+
+        points1[0] = new PointF(600.0f, 650.0f);
+        newTemplate = new TemplateMeme("Think About It Template",PATH+R.drawable.template_think_about_it, points1);
+        templates.add(newTemplate);
     }
 
     @Override
