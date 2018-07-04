@@ -87,6 +87,7 @@ public class ImageSaver {
         }
         else {
             directory = context.getDir(directoryName, Context.MODE_PRIVATE);
+            directory.mkdirs();
             Log.e("Directory Name:", directoryName);
         }
         if(!directory.exists()){//&&!directory.mkdirs()
