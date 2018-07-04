@@ -271,6 +271,8 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                     if(extras != null && extras.getString("templatePath") != null) {
                         // first clear the canvas by removing all text entities
                         deleteAllTextEntities();
+                        // remove the rotation button
+                        rotateImageButton.setVisibility(View.GONE);
                         // then load the template
                         loadTemplate(extras);
                     } else {
