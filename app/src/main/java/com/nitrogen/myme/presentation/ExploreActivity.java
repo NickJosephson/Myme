@@ -1,8 +1,6 @@
 package com.nitrogen.myme.presentation;
 
 import java.util.List;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,13 +21,14 @@ import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.business.SearchMemes;
 import com.nitrogen.myme.objects.Meme;
+import com.nitrogen.myme.persistence.Utils.DatabaseHelper;
 
 public class ExploreActivity extends AppCompatActivity {
     private AccessMemes accessMemes;
     private List<Meme> memes;
     private MemesRecyclerAdapter adapter;
     private RecyclerView rvMemes;
-    private SearchMemes searchMemes = new SearchMemes();;
+    private SearchMemes searchMemes;
     private boolean layoutAsGrid = true;
 
     //**************************************************
@@ -40,7 +39,8 @@ public class ExploreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memes);
-
+        DatabaseHelper.copyDatabaseToDevice(this);
+        searchMemes = new SearchMemes();
         // Setup toolbar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -222,5 +222,4 @@ public class ExploreActivity extends AppCompatActivity {
     private void displayMemes(List<Meme> memes) {
         adapter.updateMemeList(memes);
     }
-
 }
