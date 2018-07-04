@@ -6,6 +6,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     tools:context=".presentation.ExploreActivity">
 
     <android.support.v7.widget.Toolbar
