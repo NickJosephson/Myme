@@ -190,11 +190,11 @@ public class MotionView extends FrameLayout {
             // limit entity center to screen bounds
             boolean needUpdateUI = false;
             if (newCenterX >= 0 && newCenterX <= getWidth()) {
-                selectedEntity.getLayer().postTranslate(delta.x / getWidth(), 0.0F);
+                selectedEntity.getTextLayer().postTranslate(delta.x / getWidth(), 0.0F);
                 needUpdateUI = true;
             }
             if (newCenterY >= 0 && newCenterY <= getHeight()) {
-                selectedEntity.getLayer().postTranslate(0.0F, delta.y / getHeight());
+                selectedEntity.getTextLayer().postTranslate(0.0F, delta.y / getHeight());
                 needUpdateUI = true;
             }
             if (needUpdateUI) {
@@ -205,7 +205,7 @@ public class MotionView extends FrameLayout {
 
     private void initialTranslateAndScale(@NonNull MotionEntity entity) {
         entity.moveToCanvasCenter();
-        entity.getLayer().setScale(entity.getLayer().initialScale());
+        entity.getTextLayer().setScale(entity.getTextLayer().initialScale());
     }
 
     private void selectEntity(@Nullable MotionEntity entity, boolean updateCallback) {
@@ -278,7 +278,7 @@ public class MotionView extends FrameLayout {
         if (selectedEntity == null) {
             return;
         }
-        selectedEntity.getLayer().flip();
+        selectedEntity.getTextLayer().flip();
         invalidate();
     }
 
@@ -345,7 +345,7 @@ public class MotionView extends FrameLayout {
         public boolean onScale(ScaleGestureDetector detector) {
             if (selectedEntity != null) {
                 float scaleFactorDiff = detector.getScaleFactor();
-                selectedEntity.getLayer().postScale(scaleFactorDiff - 1.0F);
+                selectedEntity.getTextLayer().postScale(scaleFactorDiff - 1.0F);
                 updateUI();
             }
             return true;

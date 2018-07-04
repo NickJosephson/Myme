@@ -343,7 +343,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                     public void onClick(DialogInterface dialogInterface, int which) {
                         TextEntity textEntity = currentTextEntity();
                         if (textEntity != null) {
-                            textEntity.getLayer().getFont().setTypeface(fonts.get(which));
+                            textEntity.getTextLayer().getFont().setTypeface(fonts.get(which));
                             textEntity.updateEntity();
                             motionView.invalidate();
                         }
@@ -389,7 +389,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     private void startTextEntityEditing() {
         TextEntity textEntity = currentTextEntity();
         if (textEntity != null) {
-            fragment = TextEditorDialogFragment.getInstance(textEntity.getLayer().getText());
+            fragment = TextEditorDialogFragment.getInstance(textEntity.getTextLayer().getText());
             fragment.show(getFragmentManager(), TextEditorDialogFragment.class.getName());
         }
     }
@@ -415,7 +415,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     public void textChanged(@NonNull String text) {
         TextEntity textEntity = currentTextEntity();
         if (textEntity != null) {
-            TextLayer textLayer = textEntity.getLayer();
+            TextLayer textLayer = textEntity.getTextLayer();
             if (!text.equals(textLayer.getText())) {
                 textLayer.setText(text);
                 textEntity.updateEntity();

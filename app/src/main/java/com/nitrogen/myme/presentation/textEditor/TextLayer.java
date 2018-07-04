@@ -1,31 +1,29 @@
 package com.nitrogen.myme.presentation.textEditor;
 
-public class TextLayer extends Layer {
+public class TextLayer /*extends Layer */{
 
     private String text;
     private Font font;
 
+    private float scale;
+    // top left X coordinate, relative to parent canvas
+    private float x;
+    // top left Y coordinate, relative to parent canvas
+    private float y;
+    // is layer flipped horizontally (by X-coordinate)
+    private boolean isFlipped;
+
     public TextLayer() {
     }
 
-    @Override
-    protected void reset() {
-        super.reset();
-        this.text = "";
-        this.font = new Font();
-    }
-
-    @Override
-    protected float getMaxScale() {
+    public float getMaxScale() {
         return Limits.MAX_SCALE;
     }
 
-    @Override
-    protected float getMinScale() {
+    public float getMinScale() {
         return Limits.MIN_SCALE;
     }
 
-    @Override
     public float initialScale() {
         return Limits.INITIAL_SCALE;
     }
@@ -57,5 +55,53 @@ public class TextLayer extends Layer {
         int INITIAL_FONT_COLOR = 0xff000000;
 
         float INITIAL_SCALE = 0.8F; // set the same to avoid text scaling
+    }
+
+    public void postScale(float scaleDiff) {
+        float newVal = scale + scaleDiff;
+        if (newVal >= getMinScale() && newVal <= getMaxScale()) {
+            scale = newVal;
+        }
+    }
+
+    public void postTranslate(float dx, float dy) {
+        this.x += dx;
+        this.y += dy;
+    }
+
+    public void flip() {
+        this.isFlipped = !isFlipped;
+    }
+
+    public float getScale() {
+        return scale;
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public boolean isFlipped() {
+        return isFlipped;
+    }
+
+    public void setFlipped(boolean flipped) {
+        isFlipped = flipped;
     }
 }

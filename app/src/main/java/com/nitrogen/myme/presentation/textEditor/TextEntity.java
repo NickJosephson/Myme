@@ -36,7 +36,7 @@ public class TextEntity extends MotionEntity {
         // save previous center
         PointF oldCenter = absoluteCenter();
 
-        Bitmap newBmp = createBitmap(getLayer(), bitmap);
+        Bitmap newBmp = createBitmap(getTextLayer(), bitmap);
 
         // recycle previous bitmap (if not reused) as soon as possible
         if (bitmap != null && bitmap != newBmp && !bitmap.isRecycled()) {
@@ -139,8 +139,8 @@ public class TextEntity extends MotionEntity {
 
     @Override
     @NonNull
-    public TextLayer getLayer() {
-        return (TextLayer) layer;
+    public TextLayer getTextLayer() {
+        return textLayer;
     }
 
     @Override

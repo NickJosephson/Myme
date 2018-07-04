@@ -12,7 +12,7 @@ import android.support.annotation.Nullable;
 public abstract class MotionEntity {
 
     @NonNull
-    protected final Layer layer;
+    protected final TextLayer textLayer;
     protected final Matrix matrix = new Matrix();
     private boolean isSelected;
     // maximum scale of the initial image
@@ -39,10 +39,10 @@ public abstract class MotionEntity {
     @NonNull
     private Paint borderPaint = new Paint();
 
-    public MotionEntity(@NonNull Layer layer,
+    public MotionEntity(@NonNull TextLayer textLayer,
                         @IntRange(from = 1) int canvasWidth,
                         @IntRange(from = 1) int canvasHeight) {
-        this.layer = layer;
+        this.textLayer = textLayer;
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
     }
@@ -75,15 +75,15 @@ public abstract class MotionEntity {
         // init matrix to E - identity matrix
         matrix.reset();
 
-        float topLeftX = layer.getX() * canvasWidth;
-        float topLeftY = layer.getY() * canvasHeight;
+        float topLeftX = textLayer.getX() * canvasWidth;
+        float topLeftY = textLayer.getY() * canvasHeight;
 
         float centerX = topLeftX + getWidth() * holyScale * 0.5F;
         float centerY = topLeftY + getHeight() * holyScale * 0.5F;
 
         // calculate params
-        float scaleX = layer.getScale();
-        float scaleY = layer.getScale();
+        float scaleX = textLayer.getScale();
+        float scaleY = textLayer.getScale();
 
         // applying transformations : L = S * R * T
 
@@ -98,19 +98,19 @@ public abstract class MotionEntity {
     }
 
     public float absoluteCenterX() {
-        float topLeftX = layer.getX() * canvasWidth;
+        float topLeftX = textLayer.getX() * canvasWidth;
         return topLeftX + getWidth() * holyScale * 0.5F;
     }
 
     public float absoluteCenterY() {
-        float topLeftY = layer.getY() * canvasHeight;
+        float topLeftY = textLayer.getY() * canvasHeight;
 
         return topLeftY + getHeight() * holyScale * 0.5F;
     }
 
     public PointF absoluteCenter() {
-        float topLeftX = layer.getX() * canvasWidth;
-        float topLeftY = layer.getY() * canvasHeight;
+        float topLeftX = textLayer.getX() * canvasWidth;
+        float topLeftY = textLayer.getY() * canvasHeight;
 
         float centerX = topLeftX + getWidth() * holyScale * 0.5F;
         float centerY = topLeftY + getHeight() * holyScale * 0.5F;
@@ -124,7 +124,7 @@ public abstract class MotionEntity {
 
     public void moveCenterTo(PointF moveToCenter) {
         PointF currentCenter = absoluteCenter();
-        layer.postTranslate(1.0F * (moveToCenter.x - currentCenter.x) / canvasWidth,
+        textLayer.postTranslate(1.0F * (moveToCenter.x - currentCenter.x) / canvasWidth,
                 1.0F * (moveToCenter.y - currentCenter.y) / canvasHeight);
     }
 
@@ -199,8 +199,8 @@ public abstract class MotionEntity {
     }
 
     @NonNull
-    public Layer getLayer() {
-        return layer;
+    public TextLayer getTextLayer() {
+        return textLayer;
     }
 
     public void setBorderPaint(@NonNull Paint borderPaint) {
