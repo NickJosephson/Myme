@@ -115,6 +115,7 @@ public class DisplayMemeActivity extends AppCompatActivity {
                     Snackbar.make(findViewById(R.id.display_meme), "Meme exported to Gallery.", Snackbar.LENGTH_LONG)
                             .setAction("export", null).show();
 
+
                 }
 
 

@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -46,8 +48,20 @@ public class ImageSaver {
         FileOutputStream fileOutputStream = null;
 
         try {
-            fileOutputStream = new FileOutputStream(createFile());
+            File fp = createFile();
+            fileOutputStream = new FileOutputStream(fp);
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+            //add media scanner
+
+            MediaScannerConnection.scanFile(this.context,
+                    new String[] { fp.toString() }, null,
+                    new MediaScannerConnection.OnScanCompletedListener() {
+                        public void onScanCompleted(String path, Uri uri) {
+                            Log.i("ExternalStorage", "Scanned " + path + ":");
+                            Log.i("ExternalStorage", "-> uri=" + uri);
+                        }
+                    });
+
         } catch (Exception e) {
             Log.e("fileOutputStream",e.getMessage());
             e.printStackTrace();
