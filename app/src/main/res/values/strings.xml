@@ -9,4 +9,5 @@
     <string name="tags_label">Tags:</string>
     <string name="title_export_icon">Export meme</string>
     <string name="export_meme_text">Export meme</string>
+    <string name="dir_img_export">myme_images</string>
 </resources>

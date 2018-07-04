@@ -1,18 +1,13 @@
 package com.nitrogen.myme.business;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import java.io.File;
@@ -20,14 +15,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static android.app.PendingIntent.getActivity;
-import static android.support.v4.app.ActivityCompat.requestPermissions;
-import static java.security.AccessController.getContext;
 
 public class ImageSaver {
 
-    private String directoryName = "images";
-    private String fileName = "image.png";
+    private String directoryName="myme_images";
+    private String fileName="img1.png";
     private Context context;
     private boolean external;
 

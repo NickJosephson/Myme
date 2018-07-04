@@ -109,9 +109,11 @@ public class DisplayMemeActivity extends AppCompatActivity {
                 if (result == 0){
                     new ImageSaver(findViewById(R.id.display_meme).getContext()).
                             setFileName(meme.getName()+".png").
-                            setDirectoryName("myme_images").
+                            setDirectoryName(getString(R.string.dir_img_export)).
                             setExternal(true).
                             save(ImageSaver.drawableToBitmap(drawable));
+                    Snackbar.make(findViewById(R.id.display_meme), "Meme exported to Gallery.", Snackbar.LENGTH_LONG)
+                            .setAction("export", null).show();
 
                 }
 
