@@ -1,4 +1,4 @@
-package com.nitrogen.myme.business;
+package com.nitrogen.myme.persistence;
 
 import android.content.Context;
 import android.graphics.Bitmap;

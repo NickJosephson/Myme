@@ -24,7 +24,7 @@ import android.widget.TextView;
 
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemes;
-import com.nitrogen.myme.business.ImageSaver;
+import com.nitrogen.myme.persistence.ImageSaver;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
 

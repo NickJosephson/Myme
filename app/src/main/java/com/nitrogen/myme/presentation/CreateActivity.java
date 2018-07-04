@@ -26,7 +26,7 @@ import com.nitrogen.myme.BuildConfig;
 import com.nitrogen.myme.R;
 
 import com.nitrogen.myme.application.Main;
-import com.nitrogen.myme.business.ImageSaver;
+import com.nitrogen.myme.persistence.ImageSaver;
 import com.nitrogen.myme.objects.Placeholder;
 import com.nitrogen.myme.presentation.textEditor.Font;
 import com.nitrogen.myme.presentation.textEditor.FontProvider;
@@ -37,8 +37,6 @@ import com.nitrogen.myme.presentation.textEditor.TextEditorDialogFragment;
 import com.nitrogen.myme.presentation.textEditor.TextEntity;
 import com.nitrogen.myme.presentation.textEditor.TextLayer;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
