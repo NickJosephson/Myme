@@ -10,7 +10,7 @@ import com.nitrogen.myme.persistence.TagsPersistence;
 import java.util.List;
 
 public class MemeValidator {
-    private final int MAX_NAME_LEN = 32;
+    public final int MAX_NAME_LEN = 32;
     private TagsPersistence tagsPersistence;
     private MemesPersistence memesPersistence;
 
@@ -23,7 +23,7 @@ public class MemeValidator {
      *
      * purpose: decide if a meme's name is valid. valid length is >= 1 and <= 32
      */
-    public void validateName(final Meme memeGiven) {
+    public boolean validateName(final Meme memeGiven) {
         if(memeGiven == null)
             throw new InvalidMemeException("Meme cannot be null");
         else if(memeGiven.getName() == null)
@@ -34,6 +34,8 @@ public class MemeValidator {
             throw new InvalidMemeException("Meme name length must be <= " + MAX_NAME_LEN);
         else if(!originalMemeName(memeGiven.getName()))
             throw new InvalidMemeException("Meme name already exists");
+
+        return true;
     }
 
     private boolean originalMemeName (final String name) {
@@ -52,7 +54,7 @@ public class MemeValidator {
      *
      * purpose: decide if a meme's tags are valid. valid length is >= 1 and <= 32
      */
-    public void validateTags(final Meme memeGiven) {
+    public boolean validateTags(final Meme memeGiven) {
         if(memeGiven == null)
             throw new InvalidMemeException("Meme cannot be null");
         else if(memeGiven.getTags() == null)
@@ -61,11 +63,12 @@ public class MemeValidator {
             throw new InvalidMemeException("Number of tags must be > 0");
         else if(memeGiven.getTags().size() > tagsPersistence.getTags().size())
             throw new InvalidMemeException("Number of tags must be <= " + tagsPersistence.getTags().size());
-        else if(containsNonExistentTag(memeGiven)) {
+        else if(containsNonExistentTag(memeGiven))
             throw new InvalidMemeException("Some tags in Meme do not exist in app");
-        } else if(containsDuplicateTags(memeGiven)) {
+        else if(containsDuplicateTags(memeGiven))
             throw new InvalidMemeException("Meme contains multiples of the same tag");
-        }
+
+        return true;
     }
 
     private boolean containsDuplicateTags (Meme memeGiven) {
