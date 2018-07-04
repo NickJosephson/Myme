@@ -305,8 +305,8 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         TextLayer textLayer = createTextLayer();
 
         // if the width is smaller than the length of the default "Sample Text"
-//        if(width <= 200);
-//            textLayer.setText("Sample\nText");
+        if(width <= 200);
+            textLayer.setText("Sample\nText");
 
         TextEntity textEntity = new TextEntity(textLayer, motionView.getWidth(), motionView.getHeight(), fontProvider);
         motionView.addEntityAndPosition(textEntity);

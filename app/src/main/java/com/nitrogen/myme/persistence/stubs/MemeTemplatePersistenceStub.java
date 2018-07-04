@@ -34,42 +34,26 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
         this.templates = new ArrayList<>();
 
         createTemplates();
-//        createTemplateMap();
-
-//        for(String name : templateMap.keySet()) {
-//            PointF points[] = { new PointF(800.0f , 800.0f),
-//                                new PointF(1000.0f , 1000.0f)};
-//
-//            TemplateMeme newMeme = new TemplateMeme(name, ("android.resource://com.nitrogen.myme/" + templateMap.get(name)), points);
-//            templates.add(newMeme);
-//        }
     }
 
     //**************************************************
     // Methods
     //**************************************************
 
-    /* createTemplateMap
+    /* createTemplates
      *
-     * purpose: Create stub memes. Each resource has a name associated with it
+     * purpose: Create stub of meme templates. Each resource has a name associated with it
      */
-    private void createTemplateMap () {
-        templateMap.put("Two Buttons Template", R.drawable.template_two_buttons);
-        templateMap.put("Gru Template", R.drawable.template_gru);
-        templateMap.put("Think About It Template", R.drawable.template_think_about_it);
-    }
-
     private void createTemplates () {
         PointF points1[] = new PointF[1];
         PointF points2[] = new PointF[2];
         PointF points3[] = new PointF[3];
         PointF points4[] = new PointF[4];
 
-
         TemplateMeme newTemplate;
 
-        points2[0] = new PointF(600.0f, 300.0f);
-        points2[1] = new PointF(1200.0f, 1200.0f);
+        points2[0] = new PointF(389.83154f, 443.7795f);
+        points2[1] = new PointF(684.2853f, 403.4104f);
         newTemplate = new TemplateMeme("Two Buttons Template",PATH+R.drawable.template_two_buttons, points2);
         templates.add(newTemplate);
 
@@ -108,9 +92,9 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
         return templateInserted;
     }
 
-    /* deleteMeme
+    /* deleteTemplate
      *
-     * purpose: Delete a meme from the database.
+     * purpose: Delete a template from the database.
      */
     @Override
     public TemplateMeme deleteTemplate(TemplateMeme template) {
@@ -126,7 +110,7 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
 
     /* getTemplate
      *
-     * purpose: Return a meme template by id
+     * purpose: Return a template template by id
      */
     public TemplateMeme getTemplate(int id) {
 
