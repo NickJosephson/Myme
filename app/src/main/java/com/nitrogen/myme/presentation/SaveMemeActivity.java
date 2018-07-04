@@ -82,7 +82,8 @@ public class SaveMemeActivity extends AppCompatActivity {
 
         // picture is defaults to trash
         // this will change when we can save memes
-        picturePath = Main.getDBPathName() + "/1234567";//"android.resource://com.nitrogen.myme/" + R.drawable.ic_trash;
+        //picturePath = Main.getDBPathName() + "/1234567.png";//"android.resource://com.nitrogen.myme/" + R.drawable.ic_trash;
+        picturePath = "/data/user/0/com.nitrogen.myme/app_db/"+"1234567"+".png";
 
         // create new Meme object
         newMeme = new Meme(name, picturePath);
