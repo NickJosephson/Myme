@@ -9,6 +9,7 @@ import com.nitrogen.myme.objects.Tag;
 import com.nitrogen.myme.persistence.MemesPersistence;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,7 +40,7 @@ public class MemesPersistenceHSQLDB  implements MemesPersistence{
     private Meme fromResultSet(final ResultSet rs) throws SQLException{
         final String name = rs.getString("name");
         final String sourceRef = rs.getString("source");
-        return new Meme(name,"android.resource://com.nitrogen.myme/" + sourceRef);
+        return new Meme(name, sourceRef);
     }
 
     private void createMemeMap () {
@@ -48,7 +49,7 @@ public class MemesPersistenceHSQLDB  implements MemesPersistence{
             final ResultSet rs = st.executeQuery("SELECT * FROM MEME");
             while (rs.next()) {
                 final Meme newMeme = fromResultSet(rs);
-                newMeme.setTags(randomTagsAssignment());
+                newMeme.setTags(tagAssignment(rs.getString("name")));
                 memes.add(newMeme);
             }
             rs.close();
@@ -59,14 +60,22 @@ public class MemesPersistenceHSQLDB  implements MemesPersistence{
         }
     }
 
-    private List<Tag> randomTagsAssignment(){
+    private List<Tag> tagAssignment(String name){
         ArrayList<Tag> result = new ArrayList<>();
-        final int MIN_TAG_NUM =  1;
-        int numOfTag = new Random().nextInt(5) + MIN_TAG_NUM;
-        for(int i =0; i < numOfTag; i++){
-            result.add(tags.get(new Random().nextInt(tags.size()-1) + MIN_TAG_NUM));
+        try(Connection c = connect()) {
+            final PreparedStatement st = c.prepareStatement("SELECT * FROM MEMETAGS WHERE name=?");
+            st.setString(1, name);
+            final ResultSet rs = st.executeQuery();
+            while (rs.next()){
+                result.add(new Tag(rs.getString("tagname")));
+            }
+            rs.close();
+            st.close();
         }
-        return  result;
+        catch (final SQLException e) {
+            Log.e("Connect SQL3",e.getMessage()+ e.getSQLState());
+        }
+        return result;
     }
 
     public List<Meme> getMemes() {
@@ -80,15 +89,37 @@ public class MemesPersistenceHSQLDB  implements MemesPersistence{
      */
     @Override
     public boolean insertMeme(Meme meme) {
-        boolean memeInserted = false;
+        boolean memeAdded = false;
+        try(Connection c = connect()){
+            if(!memes.contains(meme)) {
+                memeAdded = true;
+            }
+            if(memeAdded){
+                final PreparedStatement in = c.prepareStatement("INSERT INTO meme VALUES(? , ?)");
 
-        // don't add duplicates
-        if(!memes.contains(meme)) {
-            memes.add(meme);
-            memeInserted = true;
+                in.setString(1,meme.getName());
+                in.setString(2, meme.getImagePath());
+                memes.add(meme);
+                PreparedStatement inTag = null;
+                for(Tag a : meme.getTags()){
+                    inTag = c.prepareStatement("INSERT INTO memetags VALUES(? , ?)");
+                    inTag.setString(1,meme.getName());
+                    inTag.setString(2,a.getName());
+                    inTag.execute();
+                }
+
+                in.executeUpdate();
+                in.close();
+                if(inTag !=null){
+                    inTag.close();
+                }
+            }
+
         }
-
-        return memeInserted;
+        catch (final SQLException e){
+            Log.e("Connect SQL",e.getMessage()+ e.getSQLState());
+        }
+        return memeAdded;
     }
 
     /* deleteMeme
