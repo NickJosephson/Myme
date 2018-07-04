@@ -42,6 +42,10 @@ public class FontProvider {
         fontNameToTypefaceFile.put("The Godfather v2", "TheGodfather_v2.ttf");
         fontNameToTypefaceFile.put("Aka Dora", "akaDora.ttf");
         fontNameToTypefaceFile.put("Waltograph", "waltograph42.ttf");
+        fontNameToTypefaceFile.put("Le Mans", "LeMans.ttf");
+        fontNameToTypefaceFile.put("Wimp", "wimp.ttf");
+        fontNameToTypefaceFile.put("Impact", "Impact.ttf");
+
 
         fontNames = new ArrayList<>(fontNameToTypefaceFile.keySet());
     }
