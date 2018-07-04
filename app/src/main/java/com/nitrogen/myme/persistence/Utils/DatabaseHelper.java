@@ -46,19 +46,20 @@ public class DatabaseHelper {
             char[] buffer = new char[1024];
             int count;
 
-        File outFile = new File(copyPath);
+            File outFile = new File(copyPath);
+            if(!outFile.exists()){
+                InputStreamReader in = new InputStreamReader(assetManager.open(asset));
+                FileWriter out = new FileWriter(outFile);
 
-            InputStreamReader in = new InputStreamReader(assetManager.open(asset));
-            FileWriter out = new FileWriter(outFile);
-
-            count = in.read(buffer);
-            while (count != -1) {
-                out.write(buffer, 0, count);
                 count = in.read(buffer);
-            }
+                while (count != -1) {
+                    out.write(buffer, 0, count);
+                    count = in.read(buffer);
+                }
 
-            out.close();
-            in.close();
+                out.close();
+                in.close();
+            }
 
         }
     }
