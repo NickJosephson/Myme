@@ -26,4 +26,6 @@
     <string name="text_entity_edit">edit text button</string>
     <string name="delete_text_button">delete text button</string>
     <string name="default_meme_name">Name</string>
+    <string name="title_export_icon">Export</string>
+    <string name="dir_img_export">myme_images</string>
 </resources>
