@@ -19,7 +19,7 @@ public class TemplateMeme {
 
     private String name;
     private String imagePath;
-    private ArrayList<Placeholder> captions;
+    private ArrayList<Placeholder> placeholders;
     private float coordinates[][];
 
     private final int templateID = lastTemplateID++; //unique ID
@@ -33,13 +33,23 @@ public class TemplateMeme {
         this.name = name;
         this.imagePath = source;
 
-        captions = new ArrayList<>();
-
-        for(int i = 0 ; i < points.length ; i++) {
-            captions.add(new Placeholder(points[i]));
-        }
+        placeholders = new ArrayList<>();
 
         coordinates = pointsToInt(points);
+    }
+
+    public TemplateMeme(String name, String source, ArrayList<Placeholder> placeholders) {
+        this.name = name;
+        this.imagePath = source;
+
+        this.placeholders = new ArrayList<>();
+        copyPlaceholders(placeholders);
+    }
+
+    private void copyPlaceholders(ArrayList<Placeholder> placeholders){
+        for(Placeholder p : placeholders){
+            this.placeholders.add(p.clone());
+        }
     }
 
     //**************************************************
@@ -64,7 +74,7 @@ public class TemplateMeme {
         return imagePath;
     }
 
-    public ArrayList<Placeholder> getCaptions() { return this.captions; }
+    public ArrayList<Placeholder> getPlaceholders() { return this.placeholders; }
 
     //**************************************************
     // Instance Methods
@@ -103,56 +113,6 @@ public class TemplateMeme {
                 "name='" + name + '\'' +
                 ", templateID=" + templateID +
                 '}';
-    }
-
-    //**************************************************
-    // Private Class
-    //**************************************************
-
-    /* Placeholder
-     *  //TODO
-     *  purpose: Private class specific for TemplateMemes.
-     *           Serves as a temporary caption to indicate
-     *           to the user where they are able to put text based on the general layout
-     * */
-    private class Placeholder {
-        private final String DEFAULT_TEXT = "Place text here";
-        private PointF position;
-        private String text;
-
-        // Constructor 1 - Takes in a PointF
-        public Placeholder(final PointF position) {
-            this.position = position;
-            this.text = DEFAULT_TEXT;
-        }
-
-        // Constructor 2 - Takes in an x and y coordinate
-        public Placeholder(final float posX, final float posY) {
-            this.position = new PointF(posX, posY);
-            this.text = DEFAULT_TEXT;
-        }
-
-        // accessors
-        public PointF getPosition() { return this.position; }
-        public String getText() { return this.text; }
-
-        /* updateText
-         *
-         *  purpose: Change the text
-         *
-         * */
-        public void updateText(final String updated) {
-            this.text = updated;
-        }
-
-        /* updatePosition
-         *
-         *  purpose: Reposition the text
-         *
-         * */
-        public void updatePosition(final float newX, final float newY) {
-            position.set(newX, newY);
-        }
     }
 
 }

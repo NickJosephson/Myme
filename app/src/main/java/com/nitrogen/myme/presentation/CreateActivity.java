@@ -22,12 +22,11 @@ import android.widget.Toast;
 
 import com.nitrogen.myme.BuildConfig;
 import com.nitrogen.myme.R;
-import com.nitrogen.myme.business.AccessMemeTemplates;
 
+import com.nitrogen.myme.objects.Placeholder;
 import com.nitrogen.myme.presentation.textEditor.Font;
 import com.nitrogen.myme.presentation.textEditor.FontProvider;
 import com.nitrogen.myme.presentation.textEditor.FontsAdapter;
-import com.nitrogen.myme.presentation.textEditor.Layer;
 import com.nitrogen.myme.presentation.textEditor.MotionEntity;
 import com.nitrogen.myme.presentation.textEditor.MotionView;
 import com.nitrogen.myme.presentation.textEditor.TextEditorDialogFragment;
@@ -62,8 +61,12 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         MenuItem item = bottomNavMenu.getItem(1);
         item.setChecked(true);
 
+        // Initialize space where user will create their meme
         canvas = (ImageView)findViewById(R.id.imageView1);
-        initializeButtons();
+
+        // Initialize buttons
+        initializeImageButtons();
+        initializeTextButtons();
 
         // initializing globals
         this.fontProvider = new FontProvider(getResources());
@@ -75,11 +78,17 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
     }
 
-    private void initializeButtons() {
+    /* initializeImageButtons
+     *
+     * purpose: A method to assign actions to buttons that will control the following:
+     *          - Uploading an image
+     *          - Selecting a template
+     *          - Saving a meme
+     */
+    private void initializeImageButtons() {
         Button uploadImageButton;
-        Button addTextButton;
-        Button saveMemeButton;
         Button fromTemplateButton;
+        Button saveMemeButton;
 
         // upload image button
         uploadImageButton = (Button)findViewById(R.id.gallery_button);
@@ -87,6 +96,14 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
             @Override
             public void onClick(View v) {
                 openGallery();
+            }
+        });
+
+        // select template button
+        fromTemplateButton = findViewById(R.id.from_template_button);
+        fromTemplateButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                openTemplates();
             }
         });
 
@@ -101,19 +118,31 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
             }
         });
 
-        // add text button
-        addTextButton = findViewById(R.id.add_text_button);
-        addTextButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                addTextSticker();
-            }
-        });
-
         // save meme button
         saveMemeButton = findViewById(R.id.save_meme_button);
         saveMemeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 saveMeme();
+            }
+        });
+
+    }
+
+    /* initializeTextButtons
+     *
+     * purpose: A method to assign actions to buttons that will control the following:
+     *          - Adding text
+     *          - Editing text
+     *          - Deleting text
+     */
+    private void initializeTextButtons() {
+        Button addTextButton;
+
+        // add text button
+        addTextButton = findViewById(R.id.add_text_button);
+        addTextButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                addTextSticker();
             }
         });
 
@@ -124,21 +153,13 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                 changeTextEntityFont();
             }
         });
+
         findViewById(R.id.text_entity_edit_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startTextEntityEditing();
             }
         });
-
-        // select template button
-        fromTemplateButton = findViewById(R.id.from_template_button);
-        fromTemplateButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                openTemplates();
-            }
-        });
-
 
         findViewById(R.id.delete_text_entity_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,15 +178,63 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
     }
 
-    // reference: https://www.youtube.com/watch?v=OPnusBmMQTw
+    /* openGallery
+     *
+     * reference: https://www.youtube.com/watch?v=OPnusBmMQTw
+     *
+     * purpose: A method that launches a new activity to prompt the user to select and image
+     *          they want to edit.
+     *
+     */
     private void openGallery() {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
 
+    /* openTemplates
+     *
+     * purpose: A method that launches a new activity to prompt the user to select the
+     *          template they want to edit.
+     *
+     */
     private void openTemplates() {
         Intent templates = new Intent(CreateActivity.this, SelectTemplateActivity.class);
         startActivityForResult(templates, PICK_TEMPLATE);
+    }
+
+    /* loadTemplate
+     *
+     * purpose: Render the template the user selected.
+     *
+     */
+    private void loadTemplate(Bundle template) {
+        TextLayer textLayer;
+        TextEntity textEntity;
+        String templatePath;
+
+        // get the image path
+        templatePath = template.getString("templatePath");
+
+        // render template
+        canvas.setImageURI(Uri.parse(templatePath));
+
+        // get the placeholders for this template
+        ArrayList<Placeholder> placeholders = template.getParcelableArrayList("Placeholders");
+
+        // render placeholders
+        for(Placeholder p : placeholders) {
+            // create the text
+            textLayer = createTextLayer();
+            textLayer.setText(p.getText());
+            textEntity = new TextEntity(textLayer, p.getWidth(), p.getHeight(), fontProvider);
+            motionView.addEntityAndPosition(textEntity);
+
+            // move it to its correct position
+            textEntity.moveCenterTo(p.getPosition());
+
+            // redraw
+            motionView.invalidate();
+        }
     }
 
     @Override
@@ -187,7 +256,6 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                     if(extras != null && extras.getString("templatePath") != null) {
                         // first clear the canvas by removing all text entities
                         deleteAllTextEntities();
-
                         // then load the template
                         loadTemplate(extras);
                     } else {
@@ -196,42 +264,8 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                         toast.show();
                     }
                     break;
-
             }
         }
-
-    }
-
-    private void loadTemplate(Bundle template) {
-        String templatePath;
-        Object temp[]; // required to get serializable data
-        float coordinates[][];
-        float x, y;
-        int width, height;
-
-        // get the image path
-        templatePath = template.getString("templatePath");
-
-        // display the template
-        canvas.setImageURI(Uri.parse(templatePath));
-
-        // get the coordinates of where the text should be
-        temp = (Object[])template.getSerializable("templateCoordinates");
-        if(temp != null) {
-            coordinates = new float[temp.length][2];
-            for(int i = 0 ; i < temp.length ; i++) {
-                coordinates[i] = (float[]) temp[i];
-
-                x = coordinates[i][0];
-                y = coordinates[i][1];
-                width = 200;
-                height = 800;
-
-                // add text to the template
-                addTextSticker(x, y, width, height);
-            }
-        }
-
     }
 
     //**************************************************
@@ -283,44 +317,19 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
     protected void addTextSticker() {
         TextLayer textLayer = createTextLayer();
-        TextEntity textEntity = new TextEntity(textLayer, motionView.getWidth(),
-                motionView.getHeight(), fontProvider);
+        TextEntity textEntity = new TextEntity(textLayer, motionView.getWidth(), motionView.getHeight(), fontProvider);
         motionView.addEntityAndPosition(textEntity);
 
         // move text sticker up so that its not hidden under keyboard
+        // Note: this must happen after calling motionView.addEntityAndPosition(textEntity);
         PointF center = textEntity.absoluteCenter();
         center.y = center.y * 0.5F;
         textEntity.moveCenterTo(center);
-
-
 
         // redraw
         motionView.invalidate();
 
         startTextEntityEditing();
-    }
-
-    protected void addTextSticker(float x, float y, int width, int height) {
-        List<MotionEntity> entities = motionView.getEntities();
-        TextLayer textLayer = createTextLayer();
-
-        // if the width is smaller than the length of the default "Sample Text"
-        if(width <= 200);
-            textLayer.setText("Sample\nText");
-
-        TextEntity textEntity = new TextEntity(textLayer, motionView.getWidth(), motionView.getHeight(), fontProvider);
-        motionView.addEntityAndPosition(textEntity);
-
-        // move text sticker up so that its not hidden under keyboard
-        PointF center = textEntity.absoluteCenter();
-        center.x = x;
-        center.y = y;
-        textEntity.moveCenterTo(center);
-
-        // redraw
-        motionView.invalidate();
-
-//        startTextEntityEditing();
     }
 
     @Nullable

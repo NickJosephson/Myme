@@ -213,6 +213,9 @@ public abstract class MotionEntity {
 
     public abstract int getHeight();
 
+    public void setCanvasWidth(int width) { this.canvasWidth = width; updateMatrix();}
+    public void setCanvasHeight(int height) { this.canvasHeight= height; updateMatrix();}
+
     public void release() {
         // free resources here
     }

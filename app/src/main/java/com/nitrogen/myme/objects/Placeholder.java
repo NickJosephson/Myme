@@ -69,7 +69,7 @@ public class Placeholder implements Parcelable{
 
     /* isMultiline
      *
-     *  purpose: Determine if the placeholder has multiple lines
+     *  purpose: Determine if the placeholder has multiple lines.
      *
      * */
     public boolean isMultiline() { return this.text.equals(DEFAULT_TEXT_MULTILINE);}
@@ -81,7 +81,7 @@ public class Placeholder implements Parcelable{
 
     /* updateText
      *
-     *  purpose: Change the text
+     *  purpose: Change the text.
      *
      * */
     public void updateText(final String updated) {
@@ -90,7 +90,7 @@ public class Placeholder implements Parcelable{
 
     /* updatePosition
      *
-     *  purpose: Reposition the text
+     *  purpose: Reposition the text.
      *
      * */
     public void updatePosition(final float newX, final float newY) {

@@ -201,9 +201,6 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
 
     @Override
     public void getID(int id) {
-        Toast toast = Toast.makeText(this, "Received id = "+id, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
 
         TemplateMeme template = accessMemeTemplates.getTemplateByID(id);
 
@@ -211,8 +208,9 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
         data.putExtra("templatePath", template.getImagePath());
 
         Bundle mBundle = new Bundle();
-        mBundle.putSerializable("templateCoordinates", template.getCoordinates());
+//        mBundle.putSerializable("templateCoordinates", template.getCoordinates());
 
+        mBundle.putParcelableArrayList("Placeholders", template.getPlaceholders());
         data.putExtras(mBundle);
 
         // Activity finished ok, return the data
