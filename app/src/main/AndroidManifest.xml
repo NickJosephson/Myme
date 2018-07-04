@@ -33,6 +33,10 @@
             android:name=".presentation.SaveMemeActivity"
             android:label="@string/title_activity_save_meme">
         </activity>
+        <activity
+            android:name=".presentation.SelectTemplateActivity"
+            android:label="@string/title_activity_templates">
+        </activity>
     </application>
 
 </manifest>

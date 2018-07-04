@@ -2,6 +2,7 @@
     <string name="app_name">Myme</string>
     <string name="title_activity_display_meme">DisplayMemeActivity</string>
     <string name="title_activity_favourite_meme">Favourites</string>
+    <string name="title_activity_templates">Templates</string>
     <string name="title_activity_create_meme">CreateMemeActivity</string>
     <string name="title_activity_save_meme">SaveMemeActivity</string>
     <string name="title_explore">Explore</string>
@@ -18,6 +19,7 @@
     <string name="select_tags">Select Tags:</string>
     <string name="rotate">Rotate</string>
     <string name="pick_image">Pick Image</string>
+    <string name="pick_template">Pick Template</string>
     <string name="add_text">Add Text</string>
     <string name="save_meme">Save Meme</string>
     <string name="text_entity_font_change_description">font change button</string>

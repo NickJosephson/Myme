@@ -11,16 +11,19 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import android.widget.Toast;
+
 import com.nitrogen.myme.BuildConfig;
 import com.nitrogen.myme.R;
-import com.nitrogen.myme.persistence.MemesPersistence;
-import com.nitrogen.myme.persistence.stubs.MemesPersistenceStub;
+
+import com.nitrogen.myme.objects.Placeholder;
 import com.nitrogen.myme.presentation.textEditor.Font;
 import com.nitrogen.myme.presentation.textEditor.FontProvider;
 import com.nitrogen.myme.presentation.textEditor.FontsAdapter;
@@ -30,14 +33,16 @@ import com.nitrogen.myme.presentation.textEditor.TextEditorDialogFragment;
 import com.nitrogen.myme.presentation.textEditor.TextEntity;
 import com.nitrogen.myme.presentation.textEditor.TextLayer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class CreateActivity extends AppCompatActivity implements TextEditorDialogFragment.OnTextLayerCallback {
 
-    private ImageView uploadedImage;
+    private ImageView canvas;
     private Button rotateImageButton;
     private static final int PICK_IMAGE = 100; // can be any value
+    private static final int PICK_TEMPLATE = 200;
 
     protected MotionView motionView;
     protected View textEntityEditPanel;
@@ -56,8 +61,12 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         MenuItem item = bottomNavMenu.getItem(1);
         item.setChecked(true);
 
-        uploadedImage = (ImageView)findViewById(R.id.imageView1);
-        initializeButtons();
+        // Initialize space where user will create their meme
+        canvas = (ImageView)findViewById(R.id.imageView1);
+
+        // Initialize buttons
+        initializeImageButtons();
+        initializeTextButtons();
 
         // initializing globals
         this.fontProvider = new FontProvider(getResources());
@@ -66,13 +75,22 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         textEntityEditPanel = findViewById(R.id.main_motion_text_entity_edit_panel);
         textEntityEditPanel.setVisibility(View.GONE);
         motionView.setMotionViewCallback(motionViewCallback);
+
     }
 
-    private void initializeButtons() {
+    /* initializeImageButtons
+     *
+     * purpose: A method to assign actions to buttons that will control the following:
+     *          - Uploading an image
+     *          - Selecting a template
+     *          - Saving a meme
+     */
+    private void initializeImageButtons() {
         Button uploadImageButton;
-        Button addTextButton;
+        Button fromTemplateButton;
         Button saveMemeButton;
 
+        // upload image button
         uploadImageButton = (Button)findViewById(R.id.gallery_button);
         uploadImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,21 +99,22 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
             }
         });
 
+        // select template button
+        fromTemplateButton = findViewById(R.id.from_template_button);
+        fromTemplateButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                openTemplates();
+            }
+        });
+
+        // rotate image button
         rotateImageButton = (Button)findViewById(R.id.rotateImgButton);
         rotateImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(uploadedImage != null) {
-                    uploadedImage.setRotation(uploadedImage.getRotation() + 90);
+                if(canvas != null) {
+                    canvas.setRotation(canvas.getRotation() + 90);
                 }
-            }
-        });
-
-        // add text button
-        addTextButton = findViewById(R.id.add_text_button);
-        addTextButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                addTextSticker();
             }
         });
 
@@ -107,6 +126,26 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
             }
         });
 
+    }
+
+    /* initializeTextButtons
+     *
+     * purpose: A method to assign actions to buttons that will control the following:
+     *          - Adding text
+     *          - Editing text
+     *          - Deleting text
+     */
+    private void initializeTextButtons() {
+        Button addTextButton;
+
+        // add text button
+        addTextButton = findViewById(R.id.add_text_button);
+        addTextButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                addTextSticker();
+            }
+        });
+
         // text editing buttons
         findViewById(R.id.text_entity_font_change_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,18 +153,21 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                 changeTextEntityFont();
             }
         });
+
         findViewById(R.id.text_entity_edit_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startTextEntityEditing();
             }
         });
+
         findViewById(R.id.delete_text_entity_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 deleteTextEntity();
             }
         });
+
     }
 
     private void saveMeme () {
@@ -136,21 +178,109 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
     }
 
-    // reference: https://www.youtube.com/watch?v=OPnusBmMQTw
+    /* openGallery
+     *
+     * reference: https://www.youtube.com/watch?v=OPnusBmMQTw
+     *
+     * purpose: A method that launches a new activity to prompt the user to select and image
+     *          they want to edit.
+     *
+     */
     private void openGallery() {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
 
+    /* openTemplates
+     *
+     * purpose: A method that launches a new activity to prompt the user to select the
+     *          template they want to edit.
+     *
+     */
+    private void openTemplates() {
+        Intent templates = new Intent(CreateActivity.this, SelectTemplateActivity.class);
+        startActivityForResult(templates, PICK_TEMPLATE);
+    }
+
+    /* loadTemplate
+     *
+     * purpose: Render the template the user selected.
+     *
+     */
+    private void loadTemplate(Bundle template) {
+        String templatePath;
+
+        // get the image path
+        templatePath = template.getString("templatePath");
+
+        // render template
+        canvas.setImageURI(Uri.parse(templatePath));
+
+        // get the placeholders for this template
+        ArrayList<Placeholder> placeholders = template.getParcelableArrayList("Placeholders");
+
+        // render placeholders
+        for(Placeholder p : placeholders) {
+            renderPlaceholder(p);
+
+        }
+    }
+
+    /* renderPlaceholder
+     *
+     * purpose: Render a placeholder on the screen for the user to edit.
+     *
+     */
+    private void renderPlaceholder(Placeholder p) {
+        TextLayer textLayer;
+        TextEntity textEntity;
+
+        textLayer = createTextLayer();
+        textLayer.setText(p.getText());
+
+        if(fontProvider.getFontNames().contains(p.getFontName())) {
+            textLayer.getFont().setTypeface(p.getFontName());
+        }
+
+        textEntity = new TextEntity(textLayer, p.getWidth(), p.getHeight(), fontProvider);
+        motionView.addEntityAndPosition(textEntity);
+
+        // move it to its correct position
+        textEntity.moveCenterTo(p.getPosition());
+
+        // redraw
+        motionView.invalidate();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK && requestCode == PICK_IMAGE){
-            Uri imageURI = data.getData();
-            uploadedImage.setImageURI(imageURI);
 
-            if(!rotateImageButton.isShown()) {
-                rotateImageButton.setVisibility(View.VISIBLE);
+        if(resultCode == RESULT_OK) {
+            switch(requestCode) {
+                case PICK_IMAGE:
+                    Uri imageURI = data.getData();
+                    canvas.setImageURI(imageURI);
+
+                    if(!rotateImageButton.isShown()) {
+                        rotateImageButton.setVisibility(View.VISIBLE);
+                    }
+                    break;
+                case PICK_TEMPLATE:
+                    Bundle extras = data.getExtras();
+                    if(extras != null && extras.getString("templatePath") != null) {
+                        // first clear the canvas by removing all text entities
+                        deleteAllTextEntities();
+                        // remove the rotation button
+                        rotateImageButton.setVisibility(View.GONE);
+                        // then load the template
+                        loadTemplate(extras);
+                    } else {
+                        Toast toast = Toast.makeText(this, "Sorry, it looks like that template isn't available.", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
+                    break;
             }
         }
     }
@@ -204,11 +334,11 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
     protected void addTextSticker() {
         TextLayer textLayer = createTextLayer();
-        TextEntity textEntity = new TextEntity(textLayer, motionView.getWidth(),
-                motionView.getHeight(), fontProvider);
+        TextEntity textEntity = new TextEntity(textLayer, motionView.getWidth(), motionView.getHeight(), fontProvider);
         motionView.addEntityAndPosition(textEntity);
 
         // move text sticker up so that its not hidden under keyboard
+        // Note: this must happen after calling motionView.addEntityAndPosition(textEntity);
         PointF center = textEntity.absoluteCenter();
         center.y = center.y * 0.5F;
         textEntity.moveCenterTo(center);
@@ -264,6 +394,10 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                 motionView.invalidate();
             }
         }
+    }
+
+    public void deleteAllTextEntities(){
+        motionView.release();
     }
 
     //**************************************************

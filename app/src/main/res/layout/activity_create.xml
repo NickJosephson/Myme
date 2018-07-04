@@ -11,8 +11,12 @@
     <ImageView
         android:src="@android:drawable/ic_menu_gallery"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/imageView1" />
+        android:layout_height="600dp"
+        android:id="@+id/imageView1"
+        android:adjustViewBounds= "true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <TextView
         android:id="@+id/imageOrientation"
         android:layout_width="wrap_content"
@@ -49,30 +53,38 @@
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/gallery_button"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="400dp"
-            android:layout_weight="1"
-            android:text="@string/pick_image" />
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/add_text_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="200dp"
-            android:layout_marginRight="200dp"
-            android:layout_weight="1"
-            android:text="@string/add_text" />
+            <Button
+                android:id="@+id/gallery_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/pick_image" />
 
-        <Button
-            android:id="@+id/save_meme_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="400dp"
-            android:layout_weight="1"
-            android:text="@string/save_meme" />
+            <Button
+                android:id="@+id/from_template_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/pick_template" />
+
+            <Button
+                android:id="@+id/add_text_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/add_text" />
+
+            <Button
+                android:id="@+id/save_meme_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/save_meme" />
+        </LinearLayout>
 
     </com.nitrogen.myme.presentation.textEditor.MotionView>
 
