@@ -1,14 +1,6 @@
 package com.nitrogen.myme.objects;
 
-import android.graphics.Point;
-import android.graphics.PointF;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /* TemplateMeme
  *
@@ -21,7 +13,7 @@ public class TemplateMeme {
     private String imagePath;
     private ArrayList<Placeholder> placeholders;
 
-    private final int templateID = lastTemplateID++; //unique ID
+    private final int templateID = ++lastTemplateID; //unique ID
     private static int lastTemplateID = 0; //used to ensure all memes have a unique ID
 
     //**************************************************

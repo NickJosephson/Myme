@@ -18,7 +18,7 @@ public class Meme {
     private boolean isFavourite = false;
     private final Author author;
     private final Date creationDate;
-    private final int memeID = lastMemeID++; //unique ID
+    private final int memeID = ++lastMemeID; //unique ID
 
     //ImageMeme
     private String imagePath;
