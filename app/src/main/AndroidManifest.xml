@@ -27,6 +27,18 @@
             android:name=".presentation.FavouritesActivity"
             android:label="@string/title_activity_favourite_meme">
         </activity>
+        <activity
+            android:name=".presentation.CreateActivity"
+            android:label="@string/title_activity_create_meme">
+        </activity>
+        <activity
+            android:name=".presentation.SaveMemeActivity"
+            android:label="@string/title_activity_save_meme">
+        </activity>
+        <activity
+            android:name=".presentation.SelectTemplateActivity"
+            android:label="@string/title_activity_templates">
+        </activity>
     </application>
 
 </manifest>

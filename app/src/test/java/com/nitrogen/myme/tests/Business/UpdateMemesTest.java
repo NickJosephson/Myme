@@ -3,7 +3,6 @@ package com.nitrogen.myme.tests.Business;
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.business.UpdateMemes;
-import com.nitrogen.myme.objects.ImageMeme;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
 
@@ -33,7 +32,7 @@ public class UpdateMemesTest {
     private Meme createMeme(String name) {
         List<Tag> tags = new ArrayList<>();
         tags.add(new Tag("test_tag"));
-        Meme newMeme = new ImageMeme( name, ("android.resource://com.nitrogen.myme/"+ R.drawable.lololol));
+        Meme newMeme = new Meme( name, ("android.resource://com.nitrogen.myme/"+ R.drawable.lololol));
         newMeme.setTags(tags);
         return newMeme;
     }
