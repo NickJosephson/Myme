@@ -32,14 +32,14 @@ public class AccessMemes {
         return Collections.unmodifiableList(memes);
     }
 
-    /* getMemeByID
+    /* getMemeByName
      *
-     * purpose: Return a Meme matching the given meme ID
+     * purpose: Return a Meme matching the given meme name
      *          or null if non is found.
      */
-    public Meme getMemeByID(int memeID) {
+    public Meme getMemeByName(String memeName) {
         for (Meme meme : memes) {
-            if (meme.getMemeID() == memeID) {
+            if (meme.getName().equals(memeName)) {
                 return meme;
             }
         }

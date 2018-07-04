@@ -97,14 +97,14 @@ public class MemesPersistenceHSQLDB  implements MemesPersistence{
             if(memeAdded){
                 final PreparedStatement in = c.prepareStatement("INSERT INTO meme VALUES(? , ?)");
 
-                in.setString(1,meme.getName());
+                in.setString(1, meme.getName());
                 in.setString(2, meme.getImagePath());
                 memes.add(meme);
                 PreparedStatement inTag = null;
                 for(Tag a : meme.getTags()){
                     inTag = c.prepareStatement("INSERT INTO memetags VALUES(? , ?)");
-                    inTag.setString(1,meme.getName());
-                    inTag.setString(2,a.getName());
+                    inTag.setString(1, meme.getName());
+                    inTag.setString(2, a.getName());
                     inTag.execute();
                 }
 
