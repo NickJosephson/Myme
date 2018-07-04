@@ -190,8 +190,8 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         ImageSaver savior = new ImageSaver(CreateActivity.this);
 
         savior.setExternal(false);
-        savior.setDirectoryName(Main.getDBPathName());
-        savior.setFileName("1234567");
+        savior.setDirectoryName("db");
+        savior.setFileName("1234567.png");
         savior.save(bitmap);
     }
 
