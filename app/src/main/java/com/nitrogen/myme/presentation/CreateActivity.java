@@ -36,6 +36,7 @@ import com.nitrogen.myme.presentation.textEditor.TextEditorDialogFragment;
 import com.nitrogen.myme.presentation.textEditor.TextEntity;
 import com.nitrogen.myme.presentation.textEditor.TextLayer;
 
+import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
@@ -245,6 +246,24 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
+    /* loadGalleryImage
+     *
+     * purpose: Render the image the user chose from their gallery.
+     *
+     */
+    private void loadGalleryImage(Uri imageURI){
+        // first clear the canvas by removing all text entities
+        deleteAllTextEntities();
+
+
+        canvas.setImageURI(imageURI);
+
+        if(!rotateImageButton.isShown()) {
+            rotateImageButton.setVisibility(View.VISIBLE);
+        }
+
+        isBlankCanvas = false;
+    }
 
     /* openTemplates
      *
@@ -285,14 +304,9 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
             switch(requestCode) {
                 case PICK_IMAGE:
                     Uri imageURI = data.getData();
-                    canvas.setImageURI(imageURI);
-
-                    if(!rotateImageButton.isShown()) {
-                        rotateImageButton.setVisibility(View.VISIBLE);
+                    if(imageURI != null){
+                        loadGalleryImage(imageURI);
                     }
-
-                    isBlankCanvas = false;
-
                     break;
                 case PICK_TEMPLATE:
                     String templatePath = data.getStringExtra("templatePath");
