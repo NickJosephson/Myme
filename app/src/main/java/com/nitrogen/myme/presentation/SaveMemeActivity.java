@@ -26,9 +26,6 @@ import java.util.List;
 public class SaveMemeActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE_FILE_NAME = "com.nitrogen.myme.MESSAGE_MEME_NAME";
 
-    public final boolean SAVE_SUCCESSFUL = true;
-    public final boolean CANCEL = false;
-
     List<CheckBox> tagCheckBoxes;
     String fileName;
 
@@ -81,8 +78,11 @@ public class SaveMemeActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finishActivity(CANCEL);
+                // go back to create activity
+                setResult(RESULT_CANCELED);
+                finish();
             }
+
         });
 
         acceptButton.setOnClickListener(new View.OnClickListener() {
@@ -156,21 +156,11 @@ public class SaveMemeActivity extends AppCompatActivity {
             UpdateMemes memeUpdater = new UpdateMemes();
             memeUpdater.insertMeme(newMeme);
 
-            finishActivity(SAVE_SUCCESSFUL);
+            // go to explore activity
+            Intent intent = new Intent(this, ExploreActivity.class);
+            startActivity(intent);
+            setResult(RESULT_OK);
+            finish();
         }
     }
-
-    /* finishActivity
-     *
-     * purpose: finishes the activity passing a boolean value.
-     *          The boolean value is True if the user hit the save button, False if they hit the cancel button
-     *
-     */
-    private void finishActivity(boolean memeSaved){
-        Intent mIntent = new Intent();
-        mIntent.putExtra("success", memeSaved);
-        setResult(RESULT_OK, mIntent);
-        finish(); //end this activity
-    }
-
 }

@@ -295,12 +295,8 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                     }
                     break;
                 case SAVE_MEME:
-                    boolean saveSuccessful = data.getBooleanExtra("success", false);
+                    finish(); // finish this activity
 
-                    if(saveSuccessful) {
-                        startActivity(new Intent(CreateActivity.this, ExploreActivity.class));
-                        finish(); // finish this activity
-                    }
             }
         }
     }
