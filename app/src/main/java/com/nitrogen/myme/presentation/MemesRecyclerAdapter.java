@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import java.io.File;
 import java.util.List;
 
 import com.nitrogen.myme.R;
@@ -97,8 +99,14 @@ public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdap
         ImageView imageView = viewHolder.memeImageView;
         viewHolder.meme = meme;
 
-        Picasso.get().load(meme.getThumbnailPath()).into(imageView);
-        //imageView.setImageURI(Uri.parse(meme.getThumbnailPath()));
+        String path = meme.getThumbnailPath();
+
+        if (path.substring(0,4).equals("andr")) {
+            Picasso.get().load( path ).into(imageView);
+        } else {
+            Picasso.get().load( new File(path) ).into(imageView);
+        }
+
         int vis = (meme.isFavourite()) ? View.VISIBLE : View.INVISIBLE;
         viewHolder.favouriteIconView.setVisibility(vis);
     }
