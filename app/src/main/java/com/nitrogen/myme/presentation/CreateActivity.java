@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import android.widget.Toast;
@@ -87,14 +88,82 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     /* initializeImageButtons
      *
      * purpose: A method to assign actions to buttons that will control the following:
-     *          - Uploading an image
-     *          - Selecting a template
-     *          - Saving a meme
+     *          - Rotate Image
+     *          - Change Font
+     *          - Edit Text
+     *          - Delete Text
      */
     private void initializeImageButtons() {
+        ImageButton changeFontButton;
+        ImageButton editTextButton;
+        ImageButton deleteTextButton;
+
+        // rotate image button
+        rotateImageButton = findViewById(R.id.rotateImgButton);
+        rotateImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(canvas != null) {
+                    canvas.setRotation(canvas.getRotation() + 90);
+                }
+            }
+        });
+
+        // text editing buttons...
+        changeFontButton = findViewById(R.id.text_entity_font_change_button);
+        changeFontButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeTextEntityFont();
+            }
+        });
+
+        editTextButton = findViewById(R.id.text_entity_edit_button);
+        editTextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startTextEntityEditing();
+            }
+        });
+
+        deleteTextButton = findViewById(R.id.delete_text_entity_button);
+        deleteTextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteTextEntity();
+            }
+        });
+    }
+
+    /* initializeTextButtons
+     *
+     * purpose: A method to assign actions to buttons that will control the following:
+     *          - Adding Text
+     *          - Uploading Image
+     *          - Saving Meme
+     *          - Pick Template
+     */
+    private void initializeTextButtons() {
+        Button addTextButton;
         Button uploadImageButton;
         Button fromTemplateButton;
         Button saveMemeButton;
+
+        // add text button
+        addTextButton = findViewById(R.id.add_text_button);
+        addTextButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                addTextSticker();
+            }
+        });
+
+        // save meme button
+        saveMemeButton = findViewById(R.id.save_meme_button);
+        saveMemeButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                saveMeme();
+            }
+        });
 
         // upload image button
         uploadImageButton = (Button)findViewById(R.id.gallery_button);
@@ -112,68 +181,6 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                 openTemplates();
             }
         });
-
-        // rotate image button
-        rotateImageButton = (Button)findViewById(R.id.rotateImgButton);
-        rotateImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(canvas != null) {
-                    canvas.setRotation(canvas.getRotation() + 90);
-                }
-            }
-        });
-
-        // save meme button
-        saveMemeButton = findViewById(R.id.save_meme_button);
-        saveMemeButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                saveMeme();
-            }
-        });
-
-    }
-
-    /* initializeTextButtons
-     *
-     * purpose: A method to assign actions to buttons that will control the following:
-     *          - Adding text
-     *          - Editing text
-     *          - Deleting text
-     */
-    private void initializeTextButtons() {
-        Button addTextButton;
-
-        // add text button
-        addTextButton = findViewById(R.id.add_text_button);
-        addTextButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                addTextSticker();
-            }
-        });
-
-        // text editing buttons
-        findViewById(R.id.text_entity_font_change_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTextEntityFont();
-            }
-        });
-
-        findViewById(R.id.text_entity_edit_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startTextEntityEditing();
-            }
-        });
-
-        findViewById(R.id.delete_text_entity_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteTextEntity();
-            }
-        });
-
     }
 
     private void saveMeme () {

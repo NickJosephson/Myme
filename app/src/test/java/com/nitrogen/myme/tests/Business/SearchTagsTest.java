@@ -41,15 +41,6 @@ public class SearchTagsTest {
         assertNotNull(searchTags);
     }
 
-    /* getTagsFromMemes(List<Meme> memes) */
-
-    @Test
-    public void testGetTagsFromMemes_allMemes() {
-        // Non-empty tag database where there are no orphan tags (tags that aren't assigned to any memes)
-        System.out.println("Testing getTagsFromMemes() with all memes in the database");
-        assertEquals(accessTags.getTags().size(), searchTags.getTagsFromMemes(accessMemes.getMemes()).size());
-    }
-
     @Test
     public void testGetTagsFromMemes_emptyMemeList() {
         // Non-empty tag database where meme list is empty
