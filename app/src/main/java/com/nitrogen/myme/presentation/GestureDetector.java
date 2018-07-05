@@ -1,28 +1,32 @@
-package com.nitrogen.myme.presentation.touchDetection;
+package com.nitrogen.myme.presentation;
 
-import android.content.Context;
 import android.graphics.PointF;
 import android.view.MotionEvent;
 
-public class MoveGestureDetector extends BaseGestureDetector {
+public class GestureDetector {
 
     private static final PointF FOCUS_DELTA_ZERO = new PointF();
     private final OnMoveGestureListener mListener;
     private PointF mFocusExternal = new PointF();
     private PointF mFocusDeltaExternal = new PointF();
-    public MoveGestureDetector(Context context, OnMoveGestureListener listener) {
-        super(context);
+
+    private static final float PRESSURE_THRESHOLD = 0.67f;
+    private boolean mGestureInProgress;
+    private MotionEvent mPrevEvent;
+    private MotionEvent mCurrEvent;
+    private float mCurrPressure;
+    private float mPrevPressure;
+
+    public GestureDetector(OnMoveGestureListener listener) {
         mListener = listener;
     }
 
-    @Override
-    protected void handleStartProgressEvent(int actionCode, MotionEvent event) {
+    private void handleStartProgressEvent(int actionCode, MotionEvent event) {
         switch (actionCode) {
             case MotionEvent.ACTION_DOWN:
                 resetState(); // In case we missed an UP/CANCEL event
 
                 mPrevEvent = MotionEvent.obtain(event);
-                mTimeDelta = 0;
 
                 updateStateByEvent(event);
                 break;
@@ -33,8 +37,7 @@ public class MoveGestureDetector extends BaseGestureDetector {
         }
     }
 
-    @Override
-    protected void handleInProgressEvent(int actionCode, MotionEvent event) {
+    private void handleInProgressEvent(int actionCode, MotionEvent event) {
         switch (actionCode) {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
@@ -59,10 +62,19 @@ public class MoveGestureDetector extends BaseGestureDetector {
         }
     }
 
-    protected void updateStateByEvent(MotionEvent curr) {
-        super.updateStateByEvent(curr);
-
+    private void updateStateByEvent(MotionEvent curr) {
         final MotionEvent prev = mPrevEvent;
+
+        // Reset mCurrEvent
+        if (mCurrEvent != null) {
+            mCurrEvent.recycle();
+            mCurrEvent = null;
+        }
+        mCurrEvent = MotionEvent.obtain(curr);
+
+        // Pressure
+        mCurrPressure = curr.getPressure(curr.getActionIndex());
+        mPrevPressure = prev.getPressure(prev.getActionIndex());
 
         // focus internal
         PointF mCurrFocusInternal = determineFocalPoint(curr);
@@ -103,16 +115,16 @@ public class MoveGestureDetector extends BaseGestureDetector {
 
     /* OnMoveGestureListener
      *
-     * purpose: Listener which must be implemented which is used by MoveGestureDetector to perform
-     *     callbacks to any implementing class which is registered to a MoveGestureDetector via the
+     * purpose: Listener which must be implemented which is used by GestureDetector to perform
+     *     callbacks to any implementing class which is registered to a GestureDetector via the
      *     constructor.
      */
     public interface OnMoveGestureListener {
-        boolean onMove(MoveGestureDetector detector);
+        boolean onMove(GestureDetector detector);
 
-        boolean onMoveBegin(MoveGestureDetector detector);
+        boolean onMoveBegin(GestureDetector detector);
 
-        void onMoveEnd(MoveGestureDetector detector);
+        void onMoveEnd(GestureDetector detector);
     }
 
     /* SimpleOnMoveGestureListener
@@ -121,17 +133,47 @@ public class MoveGestureDetector extends BaseGestureDetector {
      *     way it is not necessary to implement all methods of OnMoveGestureListener.
      */
     public static class SimpleOnMoveGestureListener implements OnMoveGestureListener {
-        public boolean onMove(MoveGestureDetector detector) {
+        public boolean onMove(GestureDetector detector) {
             return false;
         }
 
-        public boolean onMoveBegin(MoveGestureDetector detector) {
+        public boolean onMoveBegin(GestureDetector detector) {
             return true;
         }
 
-        public void onMoveEnd(MoveGestureDetector detector) {
+        public void onMoveEnd(GestureDetector detector) {
             // do nothing, overridden implementation may be used
         }
     }
 
+    private void resetState() {
+        if (mPrevEvent != null) {
+            mPrevEvent.recycle();
+            mPrevEvent = null;
+        }
+        if (mCurrEvent != null) {
+            mCurrEvent.recycle();
+            mCurrEvent = null;
+        }
+        mGestureInProgress = false;
+    }
+
+    /**
+     * All gesture detectors need to be called through this method to be able to
+     * detect gestures. This method delegates work to handler methods
+     * (handleStartProgressEvent, handleInProgressEvent) implemented in
+     * extending classes.
+     *
+     * @param event
+     * @return
+     */
+    public boolean onTouchEvent(MotionEvent event) {
+        final int actionCode = event.getAction() & MotionEvent.ACTION_MASK;
+        if (!mGestureInProgress) {
+            handleStartProgressEvent(actionCode, event);
+        } else {
+            handleInProgressEvent(actionCode, event);
+        }
+        return true;
+    }
 }

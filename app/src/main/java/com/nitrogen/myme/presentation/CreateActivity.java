@@ -258,11 +258,13 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
      * purpose: Render the template the user selected.
      *
      */
-    private void loadTemplate(Bundle template) {
-        String templatePath;
+    private void loadTemplate(String templatePath) {
 
-        // get the image path
-        templatePath = template.getString("templatePath");
+        // first clear the canvas by removing all text entities
+        deleteAllTextEntities();
+
+        // remove the rotation button
+        rotateImageButton.setVisibility(View.GONE);
 
         // render template
         canvas.setImageURI(Uri.parse(templatePath));
@@ -286,14 +288,9 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                     }
                     break;
                 case PICK_TEMPLATE:
-                    Bundle extras = data.getExtras();
-                    if(extras != null && extras.getString("templatePath") != null) {
-                        // first clear the canvas by removing all text entities
-                        deleteAllTextEntities();
-                        // remove the rotation button
-                        rotateImageButton.setVisibility(View.GONE);
-                        // then load the template
-                        loadTemplate(extras);
+                    String templatePath = data.getStringExtra("templatePath");
+                    if(templatePath != null) {
+                        loadTemplate(templatePath);
                     } else {
                         Toast toast = Toast.makeText(this, "Sorry, it looks like that template isn't available.", Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.CENTER, 0, 0);
