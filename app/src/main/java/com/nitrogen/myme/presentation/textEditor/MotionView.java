@@ -85,7 +85,7 @@ public class MotionView extends FrameLayout {
 
         // init listeners
         this.scaleGestureDetector = new ScaleGestureDetector(context, new ScaleListener());
-        this.moveGestureDetector = new MoveGestureDetector(context, new MoveListener());
+        this.moveGestureDetector = new MoveGestureDetector(new MoveListener());
         this.gestureDetectorCompat = new GestureDetectorCompat(context, new TapsListener());
 
         setOnTouchListener(onTouchListener);
