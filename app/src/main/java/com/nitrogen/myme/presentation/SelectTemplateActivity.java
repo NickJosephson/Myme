@@ -11,13 +11,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemeTemplates;
@@ -49,7 +45,7 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         Menu bottomNavMenu = navigation.getMenu();
-        MenuItem item = bottomNavMenu.getItem(0);
+        MenuItem item = bottomNavMenu.getItem(1);
         item.setChecked(true);
 
         // Initialize memes
@@ -111,6 +107,8 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_explore:
+                    startActivity(new Intent(SelectTemplateActivity.this, ExploreActivity.class));
+                    finish(); //end this activity
                     return true;
                 case R.id.navigation_studio:
                     startActivity(new Intent(SelectTemplateActivity.this, CreateActivity.class));
