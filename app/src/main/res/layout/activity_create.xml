@@ -19,7 +19,7 @@
 
         <ImageView
             android:id="@+id/imageView1"
-            android:src="@android:drawable/ic_menu_gallery"
+            android:src="@drawable/black_border"
             android:layout_width="fill_parent"
             android:layout_height="600dp"
             android:adjustViewBounds= "true"

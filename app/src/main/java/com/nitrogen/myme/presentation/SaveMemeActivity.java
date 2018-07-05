@@ -120,6 +120,7 @@ public class SaveMemeActivity extends AppCompatActivity {
         // create new Meme object
 
         newMeme = new Meme(name, picturePath);
+        newMeme.setFavourite(true);
 
         // add tags based on checkboxes
         for(CheckBox tag : tagCheckBoxes) {
@@ -161,7 +162,7 @@ public class SaveMemeActivity extends AppCompatActivity {
             memeUpdater.insertMeme(newMeme);
 
             // go to explore activity
-            Intent intent = new Intent(this, ExploreActivity.class);
+            Intent intent = new Intent(this, FavouritesActivity.class);
             startActivity(intent);
             setResult(RESULT_OK);
             finish();
