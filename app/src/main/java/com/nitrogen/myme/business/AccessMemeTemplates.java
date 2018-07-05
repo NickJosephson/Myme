@@ -42,9 +42,9 @@ public class AccessMemeTemplates {
      * purpose: Return a Meme matching the given meme ID
      *          or null if non is found.
      */
-    public TemplateMeme getTemplateByID(int templateID) throws TemplateNotFoundException {
+    public TemplateMeme getTemplateByName(String templateName) throws TemplateNotFoundException {
         for (TemplateMeme template : templates) {
-            if (template.getTemplateID() == templateID) {
+            if (template.getName().equalsIgnoreCase(templateName)) {
                 return template;
             }
         }

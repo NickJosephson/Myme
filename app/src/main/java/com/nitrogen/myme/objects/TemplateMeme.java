@@ -10,9 +10,6 @@ public class TemplateMeme {
     private String name;
     private String imagePath;
 
-    private final int templateID = ++lastTemplateID; //unique ID
-    private static int lastTemplateID = 0; //used to ensure all memes have a unique ID
-
     //**************************************************
     // Constructor
     //**************************************************
@@ -37,8 +34,6 @@ public class TemplateMeme {
 
     public String getName() { return name; }
 
-    public int getTemplateID() { return templateID; }
-
     public String getImagePath() {
         return imagePath;
     }
@@ -51,7 +46,6 @@ public class TemplateMeme {
     public String toString() {
         return "Template{" +
                 "name='" + name + '\'' +
-                ", templateID=" + templateID +
                 '}';
     }
 

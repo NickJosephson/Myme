@@ -186,10 +186,10 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
      * purpose: get the id of the template the user selected and return it to its parent activity.
      */
     @Override
-    public void getID(int id) {
+    public void getName(String name) {
 
         try {
-            TemplateMeme template = accessMemeTemplates.getTemplateByID(id);
+            TemplateMeme template = accessMemeTemplates.getTemplateByName(name);
             Intent data = new Intent();
 
             // pass the file path

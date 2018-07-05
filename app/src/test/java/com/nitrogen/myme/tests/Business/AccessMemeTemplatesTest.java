@@ -37,17 +37,17 @@ public class AccessMemeTemplatesTest {
     }
 
 
-    /* Method: getTemplateByID() */
+    /* Method: getTemplateByName() */
 
     @Test
-    public void testGetTemplateByID_validID() {
-        // Retrieve a template with an ID we know exists in the database
-        System.out.println("...Testing getTemplateByID() with an id we know is in the database");
+    public void testGetTemplateByName_validName() {
+        // Retrieve a template with a name we know exists in the database
+        System.out.println("...Testing getTemplateByID() with a name we know is in the database");
 
         boolean success = true;
 
         try{
-            accessMemeTemplates.getTemplateByID(1);
+            accessMemeTemplates.getTemplateByName("Two Buttons Template");
         } catch (TemplateNotFoundException e) {
             success = false;
         }
@@ -55,14 +55,14 @@ public class AccessMemeTemplatesTest {
     }
 
     @Test
-    public void testGetTemplateByID_invalidID() {
-        // Retrieve a template with an ID we know doesn't exist in the database
-        System.out.println("...Testing getTemplateByID() with an id we know is not in the database");
+    public void testGetTemplateByName_invalidName() {
+        // Retrieve a template with a name we know doesn't exist in the database
+        System.out.println("...Testing getTemplateByName() with an name we know is not in the database");
 
         boolean success = true;
 
         try{
-            accessMemeTemplates.getTemplateByID(-1);
+            accessMemeTemplates.getTemplateByName("");
         } catch (TemplateNotFoundException e) {
             success = false;
         }

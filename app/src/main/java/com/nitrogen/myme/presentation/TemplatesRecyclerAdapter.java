@@ -50,7 +50,7 @@ public class TemplatesRecyclerAdapter extends RecyclerView.Adapter<TemplatesRecy
 
         @Override
         public void onClick(View view) {
-            mCallback.getID(template.getTemplateID());
+            mCallback.getName(template.getName());
         }
 
     }
