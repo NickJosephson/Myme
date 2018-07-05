@@ -49,7 +49,7 @@ public class AccessMemesTest {
         boolean success = true;
 
         try{
-            accessMemes.getMemeByName("LOL");
+            accessMemes.getMemeByName("a_day_without_laughter");
         } catch (MemeNotFoundException e) {
             success = false;
         }
