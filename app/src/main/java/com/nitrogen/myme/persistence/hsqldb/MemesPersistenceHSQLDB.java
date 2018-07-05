@@ -50,6 +50,7 @@ public class MemesPersistenceHSQLDB  implements MemesPersistence{
             while (rs.next()) {
                 final Meme newMeme = fromResultSet(rs);
                 newMeme.setTags(tagAssignment(rs.getString("name")));
+                newMeme.setFavourite(rs.getInt("fav") == 1);
                 memes.add(newMeme);
             }
             rs.close();
@@ -95,10 +96,11 @@ public class MemesPersistenceHSQLDB  implements MemesPersistence{
                 memeAdded = true;
             }
             if(memeAdded){
-                final PreparedStatement in = c.prepareStatement("INSERT INTO meme VALUES(? , ?)");
+                final PreparedStatement in = c.prepareStatement("INSERT INTO meme VALUES(? , ?, ?)");
 
                 in.setString(1, meme.getName());
                 in.setString(2, meme.getImagePath());
+                in.setInt(3, 0);
                 memes.add(meme);
                 PreparedStatement inTag = null;
                 for(Tag a : meme.getTags()){
@@ -137,6 +139,24 @@ public class MemesPersistenceHSQLDB  implements MemesPersistence{
 
         return meme;
     }
+    public void updateFav(Meme meme){
+        try(Connection c = connect()){
+                int fav =0;
+                final PreparedStatement in = c.prepareStatement("UPDATE meme SET fav = ? WHERE name = ?");
+                if(meme.isFavourite()){
+                    fav = 1;
+                }
+                in.setInt(1, fav);
+                in.setString(2, meme.getName());
 
+                in.executeUpdate();
+                in.close();
+
+        }
+        catch (final SQLException e){
+            Log.e("Connect SQL",e.getMessage()+ e.getSQLState());
+        }
+
+    }
 
 }
