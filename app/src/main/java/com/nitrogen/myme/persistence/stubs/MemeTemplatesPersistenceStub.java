@@ -56,7 +56,6 @@ public class MemeTemplatesPersistenceStub implements MemeTemplatesPersistence {
      * purpose: Insert a template into the database.
      *          Returns True if the template was added and False otherwise.
      */
-    @Override
     public boolean insertTemplate(TemplateMeme template) {
         boolean templateInserted = false;
 
@@ -73,7 +72,6 @@ public class MemeTemplatesPersistenceStub implements MemeTemplatesPersistence {
      *
      * purpose: Delete a template from the database.
      */
-    @Override
     public TemplateMeme deleteTemplate(TemplateMeme template) {
         int index;
 

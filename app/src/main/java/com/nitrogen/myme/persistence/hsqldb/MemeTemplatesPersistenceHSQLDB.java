@@ -2,27 +2,20 @@ package com.nitrogen.myme.persistence.hsqldb;
 
 import android.util.Log;
 
-import com.nitrogen.myme.application.Services;
-import com.nitrogen.myme.objects.Meme;
-import com.nitrogen.myme.objects.Tag;
 import com.nitrogen.myme.objects.TemplateMeme;
-import com.nitrogen.myme.persistence.MemeTemplatePersistence;
-import com.nitrogen.myme.persistence.MemesPersistence;
-
+import com.nitrogen.myme.persistence.MemeTemplatesPersistence;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class MemeTemplatePersistanceHSQLDB  implements MemeTemplatePersistence {
+public class MemeTemplatesPersistenceHSQLDB implements MemeTemplatesPersistence {
     private final String dbPath;
 
-    public MemeTemplatePersistanceHSQLDB(String dbPath) {
+    public MemeTemplatesPersistenceHSQLDB(String dbPath) {
         this.dbPath = dbPath;
     }
 
@@ -33,7 +26,7 @@ public class MemeTemplatePersistanceHSQLDB  implements MemeTemplatePersistence {
     public List<TemplateMeme> getTemplates() {
         ArrayList<TemplateMeme> result = new ArrayList<>();
         try(Connection c = connect()) {
-            final PreparedStatement st = c.prepareStatement("SELECT * FROM TEMPLATE");
+            final PreparedStatement st = c.prepareStatement("SELECT * FROM TEMPLATES");
             final ResultSet rs = st.executeQuery();
             while (rs.next()){
                 result.add(new TemplateMeme(rs.getString("name"),rs.getString("source")));

@@ -4,8 +4,6 @@ public class Main {
 
     private static String dbName = "Mymedb";
 
-
-
     public static void setDBPathName(final String name) {
         try {
             Class.forName("org.hsqldb.jdbcDriver").newInstance();

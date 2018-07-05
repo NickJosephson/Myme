@@ -108,7 +108,7 @@ public class DisplayMemeActivity extends AppCompatActivity {
                 } catch (FileNotFoundException e) {
                     Log.e("exportDrawable",e.getMessage());
                     Log.e("uri_of_failed_exportimg",the_uri.toString());
-                    drawable = ContextCompat.getDrawable(findViewById(R.id.display_meme).getContext(),R.drawable.troll_face);
+                    drawable = ContextCompat.getDrawable(findViewById(R.id.display_meme).getContext(),R.drawable.ic_trash);
                 }
 
                 if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
