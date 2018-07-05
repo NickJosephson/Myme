@@ -117,6 +117,12 @@ public class MemesPersistenceStub implements MemesPersistence {
         return meme;
     }
 
-    public void updateFav(Meme meme){}
+    public void updateFav(Meme meme){
+        for(Meme mi : memes){
+            if(meme.getName().equals(mi.getName())){
+                mi.setFavourite(meme.isFavourite());
+            }
+        }
+    }
 
 }
