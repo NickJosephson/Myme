@@ -1,6 +1,7 @@
 package com.nitrogen.myme.tests.Business;
 
 import com.nitrogen.myme.business.AccessMemes;
+import com.nitrogen.myme.business.Exceptions.MemeNotFoundException;
 import com.nitrogen.myme.persistence.MemesPersistence;
 import com.nitrogen.myme.persistence.TagsPersistence;
 import com.nitrogen.myme.persistence.stubs.MemesPersistenceStub;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import org.junit.After;
 import org.junit.Before;
 
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
@@ -35,6 +37,38 @@ public class AccessMemesTest {
         // Retrieve all memes in the database
         System.out.println("...Testing getMemes()");
         assertTrue(accessMemes.getMemes().size() >= 0);
+    }
+
+    /* Method: getMemeName() */
+
+    @Test
+    public void testGetMemeByName_validName() {
+        // Retrieve a meme with an name we know exists in the database
+        System.out.println("...Testing getMemeByName() with a name we know is in the database");
+
+        boolean success = true;
+
+        try{
+            accessMemes.getMemeByName("LOL");
+        } catch (MemeNotFoundException e) {
+            success = false;
+        }
+        assertTrue(success);
+    }
+
+    @Test
+    public void testGetMemeByName_invalidName() {
+        // Retrieve a meme with an name we know doesn't exist in the database
+        System.out.println("...Testing getMemeByName() with a name we know is in the database");
+
+        boolean success = true;
+
+        try{
+            accessMemes.getMemeByName("");
+        } catch (MemeNotFoundException e) {
+            success = false;
+        }
+        assertFalse(success);
     }
 
     @After

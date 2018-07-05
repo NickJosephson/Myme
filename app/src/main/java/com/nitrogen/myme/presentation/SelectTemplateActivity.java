@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemeTemplates;
+import com.nitrogen.myme.business.Exceptions.TemplateNotFoundException;
 import com.nitrogen.myme.business.SearchMemes;
 import com.nitrogen.myme.objects.TemplateMeme;
 
@@ -188,16 +190,24 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
     @Override
     public void getID(int id) {
 
-        TemplateMeme template = accessMemeTemplates.getTemplateByID(id);
+        try {
+            TemplateMeme template = accessMemeTemplates.getTemplateByID(id);
+            Intent data = new Intent();
 
-        Intent data = new Intent();
+            // pass the file path
+            data.putExtra("templatePath", template.getImagePath());
 
-        // pass the file path
-        data.putExtra("templatePath", template.getImagePath());
+            // Activity finished ok, return the data
+            setResult(RESULT_OK, data);
+            finish();
+        } catch (TemplateNotFoundException e) {
+            // open a error message dialog box
+            new AlertDialog.Builder(SelectTemplateActivity.this)
+                    .setTitle("Error")
+                    .setMessage(e.getMessage())
+                    .setPositiveButton("OK", null).create().show();
 
-        // Activity finished ok, return the data
-        setResult(RESULT_OK, data);
-        finish();
+        }
 
     }
 
