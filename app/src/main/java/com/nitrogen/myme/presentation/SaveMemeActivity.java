@@ -59,6 +59,10 @@ public class SaveMemeActivity extends AppCompatActivity {
             final CheckBox tag = new CheckBox(this);
             tag.setText(curr.getName());
             tag.setTextSize(30);
+
+            // only (un)check box if the user taps on the checkbox or its text
+            tag.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
             attractedTo.addView(tag);
             tagCheckBoxes.add(tag);
         }
