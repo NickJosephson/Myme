@@ -283,6 +283,9 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                     if(!rotateImageButton.isShown()) {
                         rotateImageButton.setVisibility(View.VISIBLE);
                     }
+
+                    isBlankCanvas = false;
+
                     break;
                 case PICK_TEMPLATE:
                     String templatePath = data.getStringExtra("templatePath");
