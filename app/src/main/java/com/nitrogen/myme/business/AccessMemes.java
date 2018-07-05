@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Collections;
 
 import com.nitrogen.myme.application.Services;
+import com.nitrogen.myme.business.Exceptions.MemeNotFoundException;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.persistence.MemesPersistence;
 import com.nitrogen.myme.persistence.TagsPersistence;
@@ -42,14 +43,13 @@ public class AccessMemes {
      * purpose: Return a Meme matching the given meme name
      *          or null if non is found.
      */
-    public Meme getMemeByName(String memeName) {
+    public Meme getMemeByName(String memeName) throws MemeNotFoundException{
         for (Meme meme : memes) {
             if (meme.getName().equals(memeName)) {
                 return meme;
             }
         }
-
-        return null;
+        throw new MemeNotFoundException("Sorry, this meme isn't available right now");
     }
 
     public void updatefav(Meme meme){

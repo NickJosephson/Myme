@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 
+import com.nitrogen.myme.business.Exceptions.TemplateNotFoundException;
 import com.nitrogen.myme.objects.TemplateMeme;
 import com.nitrogen.myme.persistence.MemeTemplatesPersistence;
 import com.nitrogen.myme.R;
@@ -82,19 +83,4 @@ public class MemeTemplatesPersistenceStub implements MemeTemplatesPersistence {
 
         return template;
     }
-
-    /* getTemplate
-     *
-     * purpose: Return a template by id
-     */
-    public TemplateMeme getTemplate(int id) {
-
-        for(TemplateMeme template: templates){
-            if(template.getTemplateID() == id) {
-                return template;
-            }
-        }
-        return null; // TODO: Violates Liskov
-    }
-
 }
