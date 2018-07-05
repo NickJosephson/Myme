@@ -133,4 +133,6 @@ public class MemesPersistenceStub implements MemesPersistence {
         return meme;
     }
 
+    public void updateFav(Meme meme){}
+
 }

@@ -52,4 +52,8 @@ public class AccessMemes {
         return null;
     }
 
+    public void updatefav(Meme meme){
+        memePersistence.updateFav( meme);
+    }
+
 }

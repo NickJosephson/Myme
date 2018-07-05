@@ -180,7 +180,7 @@ public class DisplayMemeActivity extends AppCompatActivity {
                 meme.setFavourite(!meme.isFavourite());
                 boolean fav = meme.isFavourite();
                 FloatingActionButton button = (FloatingActionButton) view;
-
+                accessMemes.updatefav(meme);
                 if (fav) {
                     button.setImageResource(R.drawable.heart_on);
                     Snackbar.make(view, "Added to favourites.", Snackbar.LENGTH_LONG)

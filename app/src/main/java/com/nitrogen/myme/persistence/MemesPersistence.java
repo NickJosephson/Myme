@@ -9,4 +9,6 @@ public interface MemesPersistence {
     boolean insertMeme(Meme currentMeme);
 
     Meme deleteMeme(Meme currentMeme);
+
+    void updateFav(Meme meme);
 }
