@@ -246,6 +246,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
+
     /* loadGalleryImage
      *
      * purpose: Render the image the user chose from their gallery.
@@ -257,6 +258,8 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
 
         canvas.setImageURI(imageURI);
+
+        canvas.setRotation(0);
 
         if(!rotateImageButton.isShown()) {
             rotateImageButton.setVisibility(View.VISIBLE);
@@ -291,6 +294,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
         // render template
         canvas.setImageURI(Uri.parse(templatePath));
+        canvas.setRotation(0);
 
         // we have an image to edit
         isBlankCanvas = false;
