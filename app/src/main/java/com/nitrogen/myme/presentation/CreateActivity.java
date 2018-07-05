@@ -52,6 +52,8 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     private FontProvider fontProvider;
     private TextEditorDialogFragment fragment;
 
+    private boolean isBlankCanvas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +68,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
         // Initialize space where user will create their meme
         canvas = (ImageView)findViewById(R.id.imageView1);
+        isBlankCanvas = true;
 
         // Initialize buttons
         initializeImageButtons();
@@ -78,6 +81,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         textEntityEditPanel = findViewById(R.id.main_motion_text_entity_edit_panel);
         textEntityEditPanel.setVisibility(View.GONE);
         motionView.setMotionViewCallback(motionViewCallback);
+
 
     }
 
@@ -273,6 +277,9 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
             renderPlaceholder(p);
 
         }
+
+        // we have an image to edit
+        isBlankCanvas = false;
     }
 
     /* renderPlaceholder
@@ -390,6 +397,11 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         PointF center = textEntity.absoluteCenter();
         center.y = center.y * 0.5F;
         textEntity.moveCenterTo(center);
+
+        // if we haven't selected an image or template to work with, default to a white background
+        if(isBlankCanvas){
+            canvas.setImageResource(android.R.color.transparent);
+        }
 
         // redraw
         motionView.invalidate();
