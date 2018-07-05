@@ -27,7 +27,6 @@ import com.nitrogen.myme.BuildConfig;
 import com.nitrogen.myme.R;
 
 import com.nitrogen.myme.persistence.ImageSaver;
-import com.nitrogen.myme.objects.Placeholder;
 import com.nitrogen.myme.presentation.textEditor.Font;
 import com.nitrogen.myme.presentation.textEditor.FontProvider;
 import com.nitrogen.myme.presentation.textEditor.FontsAdapter;
@@ -36,7 +35,6 @@ import com.nitrogen.myme.presentation.textEditor.TextEditorDialogFragment;
 import com.nitrogen.myme.presentation.textEditor.TextEntity;
 import com.nitrogen.myme.presentation.textEditor.TextLayer;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -269,43 +267,8 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         // render template
         canvas.setImageURI(Uri.parse(templatePath));
 
-        // get the placeholders for this template
-        ArrayList<Placeholder> placeholders = template.getParcelableArrayList("Placeholders");
-
-        // render placeholders
-        for(Placeholder p : placeholders) {
-            renderPlaceholder(p);
-
-        }
-
         // we have an image to edit
         isBlankCanvas = false;
-    }
-
-    /* renderPlaceholder
-     *
-     * purpose: Render a placeholder on the screen for the user to edit.
-     *
-     */
-    private void renderPlaceholder(Placeholder p) {
-        TextLayer textLayer;
-        TextEntity textEntity;
-
-        textLayer = createTextLayer();
-        textLayer.setText(p.getText());
-
-        if(fontProvider.getFontNames().contains(p.getFontName())) {
-            textLayer.getFont().setTypeface(p.getFontName());
-        }
-
-        textEntity = new TextEntity(textLayer, p.getWidth(), p.getHeight(), fontProvider);
-        motionView.addEntityAndPosition(textEntity);
-
-        // move it to its correct position
-        textEntity.moveCenterTo(p.getPosition());
-
-        // redraw
-        motionView.invalidate();
     }
 
     @Override
