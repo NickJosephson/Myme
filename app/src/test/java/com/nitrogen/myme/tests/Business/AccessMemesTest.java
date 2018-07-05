@@ -39,6 +39,12 @@ public class AccessMemesTest {
         assertTrue(accessMemes.getMemes().size() >= 0);
     }
 
+    @Test
+    public void testInstanceNotNull() {
+        AccessMemes newInstance = new AccessMemes();
+        assertNotNull(newInstance);
+    }
+
     /* Method: getMemeName() */
 
     @Test

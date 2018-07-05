@@ -1,6 +1,7 @@
 package com.nitrogen.myme.tests.Business;
 
 import com.nitrogen.myme.business.AccessMemeTemplates;
+import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.business.Exceptions.TemplateNotFoundException;
 import com.nitrogen.myme.persistence.MemeTemplatesPersistence;
 import com.nitrogen.myme.persistence.stubs.MemeTemplatesPersistenceStub;
@@ -25,6 +26,12 @@ public class AccessMemeTemplatesTest {
 
         accessMemeTemplates = new AccessMemeTemplates(templatesStub);
         assertNotNull(accessMemeTemplates);
+    }
+
+    @Test
+    public void testInstanceNotNull() {
+        AccessMemeTemplates newInstance = new AccessMemeTemplates();
+        assertNotNull(newInstance);
     }
 
     /* Method: getTemplates() */

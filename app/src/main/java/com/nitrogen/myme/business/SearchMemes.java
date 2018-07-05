@@ -61,7 +61,7 @@ public class SearchMemes {
      * purpose: Filters through the meme database to return a list of Memes where each
      *          Meme has a similar name to the keys provided.
      */
-    public List<Meme> getMemesByNames(String[] keys) {
+    private List<Meme> getMemesByNames(String[] keys) {
         List<Meme> result = new ArrayList<>();
 
         // search through all memes
@@ -86,7 +86,6 @@ public class SearchMemes {
 
         return result;
     }
-
 
     /* getMemesByTags
      *

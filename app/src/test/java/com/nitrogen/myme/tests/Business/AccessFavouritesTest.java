@@ -2,6 +2,7 @@ package com.nitrogen.myme.tests.Business;
 
 import com.nitrogen.myme.business.AccessFavourites;
 import com.nitrogen.myme.business.AccessMemes;
+import com.nitrogen.myme.business.AccessTags;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.persistence.MemesPersistence;
 import com.nitrogen.myme.persistence.TagsPersistence;
@@ -37,6 +38,12 @@ public class AccessFavouritesTest {
         // Retrieve all favourited memes in the database
         System.out.println("Testing getMemes(), getting all favourited memes in the database");
         assertTrue(accessFavourites.getMemes().size() >= 0);
+    }
+
+    @Test
+    public void testInstanceNotNull() {
+        AccessFavourites newInstance = new AccessFavourites();
+        assertNotNull(newInstance);
     }
 
     @Test

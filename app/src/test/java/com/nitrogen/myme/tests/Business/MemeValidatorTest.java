@@ -1,7 +1,10 @@
 package com.nitrogen.myme.tests.Business;
 
+import com.nitrogen.myme.business.AccessMemes;
+import com.nitrogen.myme.business.AccessTags;
 import com.nitrogen.myme.business.Exceptions.InvalidMemeException;
 import com.nitrogen.myme.business.MemeValidator;
+import com.nitrogen.myme.business.SearchMemes;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
 import com.nitrogen.myme.persistence.MemesPersistence;
@@ -20,6 +23,8 @@ import static org.junit.Assert.assertNotNull;
 
 public class MemeValidatorTest {
 
+    private AccessTags accessTags;
+    private AccessMemes accessMemes;
     private MemeValidator memeValidator;
     private Meme goodMeme;// nice
     private Meme badMeme;
@@ -34,6 +39,11 @@ public class MemeValidatorTest {
         // stub database
         TagsPersistence tagsPersistenceStub = new TagsPersistenceStub();
         MemesPersistence memesPersistenceStub = new MemesPersistenceStub(tagsPersistenceStub);
+
+        accessMemes = new AccessMemes(memesPersistenceStub);
+        accessTags = new AccessTags(tagsPersistenceStub);
+        assertNotNull(accessMemes);
+        assertNotNull(accessTags);
 
         memeValidator = new MemeValidator(memesPersistenceStub, tagsPersistenceStub);
         assertNotNull(memeValidator);
@@ -86,6 +96,16 @@ public class MemeValidatorTest {
 
         // names longer than MAX_NAME_LEN are invalid
         badMeme.setName(generateStringOfLen(memeValidator.MAX_NAME_LEN +1));
+
+        // should throw expected exception
+        memeValidator.validateName(badMeme);
+    }
+
+    @Test(expected = InvalidMemeException.class)
+    public void testValidateName_invalidNameAlreadyExists() {
+        System.out.println("Testing validateName() with a name which we know is invalid, because name is not unique");
+
+        badMeme.setName(accessMemes.getMemes().get(0).getName());
 
         // should throw expected exception
         memeValidator.validateName(badMeme);
