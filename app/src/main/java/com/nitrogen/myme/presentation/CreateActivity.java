@@ -44,6 +44,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     private Button rotateImageButton;
     private static final int PICK_IMAGE = 100; // can be any value
     private static final int PICK_TEMPLATE = 200;
+    private static final int SAVE_MEME = 300;
 
     protected MotionView motionView;
     protected View textEntityEditPanel;
@@ -184,9 +185,8 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         Intent intent = new Intent(CreateActivity.this, SaveMemeActivity.class);
         intent.putExtra(SaveMemeActivity.EXTRA_MESSAGE_FILE_NAME, fileName);
 
-        // open SaveMeme activity
-        startActivity(intent);
-        finish(); //end this activity
+        // open save meme activity
+        startActivityForResult(intent, SAVE_MEME);
     }
 
     private String writeMemeToFile (Bitmap bitmap) {
@@ -294,6 +294,13 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                         toast.show();
                     }
                     break;
+                case SAVE_MEME:
+                    boolean saveSuccessful = data.getBooleanExtra("success", false);
+
+                    if(saveSuccessful) {
+                        startActivity(new Intent(CreateActivity.this, ExploreActivity.class));
+                        finish(); // finish this activity
+                    }
             }
         }
     }

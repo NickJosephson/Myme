@@ -26,6 +26,9 @@ import java.util.List;
 public class SaveMemeActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE_FILE_NAME = "com.nitrogen.myme.MESSAGE_MEME_NAME";
 
+    public final boolean SAVE_SUCCESSFUL = true;
+    public final boolean CANCEL = false;
+
     List<CheckBox> tagCheckBoxes;
     String fileName;
 
@@ -43,6 +46,11 @@ public class SaveMemeActivity extends AppCompatActivity {
         initializeButtons();
     }
 
+    /* createTagCheckboxes
+     *
+     * purpose: Create checkboxes to display the tags available to be assigned to their new meme
+     *
+     */
     private void createTagCheckboxes () {
         // LinearLayout, which holds dynamic checkboxes
         final LinearLayout attractedTo = findViewById(R.id.tag_list_save_meme_button);
@@ -59,6 +67,13 @@ public class SaveMemeActivity extends AppCompatActivity {
         }
     }
 
+    /* initializeButtons
+     *
+     * purpose: A method to assign actions to buttons that will control the following:
+     *          - saving a meme
+     *          - cancelling the save
+     *
+     */
     private void initializeButtons() {
         Button cancelButton = findViewById(R.id.cancel_save_meme_button);
         Button acceptButton = findViewById(R.id.accept_save_meme_button);
@@ -66,8 +81,7 @@ public class SaveMemeActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SaveMemeActivity.this, ExploreActivity.class));
-                finish(); //end this activity
+                finishActivity(CANCEL);
             }
         });
 
@@ -79,6 +93,13 @@ public class SaveMemeActivity extends AppCompatActivity {
         });
     }
 
+    /* acceptMeme
+     *
+     * purpose: Validates the data the user has provided to save the meme.
+     *          If a field is invalid, provide the user with a warning message.
+     *          If all fields are valid, save the meme.
+     *
+     */
     private void acceptMeme () {
         Meme newMeme;
         EditText mEdit = findViewById(R.id.edit_text_meme_name);
@@ -135,9 +156,21 @@ public class SaveMemeActivity extends AppCompatActivity {
             UpdateMemes memeUpdater = new UpdateMemes();
             memeUpdater.insertMeme(newMeme);
 
-            // go to ExploreActivity
-            startActivity(new Intent(SaveMemeActivity.this, ExploreActivity.class));
-            finish(); //end this activity
+            finishActivity(SAVE_SUCCESSFUL);
         }
     }
+
+    /* finishActivity
+     *
+     * purpose: finishes the activity passing a boolean value.
+     *          The boolean value is True if the user hit the save button, False if they hit the cancel button
+     *
+     */
+    private void finishActivity(boolean memeSaved){
+        Intent mIntent = new Intent();
+        mIntent.putExtra("success", memeSaved);
+        setResult(RESULT_OK, mIntent);
+        finish(); //end this activity
+    }
+
 }
