@@ -25,13 +25,11 @@ import android.widget.Toast;
 import com.nitrogen.myme.BuildConfig;
 import com.nitrogen.myme.R;
 
-import com.nitrogen.myme.application.Main;
 import com.nitrogen.myme.persistence.ImageSaver;
 import com.nitrogen.myme.objects.Placeholder;
 import com.nitrogen.myme.presentation.textEditor.Font;
 import com.nitrogen.myme.presentation.textEditor.FontProvider;
 import com.nitrogen.myme.presentation.textEditor.FontsAdapter;
-import com.nitrogen.myme.presentation.textEditor.MotionEntity;
 import com.nitrogen.myme.presentation.textEditor.MotionView;
 import com.nitrogen.myme.presentation.textEditor.TextEditorDialogFragment;
 import com.nitrogen.myme.presentation.textEditor.TextEntity;
@@ -39,7 +37,6 @@ import com.nitrogen.myme.presentation.textEditor.TextLayer;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class CreateActivity extends AppCompatActivity implements TextEditorDialogFragment.OnTextLayerCallback {
 
@@ -319,16 +316,15 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
     private final MotionView.MotionViewCallback motionViewCallback = new MotionView.MotionViewCallback() {
         @Override
-        public void onEntitySelected(@Nullable MotionEntity entity) {
-            if (entity instanceof TextEntity) {
+        public void onTextEntitySelected(@Nullable TextEntity textEntity) {
+            if(textEntity != null)
                 textEntityEditPanel.setVisibility(View.VISIBLE);
-            } else {
+            else
                 textEntityEditPanel.setVisibility(View.GONE);
-            }
         }
 
         @Override
-        public void onEntityDoubleTap(@NonNull MotionEntity entity) {
+        public void onTextEntityDoubleTap(@NonNull TextEntity textEntity) {
             startTextEntityEditing();
         }
     };
@@ -354,7 +350,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
     private void deleteTextEntity() {
         // delete TextEntity
-        motionView.deletedSelectedEntity();
+        motionView.deletedSelectedTextEntity();
 
         // remove text editor buttons
         textEntityEditPanel.setVisibility(View.GONE);
@@ -379,8 +375,8 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
     @Nullable
     private TextEntity currentTextEntity() {
-        if (motionView != null && motionView.getSelectedEntity() instanceof TextEntity) {
-            return ((TextEntity) motionView.getSelectedEntity());
+        if (motionView != null && motionView.getSelectedTextEntity() != null) {
+            return (motionView.getSelectedTextEntity());
         } else {
             return null;
         }

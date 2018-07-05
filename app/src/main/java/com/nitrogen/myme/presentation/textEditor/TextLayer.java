@@ -1,6 +1,6 @@
 package com.nitrogen.myme.presentation.textEditor;
 
-public class TextLayer /*extends Layer */{
+public class TextLayer {
 
     private String text;
     private Font font;

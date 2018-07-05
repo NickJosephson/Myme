@@ -33,14 +33,14 @@ public class MotionView extends FrameLayout {
     }
 
     public interface MotionViewCallback {
-        void onEntitySelected(@Nullable MotionEntity entity);
-        void onEntityDoubleTap(@NonNull MotionEntity entity);
+        void onTextEntitySelected(@Nullable TextEntity textEntity);
+        void onTextEntityDoubleTap(@NonNull TextEntity textEntity);
     }
 
     // layers
-    private final List<MotionEntity> entities = new ArrayList<>();
+    private final List<TextEntity> entities = new ArrayList<>();
     @Nullable
-    private MotionEntity selectedEntity;
+    private TextEntity selectedTextEntity;
 
     private Paint selectedLayerPaint;
 
@@ -93,11 +93,11 @@ public class MotionView extends FrameLayout {
         updateUI();
     }
 
-    public @Nullable MotionEntity getSelectedEntity() {
-        return selectedEntity;
+    public @Nullable TextEntity getSelectedTextEntity() {
+        return selectedTextEntity;
     }
 
-    public List<MotionEntity> getEntities() {
+    public List<TextEntity> getTextEntities() {
         return entities;
     }
 
@@ -105,23 +105,23 @@ public class MotionView extends FrameLayout {
         this.motionViewCallback = callback;
     }
 
-    public void addEntity(@Nullable MotionEntity entity) {
-        if (entity != null) {
-            entities.add(entity);
-            selectEntity(entity, false);
+    public void addTextEntity(@Nullable TextEntity textEntity) {
+        if (textEntity != null) {
+            entities.add(textEntity);
+            selectTextEntity(textEntity, false);
         }
     }
 
-    public void addEntityAndPosition(@Nullable MotionEntity entity) {
-        if (entity != null) {
-            initEntityBorder(entity);
-            initialTranslateAndScale(entity);
-            entities.add(entity);
-            selectEntity(entity, true);
+    public void addEntityAndPosition(@Nullable TextEntity textEntity) {
+        if (textEntity != null) {
+            initEntityBorder(textEntity);
+            initialTranslateAndScale(textEntity);
+            entities.add(textEntity);
+            selectTextEntity(textEntity, true);
         }
     }
 
-    private void initEntityBorder(@NonNull MotionEntity entity ) {
+    private void initEntityBorder(@NonNull TextEntity textEntity ) {
         // init stroke
         int strokeSize = getResources().getDimensionPixelSize(R.dimen.stroke_size);
         Paint borderPaint = new Paint();
@@ -129,7 +129,7 @@ public class MotionView extends FrameLayout {
         borderPaint.setAntiAlias(true);
         borderPaint.setColor(ContextCompat.getColor(getContext(), R.color.stroke_color));
 
-        entity.setBorderPaint(borderPaint);
+        textEntity.setBorderPaint(borderPaint);
     }
 
     @Override
@@ -140,8 +140,8 @@ public class MotionView extends FrameLayout {
         // the idea that is we draw background stickers, than child views (if any), and than selected item
         // to draw on top of child views - do it in dispatchDraw(Canvas)
         // to draw below that - do it in onDraw(Canvas)
-        if (selectedEntity != null) {
-            selectedEntity.draw(canvas, selectedLayerPaint);
+        if (selectedTextEntity != null) {
+            selectedTextEntity.draw(canvas, selectedLayerPaint);
         }
     }
 
@@ -167,7 +167,7 @@ public class MotionView extends FrameLayout {
      * purpose: return bitmap with all the Entities at their current positions
      */
     public Bitmap getThumbnailImage() {
-        selectEntity(null, false);
+        selectTextEntity(null, false);
 
         Bitmap bmp = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         // IMPORTANT: always create white background, cos if the image is saved in JPEG format,
@@ -184,17 +184,17 @@ public class MotionView extends FrameLayout {
     }
 
     private void handleTranslate(PointF delta) {
-        if (selectedEntity != null) {
-            float newCenterX = selectedEntity.absoluteCenterX() + delta.x;
-            float newCenterY = selectedEntity.absoluteCenterY() + delta.y;
+        if (selectedTextEntity != null) {
+            float newCenterX = selectedTextEntity.absoluteCenterX() + delta.x;
+            float newCenterY = selectedTextEntity.absoluteCenterY() + delta.y;
             // limit entity center to screen bounds
             boolean needUpdateUI = false;
             if (newCenterX >= 0 && newCenterX <= getWidth()) {
-                selectedEntity.getTextLayer().postTranslate(delta.x / getWidth(), 0.0F);
+                selectedTextEntity.getTextLayer().postTranslate(delta.x / getWidth(), 0.0F);
                 needUpdateUI = true;
             }
             if (newCenterY >= 0 && newCenterY <= getHeight()) {
-                selectedEntity.getTextLayer().postTranslate(0.0F, delta.y / getHeight());
+                selectedTextEntity.getTextLayer().postTranslate(0.0F, delta.y / getHeight());
                 needUpdateUI = true;
             }
             if (needUpdateUI) {
@@ -203,34 +203,34 @@ public class MotionView extends FrameLayout {
         }
     }
 
-    private void initialTranslateAndScale(@NonNull MotionEntity entity) {
-        entity.moveToCanvasCenter();
-        entity.getTextLayer().setScale(entity.getTextLayer().initialScale());
+    private void initialTranslateAndScale(@NonNull TextEntity textEntity) {
+        textEntity.moveToCanvasCenter();
+        textEntity.getTextLayer().setScale(textEntity.getTextLayer().initialScale());
     }
 
-    private void selectEntity(@Nullable MotionEntity entity, boolean updateCallback) {
-        if (selectedEntity != null) {
-            selectedEntity.setIsSelected(false);
+    private void selectTextEntity(@Nullable TextEntity textEntity, boolean updateCallback) {
+        if (selectedTextEntity != null) {
+            selectedTextEntity.setIsSelected(false);
         }
-        if (entity != null) {
-            entity.setIsSelected(true);
+        if (textEntity != null) {
+            textEntity.setIsSelected(true);
         }
-        selectedEntity = entity;
+        selectedTextEntity = textEntity;
         invalidate();
         if (updateCallback && motionViewCallback != null) {
-            motionViewCallback.onEntitySelected(entity);
+            motionViewCallback.onTextEntitySelected(textEntity);
         }
     }
 
     public void unselectEntity() {
-        if (selectedEntity != null) {
-            selectEntity(null, true);
+        if (selectedTextEntity != null) {
+            selectTextEntity(null, true);
         }
     }
 
     @Nullable
-    private MotionEntity findEntityAtPoint(float x, float y) {
-        MotionEntity selected = null;
+    private TextEntity findEntityAtPoint(float x, float y) {
+        TextEntity selected = null;
         PointF p = new PointF(x, y);
         for (int i = entities.size() - 1; i >= 0; i--) {
             if (entities.get(i).pointInLayerRect(p)) {
@@ -242,65 +242,65 @@ public class MotionView extends FrameLayout {
     }
 
     private void updateSelectionOnTap(MotionEvent e) {
-        MotionEntity entity = findEntityAtPoint(e.getX(), e.getY());
-        selectEntity(entity, true);
+        TextEntity textEntity = findEntityAtPoint(e.getX(), e.getY());
+        selectTextEntity(textEntity, true);
     }
 
     private void updateOnLongPress(MotionEvent e) {
         // if layer is currently selected and point inside layer - move it to front
-        if (selectedEntity != null) {
+        if (selectedTextEntity != null) {
             PointF p = new PointF(e.getX(), e.getY());
-            if (selectedEntity.pointInLayerRect(p)) {
-                bringLayerToFront(selectedEntity);
+            if (selectedTextEntity.pointInLayerRect(p)) {
+                bringLayerToFront(selectedTextEntity);
             }
         }
     }
 
-    private void bringLayerToFront(@NonNull MotionEntity entity) {
+    private void bringLayerToFront(@NonNull TextEntity textEntity) {
         // removing and adding brings layer to front
-        if (entities.remove(entity)) {
-            entities.add(entity);
+        if (entities.remove(textEntity)) {
+            entities.add(textEntity);
             invalidate();
         }
     }
 
-    private void moveEntityToBack(@Nullable MotionEntity entity) {
-        if (entity == null) {
+    private void moveEntityToBack(@Nullable TextEntity textEntity) {
+        if (textEntity == null) {
             return;
         }
-        if (entities.remove(entity)) {
-            entities.add(0, entity);
+        if (entities.remove(textEntity)) {
+            entities.add(0, textEntity);
             invalidate();
         }
     }
 
-    public void flipSelectedEntity() {
-        if (selectedEntity == null) {
+    public void flipSelectedTextEntity() {
+        if (selectedTextEntity == null) {
             return;
         }
-        selectedEntity.getTextLayer().flip();
+        selectedTextEntity.getTextLayer().flip();
         invalidate();
     }
 
     public void moveSelectedBack() {
-        moveEntityToBack(selectedEntity);
+        moveEntityToBack(selectedTextEntity);
     }
 
-    public void deletedSelectedEntity() {
-        if (selectedEntity == null) {
+    public void deletedSelectedTextEntity() {
+        if (selectedTextEntity == null) {
             return;
         }
-        if (entities.remove(selectedEntity)) {
-            selectedEntity.release();
-            selectedEntity = null;
+        if (entities.remove(selectedTextEntity)) {
+            selectedTextEntity.release();
+            selectedTextEntity = null;
             invalidate();
         }
     }
 
     // memory
     public void release() {
-        for (MotionEntity entity : entities) {
-            entity.release();
+        for (TextEntity textEntity : entities) {
+            textEntity.release();
         }
         entities.clear();
     }
@@ -322,8 +322,8 @@ public class MotionView extends FrameLayout {
     private class TapsListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-            if (motionViewCallback != null && selectedEntity != null) {
-                motionViewCallback.onEntityDoubleTap(selectedEntity);
+            if (motionViewCallback != null && selectedTextEntity != null) {
+                motionViewCallback.onTextEntityDoubleTap(selectedTextEntity);
             }
             return true;
         }
@@ -343,9 +343,9 @@ public class MotionView extends FrameLayout {
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-            if (selectedEntity != null) {
+            if (selectedTextEntity != null) {
                 float scaleFactorDiff = detector.getScaleFactor();
-                selectedEntity.getTextLayer().postScale(scaleFactorDiff - 1.0F);
+                selectedTextEntity.getTextLayer().postScale(scaleFactorDiff - 1.0F);
                 updateUI();
             }
             return true;
