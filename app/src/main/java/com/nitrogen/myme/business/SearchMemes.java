@@ -15,11 +15,16 @@ public class SearchMemes {
     private MemesPersistence memesPersistence;
 
     //**************************************************
-    // Constructor
+    // Constructors
     //**************************************************
 
     public SearchMemes() {
         this.memesPersistence = Services.getMemesPersistence();
+    }
+
+    // this is needed to swap out real database for stub
+    public SearchMemes(MemesPersistence memesPersistenceGiven) {
+        this.memesPersistence = memesPersistenceGiven;
     }
 
     //**************************************************

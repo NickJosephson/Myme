@@ -6,17 +6,24 @@ import java.util.Collections;
 import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.persistence.MemesPersistence;
+import com.nitrogen.myme.persistence.TagsPersistence;
 
 public class AccessMemes {
     private MemesPersistence memePersistence;
     private List<Meme> memes;
 
     //**************************************************
-    // Constructor
+    // Constructors
     //**************************************************
 
     public AccessMemes() {
         memePersistence = Services.getMemesPersistence();
+        memes = memePersistence.getMemes();
+    }
+
+    // this is needed to swap out real database for stub
+    public AccessMemes(MemesPersistence memesPersistenceGiven) {
+        memePersistence = memesPersistenceGiven;
         memes = memePersistence.getMemes();
     }
 

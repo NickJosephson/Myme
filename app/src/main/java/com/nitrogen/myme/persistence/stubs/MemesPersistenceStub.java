@@ -11,6 +11,7 @@ import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
 import com.nitrogen.myme.R;
+import com.nitrogen.myme.persistence.TagsPersistence;
 
 public class MemesPersistenceStub implements MemesPersistence {
     private List<Meme> memes;
@@ -18,12 +19,12 @@ public class MemesPersistenceStub implements MemesPersistence {
     private Map<String,Integer> memeMap = new HashMap<String,Integer>();
 
     //**************************************************
-    // Constructor
+    // Constructors
     //**************************************************
 
-    public MemesPersistenceStub() {
+    public MemesPersistenceStub(TagsPersistence tagsPersistenceGiven) {
         this.memes = new ArrayList<>();
-        this.tags = Services.getTagsPersistence().getTags();
+        this.tags = tagsPersistenceGiven.getTags();
 
         createMemeMap();
 

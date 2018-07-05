@@ -3,8 +3,13 @@ package com.nitrogen.myme.tests.Business;
 import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.business.AccessTags;
 import com.nitrogen.myme.business.SearchMemes;
+import com.nitrogen.myme.business.UpdateMemes;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
+import com.nitrogen.myme.persistence.MemesPersistence;
+import com.nitrogen.myme.persistence.TagsPersistence;
+import com.nitrogen.myme.persistence.stubs.MemesPersistenceStub;
+import com.nitrogen.myme.persistence.stubs.TagsPersistenceStub;
 
 import org.junit.After;
 import org.junit.Before;
@@ -41,9 +46,13 @@ public class SearchMemesTest {
     @Before
     public void setUp() {
         System.out.println("Starting tests for SearchMemes.\n");
-        accessMemes = new AccessMemes();
-        searchMemes = new SearchMemes();
-        accessTags = new AccessTags();
+        // stub database
+        TagsPersistence tagsPersistenceStub = new TagsPersistenceStub();
+        MemesPersistence memesPersistenceStub = new MemesPersistenceStub(tagsPersistenceStub);
+
+        accessMemes = new AccessMemes(memesPersistenceStub);
+        searchMemes = new SearchMemes(memesPersistenceStub);
+        accessTags = new AccessTags(tagsPersistenceStub);
         assertNotNull(accessMemes);
         assertNotNull(searchMemes);
         assertNotNull(accessTags);

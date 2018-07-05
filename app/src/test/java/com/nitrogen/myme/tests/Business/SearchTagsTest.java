@@ -5,6 +5,10 @@ import com.nitrogen.myme.business.AccessTags;
 import com.nitrogen.myme.business.SearchTags;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
+import com.nitrogen.myme.persistence.MemesPersistence;
+import com.nitrogen.myme.persistence.TagsPersistence;
+import com.nitrogen.myme.persistence.stubs.MemesPersistenceStub;
+import com.nitrogen.myme.persistence.stubs.TagsPersistenceStub;
 
 import org.junit.After;
 import org.junit.Before;
@@ -25,9 +29,13 @@ public class SearchTagsTest {
     @Before
     public void setUp() {
         System.out.println("Starting tests for SearchTags.\n");
-        accessMemes = new AccessMemes();
-        accessTags = new AccessTags();
-        searchTags = new SearchTags();
+        // stub database
+        TagsPersistence tagsPersistenceStub = new TagsPersistenceStub();
+        MemesPersistence memesPersistenceStub = new MemesPersistenceStub(tagsPersistenceStub);
+
+        accessMemes = new AccessMemes(memesPersistenceStub);
+        accessTags = new AccessTags(tagsPersistenceStub);
+        searchTags = new SearchTags(tagsPersistenceStub);
         assertNotNull(accessMemes);
         assertNotNull(accessTags);
         assertNotNull(searchTags);
