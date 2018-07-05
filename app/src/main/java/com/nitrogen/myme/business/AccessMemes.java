@@ -52,4 +52,8 @@ public class AccessMemes {
         throw new MemeNotFoundException("Sorry, this meme isn't available right now");
     }
 
+    public void updatefav(Meme meme){
+        memePersistence.updateFav( meme);
+    }
+
 }

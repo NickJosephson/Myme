@@ -36,7 +36,7 @@ public class UpdateMemesTest {
     private Meme createMeme(String name) {
         List<Tag> tags = new ArrayList<>();
         tags.add(new Tag("test_tag"));
-        Meme newMeme = new Meme( name, ("android.resource://com.nitrogen.myme/"+ R.drawable.lololol));
+        Meme newMeme = new Meme( name, ("android.resource://com.nitrogen.myme/"+ R.drawable.meme_a_day_without_laughter));
         newMeme.setTags(tags);
         return newMeme;
     }
