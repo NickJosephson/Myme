@@ -6,19 +6,21 @@ import java.util.Date;
 
 /* Meme
  *
- * purpose: This abstract class provides a base of metadata and functionality
+ * purpose: This class implements a single image format Meme.
+ *
+ * Note:    In the future this will be an abstract class that provides a base of metadata and functionality
  *          for subclass implementations of a specific media format (e.g. ImageMeme)
  */
-public abstract class Meme {
+public class Meme {
     private String name;
     private String description;
     private List<Tag> tags;
     private boolean isFavourite = false;
     private final Author author;
     private final Date creationDate;
-    private final int memeID = lastMemeID++; //unique ID
 
-    private static int lastMemeID = 0; //used to ensure all memes have a unique ID
+    //ImageMeme
+    private String imagePath;
 
     //**************************************************
     // Constructors
@@ -30,6 +32,11 @@ public abstract class Meme {
         this.author = new Author();
         this.creationDate = new Date();
         this.tags = new ArrayList<>();
+    }
+
+    public Meme(String name, String source) {
+        this(name);
+        imagePath = source;
     }
 
     public Meme(String name, String description, Author author) {
@@ -65,7 +72,7 @@ public abstract class Meme {
      * purpose: A method to be implemented by subclasses to allow for the displaying
      *          of a thumbnail of this meme by providing a path to an image.
      */
-    public abstract String getThumbnailPath();
+    //public abstract String getThumbnailPath();
 
     //**************************************************
     // Helper Methods
@@ -97,7 +104,7 @@ public abstract class Meme {
 
     @Override
     public boolean equals(Object otherMeme) {
-        return otherMeme instanceof Meme && memeID == ((Meme) otherMeme).getMemeID();
+        return otherMeme instanceof Meme && name.equals(((Meme) otherMeme).getName());
     }
 
     @Override
@@ -109,7 +116,6 @@ public abstract class Meme {
                 ", creationDate=" + creationDate +
                 ", tags=" + tags +
                 ", isFavourite=" + isFavourite +
-                ", memeID=" + memeID +
                 '}';
     }
 
@@ -125,6 +131,8 @@ public abstract class Meme {
 
     public void setTags(List<Tag> tags) { this.tags = tags; }
 
+    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
+
     //**************************************************
     // Accessor Methods
     //**************************************************
@@ -139,8 +147,15 @@ public abstract class Meme {
 
     public boolean isFavourite() { return isFavourite; }
 
-    public int getMemeID() { return memeID; }
 
     public List<Tag> getTags() { return this.tags; }
+
+    public String getThumbnailPath() {
+        return imagePath;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
 
 }

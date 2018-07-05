@@ -4,6 +4,10 @@ import com.nitrogen.myme.business.AccessTags;
 import com.nitrogen.myme.business.UpdateTags;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
+import com.nitrogen.myme.persistence.MemesPersistence;
+import com.nitrogen.myme.persistence.TagsPersistence;
+import com.nitrogen.myme.persistence.stubs.MemesPersistenceStub;
+import com.nitrogen.myme.persistence.stubs.TagsPersistenceStub;
 
 import org.junit.After;
 import org.junit.Before;
@@ -22,8 +26,11 @@ public class UpdateTagsTest {
     @Before
     public void setUp() {
         System.out.println("Starting tests for UpdateTags.\n");
-        updateTags = new UpdateTags();
-        accessTags = new AccessTags();
+        // stub database
+        TagsPersistence tagsPersistenceStub = new TagsPersistenceStub();
+
+        updateTags = new UpdateTags(tagsPersistenceStub);
+        accessTags = new AccessTags(tagsPersistenceStub);
         assertNotNull(updateTags);
         assertNotNull(accessTags);
 

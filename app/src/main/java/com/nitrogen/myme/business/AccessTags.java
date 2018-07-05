@@ -12,11 +12,15 @@ public class AccessTags {
     private List<Tag> tags;
 
     //**************************************************
-    // Constructor
+    // Constructors
     //**************************************************
 
     public AccessTags(){
         tagsPersistence = Services.getTagsPersistence();
+        tags = tagsPersistence.getTags();
+    }
+    public AccessTags(TagsPersistence tagsPersistenceGiven){
+        tagsPersistence = tagsPersistenceGiven;
         tags = tagsPersistence.getTags();
     }
 

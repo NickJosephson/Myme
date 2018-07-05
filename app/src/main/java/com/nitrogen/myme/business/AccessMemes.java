@@ -4,20 +4,26 @@ import java.util.List;
 import java.util.Collections;
 
 import com.nitrogen.myme.application.Services;
+import com.nitrogen.myme.business.Exceptions.MemeNotFoundException;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.persistence.MemesPersistence;
+import com.nitrogen.myme.persistence.TagsPersistence;
 
 public class AccessMemes {
     private MemesPersistence memePersistence;
     private List<Meme> memes;
 
     //**************************************************
-    // Constructor
+    // Constructors
     //**************************************************
 
     public AccessMemes() {
         memePersistence = Services.getMemesPersistence();
-        memes = memePersistence.getMemes();;
+        memes = memePersistence.getMemes();
+    }
+    public AccessMemes(MemesPersistence memesPersistenceGiven) {
+        memePersistence = memesPersistenceGiven;
+        memes = memePersistence.getMemes();
     }
 
     //**************************************************
@@ -32,19 +38,22 @@ public class AccessMemes {
         return Collections.unmodifiableList(memes);
     }
 
-    /* getMemeByID
+    /* getMemeByName
      *
-     * purpose: Return a Meme matching the given meme ID
+     * purpose: Return a Meme matching the given meme name
      *          or null if non is found.
      */
-    public Meme getMemeByID(int memeID) {
+    public Meme getMemeByName(String memeName) throws MemeNotFoundException{
         for (Meme meme : memes) {
-            if (meme.getMemeID() == memeID) {
+            if (meme.getName().equals(memeName)) {
                 return meme;
             }
         }
+        throw new MemeNotFoundException("Sorry, this meme isn't available right now");
+    }
 
-        return null;
+    public void updatefav(Meme meme){
+        memePersistence.updateFav( meme);
     }
 
 }

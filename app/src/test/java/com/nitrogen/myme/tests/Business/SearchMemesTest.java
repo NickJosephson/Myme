@@ -3,16 +3,19 @@ package com.nitrogen.myme.tests.Business;
 import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.business.AccessTags;
 import com.nitrogen.myme.business.SearchMemes;
+import com.nitrogen.myme.business.UpdateMemes;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
+import com.nitrogen.myme.persistence.MemesPersistence;
+import com.nitrogen.myme.persistence.TagsPersistence;
+import com.nitrogen.myme.persistence.stubs.MemesPersistenceStub;
+import com.nitrogen.myme.persistence.stubs.TagsPersistenceStub;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -31,7 +34,7 @@ public class SearchMemesTest {
      * helper method to determine if a meme has a specific tag
      */
     private boolean hasTag(String tag, Meme meme) {
-        boolean hasTag = true;
+        boolean hasTag = false;
         for(Tag t : meme.getTags()) {
             if(t.getName().equals(tag)) {
                 hasTag = true;
@@ -43,9 +46,13 @@ public class SearchMemesTest {
     @Before
     public void setUp() {
         System.out.println("Starting tests for SearchMemes.\n");
-        accessMemes = new AccessMemes();
-        searchMemes = new SearchMemes();
-        accessTags = new AccessTags();
+        // stub database
+        TagsPersistence tagsPersistenceStub = new TagsPersistenceStub();
+        MemesPersistence memesPersistenceStub = new MemesPersistenceStub(tagsPersistenceStub);
+
+        accessMemes = new AccessMemes(memesPersistenceStub);
+        searchMemes = new SearchMemes(memesPersistenceStub);
+        accessTags = new AccessTags(tagsPersistenceStub);
         assertNotNull(accessMemes);
         assertNotNull(searchMemes);
         assertNotNull(accessTags);

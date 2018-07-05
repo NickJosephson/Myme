@@ -3,9 +3,12 @@ package com.nitrogen.myme.tests.Business;
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.business.UpdateMemes;
-import com.nitrogen.myme.objects.ImageMeme;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
+import com.nitrogen.myme.persistence.MemesPersistence;
+import com.nitrogen.myme.persistence.TagsPersistence;
+import com.nitrogen.myme.persistence.stubs.MemesPersistenceStub;
+import com.nitrogen.myme.persistence.stubs.TagsPersistenceStub;
 
 import org.junit.After;
 import org.junit.Before;
@@ -33,7 +36,7 @@ public class UpdateMemesTest {
     private Meme createMeme(String name) {
         List<Tag> tags = new ArrayList<>();
         tags.add(new Tag("test_tag"));
-        Meme newMeme = new ImageMeme( name, ("android.resource://com.nitrogen.myme/"+ R.drawable.lololol));
+        Meme newMeme = new Meme( name, ("android.resource://com.nitrogen.myme/"+ R.drawable.meme_a_day_without_laughter));
         newMeme.setTags(tags);
         return newMeme;
     }
@@ -41,8 +44,12 @@ public class UpdateMemesTest {
     @Before
     public void setUp() {
         System.out.println("Starting tests for UpdateMemes.\n");
-        updateMemes = new UpdateMemes();
-        accessMemes = new AccessMemes();
+        // stub database
+        TagsPersistence tagsPersistenceStub = new TagsPersistenceStub();
+        MemesPersistence memesPersistenceStub = new MemesPersistenceStub(tagsPersistenceStub);
+
+        updateMemes = new UpdateMemes(memesPersistenceStub);
+        accessMemes = new AccessMemes(memesPersistenceStub);
         assertNotNull(updateMemes);
         assertNotNull(accessMemes);
 

@@ -8,13 +8,16 @@ public class UpdateMemes {
     private MemesPersistence memesPersistence;
 
     //**************************************************
-    // Constructor
+    // Constructors
     //**************************************************
 
     public UpdateMemes() {
         this.memesPersistence = Services.getMemesPersistence();
     }
 
+    public UpdateMemes(MemesPersistence memesPersistenceGiven) {
+        this.memesPersistence = memesPersistenceGiven;
+    }
     //**************************************************
     // Methods
     //**************************************************

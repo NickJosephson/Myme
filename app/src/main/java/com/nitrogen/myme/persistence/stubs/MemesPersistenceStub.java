@@ -9,9 +9,9 @@ import java.util.Map;
 import com.nitrogen.myme.persistence.MemesPersistence;
 import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.objects.Meme;
-import com.nitrogen.myme.objects.ImageMeme;
 import com.nitrogen.myme.objects.Tag;
 import com.nitrogen.myme.R;
+import com.nitrogen.myme.persistence.TagsPersistence;
 
 public class MemesPersistenceStub implements MemesPersistence {
     private List<Meme> memes;
@@ -19,17 +19,17 @@ public class MemesPersistenceStub implements MemesPersistence {
     private Map<String,Integer> memeMap = new HashMap<String,Integer>();
 
     //**************************************************
-    // Constructor
+    // Constructors
     //**************************************************
 
-    public MemesPersistenceStub() {
+    public MemesPersistenceStub(TagsPersistence tagsPersistenceGiven) {
         this.memes = new ArrayList<>();
-        this.tags = Services.getTagsPersistence().getTags();
+        this.tags = tagsPersistenceGiven.getTags();
 
         createMemeMap();
 
         for(String name : memeMap.keySet()) {
-            Meme newMeme = new ImageMeme(name, ("android.resource://com.nitrogen.myme/" + memeMap.get(name)));
+            Meme newMeme = new Meme(name, ("android.resource://com.nitrogen.myme/" + memeMap.get(name)));
             newMeme.setTags(randomTags(memeMap.get(name)));
             memes.add(newMeme);
         }
@@ -44,26 +44,10 @@ public class MemesPersistenceStub implements MemesPersistence {
      * purpose: Create stub memes. Each resource has a name associated with it
      */
     private void createMemeMap () {
-        memeMap.put("Pff Guy", R.drawable.pff_guy);
-        memeMap.put("Frick Yea", R.drawable.frick_yea);
-        memeMap.put("Questioning Face", R.drawable.questioning_face);
-        memeMap.put("Mother of God", R.drawable.mother_of_god);
-        memeMap.put("Me Gusta", R.drawable.me_gusta);
-        memeMap.put("LOL", R.drawable.lol);
-        memeMap.put("LOLOLOL", R.drawable.lololol);
-        memeMap.put("You Don't Say", R.drawable.you_dont_say);
-        memeMap.put("Are You Flipping Kidding Me", R.drawable.are_you_flipping_kidding_me);
-        memeMap.put("Forever Alone", R.drawable.forever_alone);
-        memeMap.put("Genius", R.drawable.genius);
-        memeMap.put("Happy Guy Rage Face", R.drawable.happy_guy_rage_face);
-        memeMap.put("Herp Derp", R.drawable.herp_derp);
-        memeMap.put("Okay Guy", R.drawable.okay_guy);
-        memeMap.put("Poker Face", R.drawable.poker_face);
-        memeMap.put("Rage Face", R.drawable.rage_face);
-        memeMap.put("Staring Face", R.drawable.staring_face);
-        memeMap.put("Thumbs Up", R.drawable.thumbs_up);
-        memeMap.put("Troll Face", R.drawable.troll_face);
-        memeMap.put("Y U NO", R.drawable.y_u_no);
+        memeMap.put("a_day_without_laughter", R.drawable.meme_a_day_without_laughter);
+        memeMap.put("and_who_could_forget_dear_rat_boy", R.drawable.meme_and_who_could_forget_dear_rat_boy);
+        memeMap.put("breathes_in_meep", R.drawable.meme_breathes_in_meep);
+        memeMap.put("cat_with_gun", R.drawable.meme_cat_with_gun);
     }
 
     /* randomTags
@@ -131,6 +115,14 @@ public class MemesPersistenceStub implements MemesPersistence {
         }
 
         return meme;
+    }
+
+    public void updateFav(Meme meme){
+        for(Meme mi : memes){
+            if(meme.getName().equals(mi.getName())){
+                mi.setFavourite(meme.isFavourite());
+            }
+        }
     }
 
 }

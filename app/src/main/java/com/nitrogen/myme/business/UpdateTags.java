@@ -8,11 +8,11 @@ public class UpdateTags {
     private TagsPersistence tagsPersistence;
 
     //**************************************************
-    // Constructor
+    // Constructors
     //**************************************************
 
-    public UpdateTags() {
-        this.tagsPersistence = Services.getTagsPersistence();
+    public UpdateTags(TagsPersistence tagsPersistenceGiven) {
+        this.tagsPersistence = tagsPersistenceGiven;
     }
 
     //**************************************************

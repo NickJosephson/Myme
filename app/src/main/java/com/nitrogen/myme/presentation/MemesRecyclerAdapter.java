@@ -5,14 +5,18 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import java.io.File;
 import java.util.List;
 
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.objects.Meme;
+import com.squareup.picasso.Picasso;
 
 // Note that we specify the custom ViewHolder which gives us access to our views
 public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdapter.ViewHolder> {
@@ -49,7 +53,7 @@ public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdap
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), DisplayMemeActivity.class);
-            intent.putExtra(DisplayMemeActivity.EXTRA_MESSAGE_MEME_ID, meme.getMemeID());
+            intent.putExtra(DisplayMemeActivity.EXTRA_MESSAGE_MEME_NAME, meme.getName());
             view.getContext().startActivity(intent);
         }
 
@@ -95,7 +99,14 @@ public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdap
         ImageView imageView = viewHolder.memeImageView;
         viewHolder.meme = meme;
 
-        imageView.setImageURI(Uri.parse(meme.getThumbnailPath()));
+        String path = meme.getThumbnailPath();
+
+        if (path.substring(0,4).equals("andr")) {
+            Picasso.get().load( path ).into(imageView);
+        } else {
+            Picasso.get().load( new File(path) ).into(imageView);
+        }
+
         int vis = (meme.isFavourite()) ? View.VISIBLE : View.INVISIBLE;
         viewHolder.favouriteIconView.setVisibility(vis);
     }

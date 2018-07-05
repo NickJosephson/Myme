@@ -12,11 +12,15 @@ public class AccessFavourites {
     private MemesPersistence memePersistence;
 
     //**************************************************
-    // Constructor
+    // Constructors
     //**************************************************
 
     public AccessFavourites() {
         memePersistence = Services.getMemesPersistence();
+    }
+
+    public AccessFavourites(MemesPersistence memesPersistenceGiven) {
+        memePersistence = memesPersistenceGiven;
     }
 
     //**************************************************
@@ -33,6 +37,7 @@ public class AccessFavourites {
         for (Meme meme : memePersistence.getMemes()) {
             if (meme.isFavourite()) {
                 memes.add(meme);
+
             }
         }
 
