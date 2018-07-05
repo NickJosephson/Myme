@@ -28,6 +28,7 @@ import com.nitrogen.myme.persistence.ImageSaver;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -89,14 +90,24 @@ public class DisplayMemeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.export_meme:
 
-                Uri the_uri = Uri.parse(meme.getImagePath());
+                String memeImgPath = meme.getImagePath();
+                Uri the_uri;
+
+                if(memeImgPath.startsWith("android.resource")){
+                    the_uri = Uri.parse(meme.getImagePath());
+                }else{
+                    the_uri = Uri.fromFile(new File(meme.getImagePath()));
+                }
+
                 Drawable drawable;
 
                 try {
                     InputStream inputStream = getContentResolver().openInputStream(the_uri);
+                    Log.e("input stream:", "hi"+inputStream.toString());
                     drawable = Drawable.createFromStream(inputStream, the_uri.toString() );
                 } catch (FileNotFoundException e) {
-                    Log.e("exportDrawable:",e.getMessage());
+                    Log.e("exportDrawable",e.getMessage());
+                    Log.e("uri_of_failed_exportimg",the_uri.toString());
                     drawable = ContextCompat.getDrawable(findViewById(R.id.display_meme).getContext(),R.drawable.troll_face);
                 }
 
