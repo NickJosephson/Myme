@@ -181,37 +181,19 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
         adapter.updateTemplateList(templates);
     }
 
-    /* getSource
+    /* getID
      *
      * purpose: get the id of the template the user selected and return it to its parent activity.
      */
-    @Override
-    public void getSource(String source) {
-        Toast toast = Toast.makeText(this, "Received id = "+source, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
-
-        Intent data = new Intent();
-        data.putExtra("template", source);
-
-        // Activity finished ok, return the data
-        setResult(RESULT_OK, data);
-        finish();
-    }
-
     @Override
     public void getID(int id) {
 
         TemplateMeme template = accessMemeTemplates.getTemplateByID(id);
 
         Intent data = new Intent();
+
+        // pass the file path
         data.putExtra("templatePath", template.getImagePath());
-
-        Bundle mBundle = new Bundle();
-//        mBundle.putSerializable("templateCoordinates", template.getCoordinates());
-
-        mBundle.putParcelableArrayList("Placeholders", template.getPlaceholders());
-        data.putExtras(mBundle);
 
         // Activity finished ok, return the data
         setResult(RESULT_OK, data);

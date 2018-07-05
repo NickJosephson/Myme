@@ -27,7 +27,6 @@ import com.nitrogen.myme.BuildConfig;
 import com.nitrogen.myme.R;
 
 import com.nitrogen.myme.persistence.ImageSaver;
-import com.nitrogen.myme.objects.Placeholder;
 import com.nitrogen.myme.presentation.textEditor.Font;
 import com.nitrogen.myme.presentation.textEditor.FontProvider;
 import com.nitrogen.myme.presentation.textEditor.FontsAdapter;
@@ -36,7 +35,6 @@ import com.nitrogen.myme.presentation.textEditor.TextEditorDialogFragment;
 import com.nitrogen.myme.presentation.textEditor.TextEntity;
 import com.nitrogen.myme.presentation.textEditor.TextLayer;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +50,8 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     private FontProvider fontProvider;
     private TextEditorDialogFragment fragment;
 
+    private boolean isBlankCanvas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +66,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
         // Initialize space where user will create their meme
         canvas = (ImageView)findViewById(R.id.imageView1);
+        isBlankCanvas = true;
 
         // Initialize buttons
         initializeImageButtons();
@@ -78,6 +79,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         textEntityEditPanel = findViewById(R.id.main_motion_text_entity_edit_panel);
         textEntityEditPanel.setVisibility(View.GONE);
         motionView.setMotionViewCallback(motionViewCallback);
+
 
     }
 
@@ -256,49 +258,19 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
      * purpose: Render the template the user selected.
      *
      */
-    private void loadTemplate(Bundle template) {
-        String templatePath;
+    private void loadTemplate(String templatePath) {
 
-        // get the image path
-        templatePath = template.getString("templatePath");
+        // first clear the canvas by removing all text entities
+        deleteAllTextEntities();
+
+        // remove the rotation button
+        rotateImageButton.setVisibility(View.GONE);
 
         // render template
         canvas.setImageURI(Uri.parse(templatePath));
 
-        // get the placeholders for this template
-        ArrayList<Placeholder> placeholders = template.getParcelableArrayList("Placeholders");
-
-        // render placeholders
-        for(Placeholder p : placeholders) {
-            renderPlaceholder(p);
-
-        }
-    }
-
-    /* renderPlaceholder
-     *
-     * purpose: Render a placeholder on the screen for the user to edit.
-     *
-     */
-    private void renderPlaceholder(Placeholder p) {
-        TextLayer textLayer;
-        TextEntity textEntity;
-
-        textLayer = createTextLayer();
-        textLayer.setText(p.getText());
-
-        if(fontProvider.getFontNames().contains(p.getFontName())) {
-            textLayer.getFont().setTypeface(p.getFontName());
-        }
-
-        textEntity = new TextEntity(textLayer, p.getWidth(), p.getHeight(), fontProvider);
-        motionView.addEntityAndPosition(textEntity);
-
-        // move it to its correct position
-        textEntity.moveCenterTo(p.getPosition());
-
-        // redraw
-        motionView.invalidate();
+        // we have an image to edit
+        isBlankCanvas = false;
     }
 
     @Override
@@ -316,14 +288,9 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                     }
                     break;
                 case PICK_TEMPLATE:
-                    Bundle extras = data.getExtras();
-                    if(extras != null && extras.getString("templatePath") != null) {
-                        // first clear the canvas by removing all text entities
-                        deleteAllTextEntities();
-                        // remove the rotation button
-                        rotateImageButton.setVisibility(View.GONE);
-                        // then load the template
-                        loadTemplate(extras);
+                    String templatePath = data.getStringExtra("templatePath");
+                    if(templatePath != null) {
+                        loadTemplate(templatePath);
                     } else {
                         Toast toast = Toast.makeText(this, "Sorry, it looks like that template isn't available.", Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.CENTER, 0, 0);
@@ -390,6 +357,11 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         PointF center = textEntity.absoluteCenter();
         center.y = center.y * 0.5F;
         textEntity.moveCenterTo(center);
+
+        // if we haven't selected an image or template to work with, default to a white background
+        if(isBlankCanvas){
+            canvas.setImageResource(android.R.color.transparent);
+        }
 
         // redraw
         motionView.invalidate();

@@ -1,18 +1,28 @@
 package com.nitrogen.myme.persistence.stubs;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.graphics.PointF;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
-import com.nitrogen.myme.objects.Placeholder;
 import com.nitrogen.myme.objects.TemplateMeme;
 import com.nitrogen.myme.persistence.MemeTemplatePersistence;
+import com.nitrogen.myme.objects.Meme;
+import com.nitrogen.myme.objects.Tag;
 import com.nitrogen.myme.R;
+
+import org.json.JSONObject;
 
 public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
     private List<TemplateMeme> templates;
+    private Map<String,Integer> templateMap = new HashMap<String,Integer>();
+
     private final String PATH = "android.resource://com.nitrogen.myme/";
 
     //**************************************************
@@ -22,14 +32,28 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
     public MemeTemplatePersistenceStub() {
         this.templates = new ArrayList<>();
 
-        createTemplateTwoButtons();
-        createTemplateGru();
-        createTemplateThinkAboutIt();
+        createTemplateMap();
+
+        for(String name : templateMap.keySet()) {
+            TemplateMeme newTemplate = new TemplateMeme(name, (PATH + templateMap.get(name)));
+            templates.add(newTemplate);
+        }
     }
 
     //**************************************************
     // Methods
     //**************************************************
+
+    /* createTemplateMap
+     *
+     * purpose: Create stub templates. Each resource has a name associated with it
+     */
+    private void createTemplateMap () {
+        templateMap.put("Two Buttons Template", R.drawable.template_two_buttons);
+        templateMap.put("Gru Template", R.drawable.template_gru);
+        templateMap.put("Think About It Template", R.drawable.template_think_about_it);
+    }
+
 
     @Override
     public List<TemplateMeme> getTemplates() {
@@ -54,7 +78,7 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
         return templateInserted;
     }
 
-    /* deleteTemplate
+    /* deleteMeme
      *
      * purpose: Delete a template from the database.
      */
@@ -72,7 +96,7 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
 
     /* getTemplate
      *
-     * purpose: Return a template template by id
+     * purpose: Return a template by id
      */
     public TemplateMeme getTemplate(int id) {
 
@@ -82,83 +106,6 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
             }
         }
         return null; // TODO: Violates Liskov
-    }
-
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     *
-     * Here is where we create the templates
-     *
-     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    private void createTemplateTwoButtons(){
-
-        ArrayList<Placeholder> placeholders = new ArrayList<>();
-
-        PointF positions[] = {
-                new PointF(394.9008f, 464.0278f),
-                new PointF(668.89f, 398.39233f)};
-
-
-        // both placeholders are identical, so we need to only define one width and height
-        int width = 800;
-        int height = 200;
-
-        Placeholder p;
-        for(int i = 0 ; i < positions.length ; i++){
-            p = new Placeholder(positions[i]);
-            p.setWidth(width);
-            p.setHeight(height);
-            p.setMultiLine();
-
-            placeholders.add(p);
-        }
-        templates.add(new TemplateMeme("Two Buttons Template",PATH+R.drawable.template_two_buttons, placeholders));
-    }
-
-    private void createTemplateGru(){
-
-        ArrayList<Placeholder> placeholders = new ArrayList<>();
-
-        PointF positions[] = {
-                new PointF(448.7607f, 728.03955f),
-                new PointF(1059.5837f, 728.03955f),
-                new PointF(448.7607f, 1121.40272f),
-                new PointF(1059.5837f, 1121.40272f)};
-
-        // all placeholders are identical, so we need to only define one width and height
-        int width = 800;
-        int height = 200;
-
-        Placeholder p;
-        for(int i = 0 ; i < positions.length ; i++){
-            p = new Placeholder(positions[i]);
-            p.setWidth(width);
-            p.setHeight(height);
-            p.setMultiLine();
-
-            placeholders.add(p);
-        }
-        templates.add(new TemplateMeme("Gru Template",PATH+R.drawable.template_gru, placeholders));
-    }
-
-    private void createTemplateThinkAboutIt(){
-
-        ArrayList<Placeholder> placeholders = new ArrayList<>();
-
-        PointF positions[] = {new PointF(600.0f, 474.33685f)};
-
-        int width = 1500;
-        int height = 800;
-
-        Placeholder p;
-        for(int i = 0 ; i < positions.length ; i++){
-            p = new Placeholder(positions[i]);
-            p.setWidth(width);
-            p.setHeight(height);
-            p.setFontName("Impact");
-
-            placeholders.add(p);
-        }
-        templates.add(new TemplateMeme("Think About It Template",PATH+R.drawable.template_think_about_it, placeholders));
     }
 
 }

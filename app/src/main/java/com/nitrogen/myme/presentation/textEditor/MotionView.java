@@ -13,13 +13,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.nitrogen.myme.presentation.touchDetection.MoveGestureDetector;
+import com.nitrogen.myme.presentation.GestureDetector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +49,7 @@ public class MotionView extends FrameLayout {
 
     // gesture detection
     private ScaleGestureDetector scaleGestureDetector;
-    private MoveGestureDetector moveGestureDetector;
+    private GestureDetector gestureDetector;
     private GestureDetectorCompat gestureDetectorCompat;
 
     // constructors
@@ -85,7 +84,7 @@ public class MotionView extends FrameLayout {
 
         // init listeners
         this.scaleGestureDetector = new ScaleGestureDetector(context, new ScaleListener());
-        this.moveGestureDetector = new MoveGestureDetector(new MoveListener());
+        this.gestureDetector = new GestureDetector(new MoveListener());
         this.gestureDetectorCompat = new GestureDetectorCompat(context, new TapsListener());
 
         setOnTouchListener(onTouchListener);
@@ -303,6 +302,7 @@ public class MotionView extends FrameLayout {
             textEntity.release();
         }
         entities.clear();
+        selectedTextEntity = null;
     }
 
     // gesture detectors
@@ -312,14 +312,14 @@ public class MotionView extends FrameLayout {
         public boolean onTouch(View v, MotionEvent event) {
             if (scaleGestureDetector != null) {
                 scaleGestureDetector.onTouchEvent(event);
-                moveGestureDetector.onTouchEvent(event);
+                gestureDetector.onTouchEvent(event);
                 gestureDetectorCompat.onTouchEvent(event);
             }
             return true;
         }
     };
 
-    private class TapsListener extends GestureDetector.SimpleOnGestureListener {
+    private class TapsListener extends android.view.GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onDoubleTap(MotionEvent e) {
             if (motionViewCallback != null && selectedTextEntity != null) {
@@ -352,9 +352,9 @@ public class MotionView extends FrameLayout {
         }
     }
 
-    private class MoveListener extends MoveGestureDetector.SimpleOnMoveGestureListener {
+    private class MoveListener extends GestureDetector.SimpleOnMoveGestureListener {
         @Override
-        public boolean onMove(MoveGestureDetector detector) {
+        public boolean onMove(GestureDetector detector) {
             handleTranslate(detector.getFocusDelta());
             return true;
         }

@@ -1,9 +1,9 @@
-package com.nitrogen.myme.presentation.touchDetection;
+package com.nitrogen.myme.presentation;
 
 import android.graphics.PointF;
 import android.view.MotionEvent;
 
-public class MoveGestureDetector {
+public class GestureDetector {
 
     private static final PointF FOCUS_DELTA_ZERO = new PointF();
     private final OnMoveGestureListener mListener;
@@ -16,9 +16,8 @@ public class MoveGestureDetector {
     private MotionEvent mCurrEvent;
     private float mCurrPressure;
     private float mPrevPressure;
-    private long mTimeDelta;
 
-    public MoveGestureDetector(OnMoveGestureListener listener) {
+    public GestureDetector(OnMoveGestureListener listener) {
         mListener = listener;
     }
 
@@ -28,7 +27,6 @@ public class MoveGestureDetector {
                 resetState(); // In case we missed an UP/CANCEL event
 
                 mPrevEvent = MotionEvent.obtain(event);
-                mTimeDelta = 0;
 
                 updateStateByEvent(event);
                 break;
@@ -74,9 +72,6 @@ public class MoveGestureDetector {
         }
         mCurrEvent = MotionEvent.obtain(curr);
 
-        // Delta time
-        mTimeDelta = curr.getEventTime() - prev.getEventTime();
-
         // Pressure
         mCurrPressure = curr.getPressure(curr.getActionIndex());
         mPrevPressure = prev.getPressure(prev.getActionIndex());
@@ -120,16 +115,16 @@ public class MoveGestureDetector {
 
     /* OnMoveGestureListener
      *
-     * purpose: Listener which must be implemented which is used by MoveGestureDetector to perform
-     *     callbacks to any implementing class which is registered to a MoveGestureDetector via the
+     * purpose: Listener which must be implemented which is used by GestureDetector to perform
+     *     callbacks to any implementing class which is registered to a GestureDetector via the
      *     constructor.
      */
     public interface OnMoveGestureListener {
-        boolean onMove(MoveGestureDetector detector);
+        boolean onMove(GestureDetector detector);
 
-        boolean onMoveBegin(MoveGestureDetector detector);
+        boolean onMoveBegin(GestureDetector detector);
 
-        void onMoveEnd(MoveGestureDetector detector);
+        void onMoveEnd(GestureDetector detector);
     }
 
     /* SimpleOnMoveGestureListener
@@ -138,15 +133,15 @@ public class MoveGestureDetector {
      *     way it is not necessary to implement all methods of OnMoveGestureListener.
      */
     public static class SimpleOnMoveGestureListener implements OnMoveGestureListener {
-        public boolean onMove(MoveGestureDetector detector) {
+        public boolean onMove(GestureDetector detector) {
             return false;
         }
 
-        public boolean onMoveBegin(MoveGestureDetector detector) {
+        public boolean onMoveBegin(GestureDetector detector) {
             return true;
         }
 
-        public void onMoveEnd(MoveGestureDetector detector) {
+        public void onMoveEnd(GestureDetector detector) {
             // do nothing, overridden implementation may be used
         }
     }
