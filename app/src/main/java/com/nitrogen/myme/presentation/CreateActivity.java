@@ -271,7 +271,6 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         // render placeholders
         for(Placeholder p : placeholders) {
             renderPlaceholder(p);
-
         }
     }
 
