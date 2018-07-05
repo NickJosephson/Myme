@@ -1,10 +1,5 @@
 package com.nitrogen.myme.persistence.stubs;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
-import android.graphics.PointF;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
@@ -12,14 +7,10 @@ import java.util.Collections;
 import java.util.Map;
 
 import com.nitrogen.myme.objects.TemplateMeme;
-import com.nitrogen.myme.persistence.MemeTemplatePersistence;
-import com.nitrogen.myme.objects.Meme;
-import com.nitrogen.myme.objects.Tag;
+import com.nitrogen.myme.persistence.MemeTemplatesPersistence;
 import com.nitrogen.myme.R;
 
-import org.json.JSONObject;
-
-public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
+public class MemeTemplatesPersistenceStub implements MemeTemplatesPersistence {
     private List<TemplateMeme> templates;
     private Map<String,Integer> templateMap = new HashMap<String,Integer>();
 
@@ -29,7 +20,7 @@ public class MemeTemplatePersistenceStub implements MemeTemplatePersistence {
     // Constructor
     //**************************************************
 
-    public MemeTemplatePersistenceStub() {
+    public MemeTemplatesPersistenceStub() {
         this.templates = new ArrayList<>();
 
         createTemplateMap();

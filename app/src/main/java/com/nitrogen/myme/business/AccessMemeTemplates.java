@@ -4,13 +4,11 @@ import java.util.List;
 import java.util.Collections;
 
 import com.nitrogen.myme.application.Services;
-import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.TemplateMeme;
-import com.nitrogen.myme.persistence.MemeTemplatePersistence;
-import com.nitrogen.myme.persistence.MemesPersistence;
+import com.nitrogen.myme.persistence.MemeTemplatesPersistence;
 
 public class AccessMemeTemplates {
-    private MemeTemplatePersistence memeTemplatePersistence;
+    private MemeTemplatesPersistence memeTemplatePersistence;
     private List<TemplateMeme> templates;
 
     //**************************************************
@@ -21,7 +19,7 @@ public class AccessMemeTemplates {
         memeTemplatePersistence = Services.getMemeTemplatePersistence();
         templates = memeTemplatePersistence.getTemplates();
     }
-    public AccessMemeTemplates(MemeTemplatePersistence MemeTemplatePersistenceGiven) {
+    public AccessMemeTemplates(MemeTemplatesPersistence MemeTemplatePersistenceGiven) {
         memeTemplatePersistence = MemeTemplatePersistenceGiven;
         templates = memeTemplatePersistence.getTemplates();
     }

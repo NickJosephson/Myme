@@ -4,6 +4,6 @@ import com.nitrogen.myme.objects.TemplateMeme;
 
 import java.util.List;
 
-public interface MemeTemplatePersistence {
+public interface MemeTemplatesPersistence {
     List<TemplateMeme> getTemplates();
 }

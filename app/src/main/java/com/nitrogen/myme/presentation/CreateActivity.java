@@ -360,7 +360,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
         // if we haven't selected an image or template to work with, default to a white background
         if(isBlankCanvas){
-            canvas.setImageResource(android.R.color.transparent);
+            canvas.setImageResource(android.R.color.white);
         }
 
         // redraw
