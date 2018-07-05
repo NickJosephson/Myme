@@ -18,6 +18,11 @@ public class MemeValidator {
         tagsPersistence = Services.getTagsPersistence();
         memesPersistence = Services.getMemesPersistence();
     }
+    public MemeValidator (MemesPersistence memesPersistenceGiven,
+                          TagsPersistence tagsPersistenceGiven) {
+        tagsPersistence = tagsPersistenceGiven;
+        memesPersistence = memesPersistenceGiven;
+    }
 
     /* hasValidName
      *

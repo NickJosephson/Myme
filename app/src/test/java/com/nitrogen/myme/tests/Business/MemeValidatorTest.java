@@ -4,6 +4,10 @@ import com.nitrogen.myme.business.Exceptions.InvalidMemeException;
 import com.nitrogen.myme.business.MemeValidator;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
+import com.nitrogen.myme.persistence.MemesPersistence;
+import com.nitrogen.myme.persistence.TagsPersistence;
+import com.nitrogen.myme.persistence.stubs.MemesPersistenceStub;
+import com.nitrogen.myme.persistence.stubs.TagsPersistenceStub;
 
 import org.junit.After;
 import org.junit.Before;
@@ -19,6 +23,7 @@ public class MemeValidatorTest {
     private MemeValidator memeValidator;
     private Meme goodMeme;// nice
     private Meme badMeme;
+    private List<Tag> goodTags;
     private List<Tag> badTagsNonExistent;
     private List<Tag> badTagsEmpty;
     private List<Tag> badTagsDuplicates;
@@ -26,7 +31,11 @@ public class MemeValidatorTest {
     @Before
     public void setUp() {
         System.out.println("Starting tests for MemeValidator.\n");
-        memeValidator = new MemeValidator();
+        // stub database
+        TagsPersistence tagsPersistenceStub = new TagsPersistenceStub();
+        MemesPersistence memesPersistenceStub = new MemesPersistenceStub(tagsPersistenceStub);
+
+        memeValidator = new MemeValidator(memesPersistenceStub, tagsPersistenceStub);
         assertNotNull(memeValidator);
 
         goodMeme = new Meme("good name");
@@ -42,6 +51,10 @@ public class MemeValidatorTest {
         badTagsDuplicates = new ArrayList<>();
         badTagsDuplicates.add(new Tag("copy"));
         badTagsDuplicates.add(new Tag("copy"));
+
+        goodTags = new ArrayList<>();
+        goodTags.add(new Tag("dank"));
+        goodTags.add(new Tag("wholesome"));
     }
 
     @Test
@@ -86,6 +99,15 @@ public class MemeValidatorTest {
             result += " ";
 
         return  result;
+    }
+
+    @Test
+    public void testValidateTags_validTags() {
+        System.out.println("Testing validateTags() with tags we know are valid");
+
+        goodMeme.setTags(goodTags);
+
+        assert(memeValidator.validateTags(goodMeme));
     }
 
     @Test(expected = InvalidMemeException.class)
