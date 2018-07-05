@@ -100,7 +100,7 @@ public class MemesPersistenceHSQLDB  implements MemesPersistence{
 
                 in.setString(1, meme.getName());
                 in.setString(2, meme.getImagePath());
-                in.setInt(3, 0);
+                in.setInt(3, meme.isFavourite() ? 1 : 0);
                 memes.add(meme);
                 PreparedStatement inTag = null;
                 for(Tag a : meme.getTags()){
