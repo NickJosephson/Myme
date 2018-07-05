@@ -206,16 +206,13 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
             }
         }
 
-
         View view = getWindow().getDecorView().getRootView();
         ImageView imageView = getWindow().getDecorView().findViewById(R.id.imageView1);
         Bitmap bitmap = Bitmap.createBitmap(view.getWidth(),
                 view.getHeight(), Bitmap.Config.ARGB_8888);
 
-
         Canvas canvas = new Canvas(bitmap);
         view.draw(canvas);
-
 
         Rect rect = new Rect();
 
