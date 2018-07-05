@@ -29,7 +29,8 @@
         </activity>
         <activity
             android:name=".presentation.CreateActivity"
-            android:label="@string/title_activity_create_meme">
+            android:label="@string/title_activity_create_meme"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".presentation.SaveMemeActivity"
