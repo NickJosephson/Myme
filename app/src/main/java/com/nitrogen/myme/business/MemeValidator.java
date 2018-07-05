@@ -34,9 +34,9 @@ public class MemeValidator {
         else if(memeGiven.getName() == null)
             throw new InvalidMemeException("Name cannot be null");
         else if(memeGiven.getName().length() <= 0)
-            throw new InvalidMemeException("Meme name length must be > 0");
+            throw new InvalidMemeException("Meme must have a name");
         else if(memeGiven.getName().length() > MAX_NAME_LEN)
-            throw new InvalidMemeException("Meme name length must be <= " + MAX_NAME_LEN);
+            throw new InvalidMemeException("Length of meme name cannot be greater than " + MAX_NAME_LEN);
         else if(!originalMemeName(memeGiven.getName()))
             throw new InvalidMemeException("Meme name already exists");
 
@@ -65,13 +65,13 @@ public class MemeValidator {
         else if(memeGiven.getTags() == null)
             throw new InvalidMemeException("Tags cannot be null");
         else if(memeGiven.getTags().size() <= 0)
-            throw new InvalidMemeException("Number of tags must be > 0");
+            throw new InvalidMemeException("Meme must have at least 1 tag");
         else if(memeGiven.getTags().size() > tagsPersistence.getTags().size())
-            throw new InvalidMemeException("Number of tags must be <= " + tagsPersistence.getTags().size());
+            throw new InvalidMemeException("Meme cannot have more than " + tagsPersistence.getTags().size() + " tags");
         else if(containsNonExistentTag(memeGiven))
-            throw new InvalidMemeException("Some tags in Meme do not exist in app");
+            throw new InvalidMemeException("Some tags in this Meme do not exist in app");
         else if(containsDuplicateTags(memeGiven))
-            throw new InvalidMemeException("Meme contains multiples of the same tag");
+            throw new InvalidMemeException("Meme contains duplicates of the same tag");
 
         return true;
     }
