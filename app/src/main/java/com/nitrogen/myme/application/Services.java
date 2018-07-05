@@ -3,6 +3,7 @@ package com.nitrogen.myme.application;
 import com.nitrogen.myme.persistence.MemeTemplatePersistence;
 import com.nitrogen.myme.persistence.MemesPersistence;
 import com.nitrogen.myme.persistence.TagsPersistence;
+import com.nitrogen.myme.persistence.hsqldb.MemeTemplatePersistanceHSQLDB;
 import com.nitrogen.myme.persistence.stubs.MemeTemplatePersistenceStub;
 
 import com.nitrogen.myme.persistence.hsqldb.MemesPersistenceHSQLDB;
@@ -26,7 +27,7 @@ public class Services {
 
     public static synchronized MemeTemplatePersistence getMemeTemplatePersistence() {
         if (memeTemplatePersistence == null) {
-            memeTemplatePersistence = new MemeTemplatePersistenceStub();
+            memeTemplatePersistence = new MemeTemplatePersistanceHSQLDB(Main.getDBPathName());
         }
 
         return memeTemplatePersistence;
