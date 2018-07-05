@@ -26,13 +26,11 @@ import android.widget.Toast;
 import com.nitrogen.myme.BuildConfig;
 import com.nitrogen.myme.R;
 
-import com.nitrogen.myme.application.Main;
 import com.nitrogen.myme.persistence.ImageSaver;
 import com.nitrogen.myme.objects.Placeholder;
 import com.nitrogen.myme.presentation.textEditor.Font;
 import com.nitrogen.myme.presentation.textEditor.FontProvider;
 import com.nitrogen.myme.presentation.textEditor.FontsAdapter;
-import com.nitrogen.myme.presentation.textEditor.MotionEntity;
 import com.nitrogen.myme.presentation.textEditor.MotionView;
 import com.nitrogen.myme.presentation.textEditor.TextEditorDialogFragment;
 import com.nitrogen.myme.presentation.textEditor.TextEntity;
@@ -41,7 +39,6 @@ import com.nitrogen.myme.presentation.textEditor.TextLayer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 
 public class CreateActivity extends AppCompatActivity implements TextEditorDialogFragment.OnTextLayerCallback {
 
@@ -201,9 +198,9 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     }
 
     private Bitmap saveScreenBitmap () {
-        for (MotionEntity entity: motionView.getEntities()) {
-            if (entity instanceof TextEntity) {
-                ((TextEntity) entity).setIsSelected(false);
+        for (TextEntity textEntity: motionView.getTextEntities()) {
+            if (textEntity != null) {
+                textEntity.setIsSelected(false);
             }
         }
 
@@ -343,16 +340,15 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
     private final MotionView.MotionViewCallback motionViewCallback = new MotionView.MotionViewCallback() {
         @Override
-        public void onEntitySelected(@Nullable MotionEntity entity) {
-            if (entity instanceof TextEntity) {
+        public void onTextEntitySelected(@Nullable TextEntity textEntity) {
+            if(textEntity != null)
                 textEntityEditPanel.setVisibility(View.VISIBLE);
-            } else {
+            else
                 textEntityEditPanel.setVisibility(View.GONE);
-            }
         }
 
         @Override
-        public void onEntityDoubleTap(@NonNull MotionEntity entity) {
+        public void onTextEntityDoubleTap(@NonNull TextEntity textEntity) {
             startTextEntityEditing();
         }
     };
@@ -367,7 +363,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
                     public void onClick(DialogInterface dialogInterface, int which) {
                         TextEntity textEntity = currentTextEntity();
                         if (textEntity != null) {
-                            textEntity.getLayer().getFont().setTypeface(fonts.get(which));
+                            textEntity.getTextLayer().getFont().setTypeface(fonts.get(which));
                             textEntity.updateEntity();
                             motionView.invalidate();
                         }
@@ -378,7 +374,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
     private void deleteTextEntity() {
         // delete TextEntity
-        motionView.deletedSelectedEntity();
+        motionView.deletedSelectedTextEntity();
 
         // remove text editor buttons
         textEntityEditPanel.setVisibility(View.GONE);
@@ -403,8 +399,8 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
     @Nullable
     private TextEntity currentTextEntity() {
-        if (motionView != null && motionView.getSelectedEntity() instanceof TextEntity) {
-            return ((TextEntity) motionView.getSelectedEntity());
+        if (motionView != null && motionView.getSelectedTextEntity() != null) {
+            return (motionView.getSelectedTextEntity());
         } else {
             return null;
         }
@@ -413,7 +409,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     private void startTextEntityEditing() {
         TextEntity textEntity = currentTextEntity();
         if (textEntity != null) {
-            fragment = TextEditorDialogFragment.getInstance(textEntity.getLayer().getText());
+            fragment = TextEditorDialogFragment.getInstance(textEntity.getTextLayer().getText());
             fragment.show(getFragmentManager(), TextEditorDialogFragment.class.getName());
         }
     }
@@ -439,7 +435,7 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     public void textChanged(@NonNull String text) {
         TextEntity textEntity = currentTextEntity();
         if (textEntity != null) {
-            TextLayer textLayer = textEntity.getLayer();
+            TextLayer textLayer = textEntity.getTextLayer();
             if (!text.equals(textLayer.getText())) {
                 textLayer.setText(text);
                 textEntity.updateEntity();
