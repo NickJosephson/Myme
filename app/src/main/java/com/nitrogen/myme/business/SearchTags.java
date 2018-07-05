@@ -14,11 +14,6 @@ public class SearchTags {
     //**************************************************
     // Constructors
     //**************************************************
-
-    public SearchTags() {
-        this.tagsPersistence = Services.getTagsPersistence();
-    }
-
     // this is needed to swap out real database for stub
     public SearchTags(TagsPersistence tagsPersistenceGiven) {
         this.tagsPersistence = tagsPersistenceGiven;
