@@ -17,7 +17,7 @@ public class AccessMemes {
 
     public AccessMemes() {
         memePersistence = Services.getMemesPersistence();
-        memes = memePersistence.getMemes();;
+        memes = memePersistence.getMemes();
     }
 
     //**************************************************
