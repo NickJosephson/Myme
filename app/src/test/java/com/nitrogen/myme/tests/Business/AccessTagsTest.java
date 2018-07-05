@@ -1,6 +1,8 @@
 package com.nitrogen.myme.tests.Business;
 
 import com.nitrogen.myme.business.AccessTags;
+import com.nitrogen.myme.persistence.TagsPersistence;
+import com.nitrogen.myme.persistence.stubs.TagsPersistenceStub;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,7 +16,10 @@ public class AccessTagsTest {
     @Before
     public void setUp() {
         System.out.println("Starting tests for AccessTags...");
-        accessTags = new AccessTags();
+        // stub database
+        TagsPersistence tagsPersistenceStub = new TagsPersistenceStub();
+
+        accessTags = new AccessTags(tagsPersistenceStub);
         assertNotNull(accessTags);
     }
 

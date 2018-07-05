@@ -20,8 +20,6 @@ public class AccessMemes {
         memePersistence = Services.getMemesPersistence();
         memes = memePersistence.getMemes();
     }
-
-    // this is needed to swap out real database for stub
     public AccessMemes(MemesPersistence memesPersistenceGiven) {
         memePersistence = memesPersistenceGiven;
         memes = memePersistence.getMemes();

@@ -14,12 +14,16 @@ public class AccessMemeTemplates {
     private List<TemplateMeme> templates;
 
     //**************************************************
-    // Constructor
+    // Constructors
     //**************************************************
 
     public AccessMemeTemplates() {
         memeTemplatePersistence = Services.getMemeTemplatePersistence();
-        templates = memeTemplatePersistence.getTemplates();;
+        templates = memeTemplatePersistence.getTemplates();
+    }
+    public AccessMemeTemplates(MemeTemplatePersistence MemeTemplatePersistenceGiven) {
+        memeTemplatePersistence = MemeTemplatePersistenceGiven;
+        templates = memeTemplatePersistence.getTemplates();
     }
 
     //**************************************************

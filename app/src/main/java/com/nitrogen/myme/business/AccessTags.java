@@ -19,8 +19,6 @@ public class AccessTags {
         tagsPersistence = Services.getTagsPersistence();
         tags = tagsPersistence.getTags();
     }
-
-    // this is needed to swap out real database for stub
     public AccessTags(TagsPersistence tagsPersistenceGiven){
         tagsPersistence = tagsPersistenceGiven;
         tags = tagsPersistence.getTags();

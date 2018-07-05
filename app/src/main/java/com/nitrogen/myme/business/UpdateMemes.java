@@ -15,7 +15,6 @@ public class UpdateMemes {
         this.memesPersistence = Services.getMemesPersistence();
     }
 
-    // this is needed to swap out real database for stub
     public UpdateMemes(MemesPersistence memesPersistenceGiven) {
         this.memesPersistence = memesPersistenceGiven;
     }

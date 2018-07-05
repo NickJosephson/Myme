@@ -15,7 +15,6 @@ public class UpdateTags {
         this.tagsPersistence = Services.getTagsPersistence();
     }
 
-    // this is needed to swap out real database for stub
     public UpdateTags(TagsPersistence tagsPersistenceGiven) {
         this.tagsPersistence = tagsPersistenceGiven;
     }

@@ -3,6 +3,10 @@ package com.nitrogen.myme.tests.Business;
 import com.nitrogen.myme.business.AccessFavourites;
 import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.objects.Meme;
+import com.nitrogen.myme.persistence.MemesPersistence;
+import com.nitrogen.myme.persistence.TagsPersistence;
+import com.nitrogen.myme.persistence.stubs.MemesPersistenceStub;
+import com.nitrogen.myme.persistence.stubs.TagsPersistenceStub;
 
 import org.junit.After;
 import org.junit.Before;
@@ -19,7 +23,11 @@ public class AccessFavouritesTest {
     @Before
     public void setUp() {
         System.out.println("Starting tests for AccessFavourites...");
-        accessFavourites = new AccessFavourites();
+        // stub database
+        TagsPersistence tagsPersistence = new TagsPersistenceStub();
+        MemesPersistence memesPersistence = new MemesPersistenceStub(tagsPersistence);
+
+        accessFavourites = new AccessFavourites(memesPersistence);
         assertNotNull(accessFavourites);
     }
 
