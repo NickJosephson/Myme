@@ -442,6 +442,9 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 
     public void deleteAllTextEntities(){
         motionView.release();
+
+        // remove text editor buttons
+        textEntityEditPanel.setVisibility(View.GONE);
     }
 
     //**************************************************
