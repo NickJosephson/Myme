@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.objects.Meme;
+import com.squareup.picasso.Picasso;
 
 // Note that we specify the custom ViewHolder which gives us access to our views
 public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdapter.ViewHolder> {
@@ -95,7 +97,8 @@ public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdap
         ImageView imageView = viewHolder.memeImageView;
         viewHolder.meme = meme;
 
-        imageView.setImageURI(Uri.parse(meme.getThumbnailPath()));
+        Picasso.get().load(meme.getThumbnailPath()).into(imageView);
+        //imageView.setImageURI(Uri.parse(meme.getThumbnailPath()));
         int vis = (meme.isFavourite()) ? View.VISIBLE : View.INVISIBLE;
         viewHolder.favouriteIconView.setVisibility(vis);
     }

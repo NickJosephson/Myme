@@ -13,6 +13,7 @@ import java.util.List;
 
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.objects.TemplateMeme;
+import com.squareup.picasso.Picasso;
 
 // Note that we specify the custom ViewHolder which gives us access to our views
 public class TemplatesRecyclerAdapter extends RecyclerView.Adapter<TemplatesRecyclerAdapter.ViewHolder> {
@@ -95,7 +96,8 @@ public class TemplatesRecyclerAdapter extends RecyclerView.Adapter<TemplatesRecy
         ImageView imageView = viewHolder.templateImageView;
         viewHolder.template = template;
 
-        imageView.setImageURI(Uri.parse(template.getImagePath()));
+        Picasso.get().load(template.getImagePath()).into(imageView);
+        //imageView.setImageURI(Uri.parse(template.getImagePath()));
     }
 
     // Returns the total count of items in the list
