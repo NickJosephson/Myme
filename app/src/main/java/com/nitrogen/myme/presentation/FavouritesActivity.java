@@ -145,7 +145,7 @@ public class FavouritesActivity extends AppCompatActivity {
      * purpose: Set the recycler view to layout as gird or list.
      */
     private void setRVLayout(boolean asGrid) {
-        int numberOfColumns = 3;
+        int numberOfColumns = 2;
 
         if (layoutAsGrid) {
             rvMemes.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
