@@ -49,7 +49,7 @@ public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdap
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), DisplayMemeActivity.class);
-            intent.putExtra(DisplayMemeActivity.EXTRA_MESSAGE_MEME_ID, meme.getMemeID());
+            intent.putExtra(DisplayMemeActivity.EXTRA_MESSAGE_MEME_NAME, meme.getName());
             view.getContext().startActivity(intent);
         }
 

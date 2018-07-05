@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -36,6 +37,7 @@ import com.nitrogen.myme.presentation.textEditor.TextEntity;
 import com.nitrogen.myme.presentation.textEditor.TextLayer;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CreateActivity extends AppCompatActivity implements TextEditorDialogFragment.OnTextLayerCallback {
@@ -175,32 +177,54 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
         Bitmap bitmap = saveScreenBitmap();
 
         // save uri
-        writeMemeToFile(bitmap);
+        String fileName = writeMemeToFile(bitmap);
+
+        Intent intent = new Intent(CreateActivity.this, SaveMemeActivity.class);
+        intent.putExtra(SaveMemeActivity.EXTRA_MESSAGE_FILE_NAME, fileName);
 
         // open SaveMeme activity
-        startActivity(new Intent(CreateActivity.this, SaveMemeActivity.class));
+        startActivity(intent);
         finish(); //end this activity
-
     }
 
-    private void writeMemeToFile (Bitmap bitmap) {
+    private String writeMemeToFile (Bitmap bitmap) {
         ImageSaver savior = new ImageSaver(CreateActivity.this);
-
+        String name = "meme" + (new Date()).toString() + ".png";
         savior.setExternal(false);
         savior.setDirectoryName("db");
-        savior.setFileName("1234567.png");
+        savior.setFileName(name);
         savior.save(bitmap);
+        return name;
     }
 
     private Bitmap saveScreenBitmap () {
-        View view = getWindow().getDecorView().getRootView();
+        for (TextEntity textEntity: motionView.getTextEntities()) {
+            if (textEntity != null) {
+                textEntity.setIsSelected(false);
+            }
+        }
 
+
+        View view = getWindow().getDecorView().getRootView();
+        ImageView imageView = getWindow().getDecorView().findViewById(R.id.imageView1);
         Bitmap bitmap = Bitmap.createBitmap(view.getWidth(),
                 view.getHeight(), Bitmap.Config.ARGB_8888);
+
+
         Canvas canvas = new Canvas(bitmap);
         view.draw(canvas);
 
-        return bitmap;
+
+        Rect rect = new Rect();
+
+        imageView.getGlobalVisibleRect(rect);
+
+        //  Create our resulting image (150--50),(75--25) = 200x100px
+        Bitmap resultBmp = Bitmap.createBitmap(rect.width(), rect.height(), Bitmap.Config.ARGB_8888);
+        //  draw source bitmap into resulting image at given position:
+        new Canvas(resultBmp).drawBitmap(bitmap, -rect.left, -rect.top, null);
+
+        return resultBmp;
     }
 
     /* openGallery

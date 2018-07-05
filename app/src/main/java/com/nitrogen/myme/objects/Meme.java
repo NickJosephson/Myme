@@ -18,12 +18,9 @@ public class Meme {
     private boolean isFavourite = false;
     private final Author author;
     private final Date creationDate;
-    private final int memeID = ++lastMemeID; //unique ID
 
     //ImageMeme
     private String imagePath;
-
-    private static int lastMemeID = 0; //used to ensure all memes have a unique ID
 
     //**************************************************
     // Constructors
@@ -107,7 +104,7 @@ public class Meme {
 
     @Override
     public boolean equals(Object otherMeme) {
-        return otherMeme instanceof Meme && memeID == ((Meme) otherMeme).getMemeID();
+        return otherMeme instanceof Meme && name.equals(((Meme) otherMeme).getName());
     }
 
     @Override
@@ -119,7 +116,6 @@ public class Meme {
                 ", creationDate=" + creationDate +
                 ", tags=" + tags +
                 ", isFavourite=" + isFavourite +
-                ", memeID=" + memeID +
                 '}';
     }
 
@@ -151,7 +147,6 @@ public class Meme {
 
     public boolean isFavourite() { return isFavourite; }
 
-    public int getMemeID() { return memeID; }
 
     public List<Tag> getTags() { return this.tags; }
 

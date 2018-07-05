@@ -24,12 +24,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SaveMemeActivity extends AppCompatActivity {
+    public static final String EXTRA_MESSAGE_FILE_NAME = "com.nitrogen.myme.MESSAGE_MEME_NAME";
+
     List<CheckBox> tagCheckBoxes;
+    String fileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_meme);
+
+        // Get the Intent that started this activity and extract the memeID
+        Intent intent = getIntent();
+        fileName = intent.getStringExtra(EXTRA_MESSAGE_FILE_NAME);
 
         createTagCheckboxes();
 
@@ -83,9 +90,10 @@ public class SaveMemeActivity extends AppCompatActivity {
         // picture is defaults to trash
         // this will change when we can save memes
         //picturePath = Main.getDBPathName() + "/1234567.png";//"android.resource://com.nitrogen.myme/" + R.drawable.ic_trash;
-        picturePath = "/data/user/0/com.nitrogen.myme/app_db/"+"1234567"+".png";
+        picturePath = "/data/user/0/com.nitrogen.myme/app_db/"+fileName;
 
         // create new Meme object
+
         newMeme = new Meme(name, picturePath);
 
         // add tags based on checkboxes

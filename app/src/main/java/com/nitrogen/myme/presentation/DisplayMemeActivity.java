@@ -32,7 +32,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class DisplayMemeActivity extends AppCompatActivity {
-    public static final String EXTRA_MESSAGE_MEME_ID = "com.nitrogen.myme.MESSAGE_MEME_ID";
+    public static final String EXTRA_MESSAGE_MEME_NAME = "com.nitrogen.myme.MESSAGE_MEME_NAME";
     AccessMemes accessMemes = new AccessMemes();
     private Meme meme;
 
@@ -57,10 +57,12 @@ public class DisplayMemeActivity extends AppCompatActivity {
 
         // Get the Intent that started this activity and extract the memeID
         Intent intent = getIntent();
-        int memeID = intent.getIntExtra(EXTRA_MESSAGE_MEME_ID, 0);
+        String memeName = intent.getStringExtra(EXTRA_MESSAGE_MEME_NAME);
 
         // Set the meme for this view with memeID
-        meme = accessMemes.getMemeByID(memeID);
+        if (memeName != null) {
+            meme = accessMemes.getMemeByName(memeName);
+        }
 
         toolbar.setTitle(meme.getName());
         setupView();
