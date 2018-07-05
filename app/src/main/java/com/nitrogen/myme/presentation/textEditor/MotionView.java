@@ -302,6 +302,7 @@ public class MotionView extends FrameLayout {
             textEntity.release();
         }
         entities.clear();
+        selectedTextEntity = null;
     }
 
     // gesture detectors
