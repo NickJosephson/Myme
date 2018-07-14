@@ -27,7 +27,7 @@ import org.junit.runners.Suite;
         UpdateMemesTest.class,
         UpdateTagsTest.class
 })
-public class AllTests
+public class AllUnitTests
 {
     /* empty */
 }
