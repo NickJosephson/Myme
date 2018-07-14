@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.nitrogen.myme.BuildConfig;
 import com.nitrogen.myme.R;
 
+import com.nitrogen.myme.business.SaveHandler;
 import com.nitrogen.myme.persistence.ImageSaver;
 import com.nitrogen.myme.presentation.textEditor.Font;
 import com.nitrogen.myme.presentation.textEditor.FontProvider;
@@ -198,12 +199,15 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
     }
 
     private String writeMemeToFile (Bitmap bitmap) {
-        ImageSaver savior = new ImageSaver(CreateActivity.this);
-        String name = "meme" + (new Date()).toString() + ".png";
-        savior.setExternal(false);
-        savior.setDirectoryName("db");
-        savior.setFileName(name);
-        savior.save(bitmap);
+//        ImageSaver savior = new ImageSaver(CreateActivity.this);
+//        String name = "meme" + (new Date()).toString() + ".png";
+//        savior.setExternal(false);
+//        savior.setDirectoryName("db");
+//        savior.setFileName(name);
+//        savior.save(bitmap);
+//        return name;
+        SaveHandler handler = new SaveHandler(CreateActivity.this);
+        String name = handler.writeToFile(bitmap);
         return name;
     }
 

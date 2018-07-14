@@ -29,6 +29,7 @@ public class ImageSaver {
         this.context = context;
     }
 
+
     public ImageSaver setFileName(String fileName) {
         this.fileName = fileName;
         return this;
@@ -156,6 +157,14 @@ public class ImageSaver {
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
         return bitmap;
+    }
+
+    /* Get directory path of where newly created memes are stored
+     *
+     *
+     */
+    public static String getCreatedMemePath(){
+        return "/data/user/0/com.nitrogen.myme/app_db/";
     }
 
 }

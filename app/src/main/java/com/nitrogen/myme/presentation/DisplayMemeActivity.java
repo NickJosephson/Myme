@@ -90,6 +90,7 @@ public class DisplayMemeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.export_meme:
 
+                //memeExportHandler(meme)
                 String memeImgPath = meme.getImagePath();
                 Uri the_uri;
 
@@ -123,7 +124,6 @@ public class DisplayMemeActivity extends AppCompatActivity {
                             save(ImageSaver.drawableToBitmap(drawable));
                     Snackbar.make(findViewById(R.id.display_meme), "Meme exported to Gallery.", Snackbar.LENGTH_LONG)
                             .setAction("export", null).show();
-
 
                 }
 

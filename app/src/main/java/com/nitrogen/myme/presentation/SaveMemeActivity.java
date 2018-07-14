@@ -14,6 +14,7 @@ import com.nitrogen.myme.application.Main;
 import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.business.Exceptions.InvalidMemeException;
 import com.nitrogen.myme.business.MemeValidator;
+import com.nitrogen.myme.business.SaveHandler;
 import com.nitrogen.myme.business.UpdateMemes;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
@@ -112,13 +113,10 @@ public class SaveMemeActivity extends AppCompatActivity {
         String picturePath;
         boolean isValid = true;
 
-        // picture is defaults to trash
-        // this will change when we can save memes
-        //picturePath = Main.getDBPathName() + "/1234567.png";//"android.resource://com.nitrogen.myme/" + R.drawable.ic_trash;
-        picturePath = "/data/user/0/com.nitrogen.myme/app_db/"+fileName;
+
+        picturePath = SaveHandler.getMemePicturePath(fileName);
 
         // create new Meme object
-
         newMeme = new Meme(name, picturePath);
         newMeme.setFavourite(true);
 
