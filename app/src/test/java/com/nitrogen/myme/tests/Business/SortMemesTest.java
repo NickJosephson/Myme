@@ -3,7 +3,6 @@ package com.nitrogen.myme.tests.Business;
 import com.nitrogen.myme.business.AccessFavourites;
 import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.business.AccessTags;
-import com.nitrogen.myme.business.SearchTags;
 import com.nitrogen.myme.business.SortMemes;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
