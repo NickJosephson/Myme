@@ -1,9 +1,7 @@
 package com.nitrogen.myme.tests.Business;
 
-import com.nitrogen.myme.application.Main;
 import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.business.AccessMemes;
-import com.nitrogen.myme.business.Exceptions.InvalidMemeException;
 import com.nitrogen.myme.business.Exceptions.MemeNotFoundException;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.tests.utils.TestUtils;

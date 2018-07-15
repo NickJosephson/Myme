@@ -1,6 +1,5 @@
 package com.nitrogen.myme.tests.Business;
 
-import com.nitrogen.myme.business.AccessMemeTemplates;
 import com.nitrogen.myme.business.AccessTags;
 import com.nitrogen.myme.persistence.TagsPersistence;
 import com.nitrogen.myme.persistence.stubs.TagsPersistenceStub;
