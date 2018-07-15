@@ -59,15 +59,13 @@ public class ExploreActivity extends AppCompatActivity {
 
         // Initialize memes
         accessMemes = new AccessMemes();
-        for (Meme meme : accessMemes.getMemes()) {
-            memes.add(meme);
-        }
+        memes.addAll(accessMemes.getMemes());
         sortMemes = new SortMemes(memes);
         sortMemes.sortByRelevance();
 
         // Setup recycler view
         setupRV();
-        
+
         Toast toast = Toast.makeText(this, "Sorted by relevance based on favourites.", Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
