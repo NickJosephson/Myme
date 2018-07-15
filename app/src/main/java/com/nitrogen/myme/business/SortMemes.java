@@ -59,7 +59,7 @@ public class SortMemes implements Comparator<Meme> {
         } else {
             accessFavourites = new AccessFavourites();
         }
-        
+
         List<Meme> favorites = accessFavourites.getMemes();
         for (Meme meme : favorites) {
             List<Tag> tags = meme.getTags();
