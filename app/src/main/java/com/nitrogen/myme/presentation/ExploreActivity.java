@@ -1,10 +1,13 @@
 package com.nitrogen.myme.presentation;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,15 +23,17 @@ import android.widget.Toast;
 import com.nitrogen.myme.R;
 import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.business.SearchMemes;
+import com.nitrogen.myme.business.SortMemes;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.persistence.Utils.DatabaseHelper;
 
 public class ExploreActivity extends AppCompatActivity {
     private AccessMemes accessMemes;
-    private List<Meme> memes;
+    private List<Meme> memes = new ArrayList<Meme>();
     private MemesRecyclerAdapter adapter;
     private RecyclerView rvMemes;
     private SearchMemes searchMemes;
+    private SortMemes sortMemes;
     private boolean layoutAsGrid = true;
 
     //**************************************************
@@ -54,10 +59,18 @@ public class ExploreActivity extends AppCompatActivity {
 
         // Initialize memes
         accessMemes = new AccessMemes();
-        memes = accessMemes.getMemes();
+        for (Meme meme : accessMemes.getMemes()) {
+            memes.add(meme);
+        }
+        sortMemes = new SortMemes(memes);
+        sortMemes.sortByRelevance();
 
         // Setup recycler view
         setupRV();
+        
+        Toast toast = Toast.makeText(this, "Sorted by relevance based on favourites.", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     @Override
