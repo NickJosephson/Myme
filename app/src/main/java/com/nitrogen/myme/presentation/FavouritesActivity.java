@@ -58,7 +58,9 @@ public class FavouritesActivity extends AppCompatActivity {
         super.onResume();
 
         //data may have changed (e.g. some meme is now a favorite)
-        rvMemes.getAdapter().notifyDataSetChanged();
+        accessMemes = new AccessFavourites();
+        memes = accessMemes.getMemes();
+        ((MemesRecyclerAdapter) rvMemes.getAdapter()).setMemes(memes);
     }
 
     //**************************************************
