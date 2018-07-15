@@ -49,7 +49,7 @@ public class AccessMemes {
                 return meme;
             }
         }
-        throw new MemeNotFoundException("Sorry, this meme isn't available right now");
+        throw new MemeNotFoundException();
     }
 
     public void updatefav(Meme meme){
