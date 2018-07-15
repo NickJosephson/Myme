@@ -1,5 +1,6 @@
 package com.nitrogen.myme.tests.Business;
 
+import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.business.AccessFavourites;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.tests.utils.TestUtils;
@@ -22,6 +23,7 @@ public class AccessFavouritesIT {
     @Before
     public void setUp() throws IOException {
         System.out.println("Starting tests for AccessFavourites...");
+
         // build database
         tempDB = TestUtils.copyDB();
 
@@ -55,7 +57,11 @@ public class AccessFavouritesIT {
 
     @After
     public void tearDown() {
-        // reset DB
+        // delete file
         tempDB.delete();
+        // forget DB
+        Services.clean();
+
+        System.out.println("\nFinished tests.\n");
     }
 }
