@@ -11,7 +11,7 @@ The Persistence layer has 3 interfaces: `MemesPersistence`, `MemeTemplatesPersis
 Meme creation sits primarily in the Presentation layer. The class `TextEntity` represents editable text that users put on their memes. The class `GestureDetector` helps with touch detection, for moving a `TextEntity` around. `CreateActivity` implements the class `TextEditorDialogFragment` which allows for the user to edit text. Meme creation has presence in the Business layer, in the `MemeValidator` class and the `InvalidMemeException` exception. Memes are validated depending on whether they fit certain criteria. `MemeValidator` is used in the `SaveMemeActivity` so that only valid memes are inserted into the database. And as for the Persistence layer, user created memes are added to the database. This happens through the `MemesPersistence` interface.
 
 `ImageSaver` manages saving an image to the file system, externally and internally. It is useful for exporting memes and when saving user-created memes.
-
+'SortMemes' manipulates a list of memes to be sorted as needed, our current use is sorting by relevance which puts memes with similar tags to the ones of your favorite memes to the top. This also sorts already favorite memes to the end.
 
 ---
 ##### Diagram:
