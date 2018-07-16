@@ -12,10 +12,14 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.nitrogen.myme.objects.BitmapContext;
+import com.nitrogen.myme.presentation.CreateActivity;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 
 
 public class ImageSaver {
@@ -27,6 +31,10 @@ public class ImageSaver {
 
     public ImageSaver(Context context) {
         this.context = context;
+    }
+
+    public ImageSaver(BitmapContext bitmapContext){
+        this.context = bitmapContext.getContext();
     }
 
     public ImageSaver setFileName(String fileName) {
@@ -42,6 +50,16 @@ public class ImageSaver {
     public ImageSaver setDirectoryName(String directoryName) {
         this.directoryName = directoryName;
         return this;
+    }
+
+    public String saveInternally(BitmapContext bitmapContext){
+        String name = "meme" + (new Date()).toString() + ".png";
+        this.setFileName(name);
+        this.setDirectoryName("db");
+        this.save(bitmapContext.getBitmap());
+        this.setExternal(false);
+
+        return name;
     }
 
     public void save(Bitmap bitmapImage) {
@@ -156,6 +174,14 @@ public class ImageSaver {
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
         return bitmap;
+    }
+
+    /* Get directory path of where newly created memes are stored
+     *
+     *
+     */
+    public static String getCreatedMemePath(){
+        return "/data/user/0/com.nitrogen.myme/app_db/";
     }
 
 }
