@@ -135,7 +135,7 @@ public class SelectTemplateActivity extends AppCompatActivity implements OnItemC
      */
     private void setupRV() {
         // Lookup the recycler view in activity layout
-        rvTemplates = (RecyclerView) findViewById(R.id.rvMemes);
+        rvTemplates = (RecyclerView) findViewById(R.id.rvTemplates);
 
         // Create adapter passing in the sample user data
         adapter = new TemplatesRecyclerAdapter(templates, this);
