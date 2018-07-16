@@ -5,7 +5,7 @@ Myme allows users to browse existing memes, and gives them the option to make ne
 
 ## Running the app
 You get started by cloning the project to your local machine:
-~~~~ $ git clone https://code.cs.umanitoba.ca/comp3350-summer2018/nitrogen.git ~~~~ 
+` $ git clone https://code.cs.umanitoba.ca/comp3350-summer2018/nitrogen.git `
 
 You can also do this in Android Studio: on the top toolbar navigate to VCS > Git.
 
