@@ -7,7 +7,6 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         SearchForMemeTest.class,
         ViewMemeTest.class,
-        RecommendationTest.class,
         ExportingTest.class,
         FavouritingTest.class,
         CreatingMemeTest.class,
