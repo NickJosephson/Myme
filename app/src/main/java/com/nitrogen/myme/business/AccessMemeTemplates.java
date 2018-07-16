@@ -48,7 +48,7 @@ public class AccessMemeTemplates {
                 return template;
             }
         }
-        throw new TemplateNotFoundException("Sorry, this template isn't available right now");
+        throw new TemplateNotFoundException();
 
     }
 

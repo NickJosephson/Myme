@@ -11,4 +11,9 @@ public interface MemesPersistence {
     Meme deleteMeme(Meme currentMeme);
 
     void updateFav(Meme meme);
+
+    void setCurrView(List<Meme> memes);
+
+    List<Meme> getCurrView();
+
 }

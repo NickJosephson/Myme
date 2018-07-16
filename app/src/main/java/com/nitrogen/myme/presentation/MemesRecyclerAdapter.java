@@ -122,4 +122,13 @@ public class MemesRecyclerAdapter extends RecyclerView.Adapter<MemesRecyclerAdap
         this.memes = newMemeList;
         notifyDataSetChanged();
     }
+
+    //**************************************************
+    // Mutator Methods
+    //**************************************************
+
+    public void setMemes(List<Meme> newMemes) {
+        memes = newMemes;
+        notifyDataSetChanged();
+    }
 }

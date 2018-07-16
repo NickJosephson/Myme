@@ -13,7 +13,14 @@ import android.widget.LinearLayout;
 import com.nitrogen.myme.application.Main;
 import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.business.Exceptions.InvalidMemeException;
+import com.nitrogen.myme.business.Exceptions.MemeHasDuplicateNameException;
+import com.nitrogen.myme.business.Exceptions.MemeHasDuplicateTagsException;
+import com.nitrogen.myme.business.Exceptions.MemeHasNoTagsException;
+import com.nitrogen.myme.business.Exceptions.MemeHasNonexistentTagsException;
+import com.nitrogen.myme.business.Exceptions.MemeNameTooLongException;
+import com.nitrogen.myme.business.Exceptions.NamelessMemeException;
 import com.nitrogen.myme.business.MemeValidator;
+import com.nitrogen.myme.business.SaveHandler;
 import com.nitrogen.myme.business.UpdateMemes;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
@@ -25,6 +32,18 @@ import java.util.List;
 
 public class SaveMemeActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE_FILE_NAME = "com.nitrogen.myme.MESSAGE_MEME_NAME";
+
+    public static final String INVALID_NAME = "Invalid Name";
+    public static final String INVALID_NAME_NULL = "Meme must have a name";
+    public static final String INVALID_NAME_LENGTH = "Length of meme name cannot be greater than ";
+    public static final String INVALID_NAME_DUPLICATE = "Meme name already exists";
+    public static final String INVALID_NAME_UNKNOWN ="Unknown Error: meme name is invalid";
+
+    public static final String INVALID_TAGS = "Invalid Tags";
+    public static final String INVALID_TAGS_NULL = "Meme must have at least 1 tag";
+    public static final String INVALID_TAGS_DNE = "Some tags in this Meme do not exist in app";
+    public static final String INVALID_TAGS_DUPLICATE = "Meme contains duplicates of the same tag";
+    public static final String INVALID_TAGS_UNKNOWN = "Unknown error: Meme Tags are Invalid";
 
     List<CheckBox> tagCheckBoxes;
     String fileName;
@@ -112,13 +131,10 @@ public class SaveMemeActivity extends AppCompatActivity {
         String picturePath;
         boolean isValid = true;
 
-        // picture is defaults to trash
-        // this will change when we can save memes
-        //picturePath = Main.getDBPathName() + "/1234567.png";//"android.resource://com.nitrogen.myme/" + R.drawable.ic_trash;
-        picturePath = "/data/user/0/com.nitrogen.myme/app_db/"+fileName;
+
+        picturePath = SaveHandler.getMemePicturePath(fileName);
 
         // create new Meme object
-
         newMeme = new Meme(name, picturePath);
         newMeme.setFavourite(true);
 
@@ -132,27 +148,34 @@ public class SaveMemeActivity extends AppCompatActivity {
         // validate Name
         try {
             memeValidator.validateName(newMeme);
+        } catch(NamelessMemeException e) {
+            showErrorMsg(INVALID_NAME, INVALID_NAME_NULL);
+            isValid = false;
+        } catch(MemeNameTooLongException e) {
+            showErrorMsg(INVALID_NAME, INVALID_NAME_LENGTH + memeValidator.MAX_NAME_LEN);
+            isValid = false;
+        } catch(MemeHasDuplicateNameException e) {
+            showErrorMsg(INVALID_NAME, INVALID_NAME_DUPLICATE);
+            isValid = false;
         } catch(InvalidMemeException e) {
-
-            // open a error message dialog box
-            new AlertDialog.Builder(SaveMemeActivity.this)
-                    .setTitle("Invalid Name")
-                    .setMessage(e.getMessage())
-                    .setPositiveButton("OK", null).create().show();
-
+            showErrorMsg(INVALID_NAME, INVALID_NAME_UNKNOWN);
             isValid = false;
         }
 
         // validate tags
         try {
             memeValidator.validateTags(newMeme);
+        } catch(MemeHasNoTagsException e) {
+            showErrorMsg(INVALID_TAGS, INVALID_TAGS_NULL);
+            isValid = false;
+        } catch(MemeHasNonexistentTagsException e) {
+            showErrorMsg(INVALID_TAGS, INVALID_TAGS_DNE);
+            isValid = false;
+        } catch(MemeHasDuplicateTagsException e) {
+            showErrorMsg(INVALID_TAGS, INVALID_TAGS_DUPLICATE);
+            isValid = false;
         } catch(InvalidMemeException e) {
-            // open a error message dialog box
-            new AlertDialog.Builder(SaveMemeActivity.this)
-                    .setTitle("Invalid Tags")
-                    .setMessage(e.getMessage())
-                    .setPositiveButton("OK", null).create().show();
-
+            showErrorMsg(INVALID_TAGS, INVALID_TAGS_UNKNOWN);
             isValid = false;
         }
 
@@ -167,5 +190,13 @@ public class SaveMemeActivity extends AppCompatActivity {
             setResult(RESULT_OK);
             finish();
         }
+    }
+
+    private void showErrorMsg (String title, String message) {
+        // open a error message dialog box
+        new AlertDialog.Builder(SaveMemeActivity.this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", null).create().show();
     }
 }

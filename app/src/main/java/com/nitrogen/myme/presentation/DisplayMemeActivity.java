@@ -90,6 +90,7 @@ public class DisplayMemeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.export_meme:
 
+                //memeExportHandler(meme)
                 String memeImgPath = meme.getImagePath();
                 Uri the_uri;
 
@@ -115,15 +116,16 @@ public class DisplayMemeActivity extends AppCompatActivity {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                 }
                 int result = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
                 if (result == 0){
                     new ImageSaver(findViewById(R.id.display_meme).getContext()).
                             setFileName(meme.getName()+".png").
                             setDirectoryName(getString(R.string.dir_img_export)).
                             setExternal(true).
                             save(ImageSaver.drawableToBitmap(drawable));
+
                     Snackbar.make(findViewById(R.id.display_meme), "Meme exported to Gallery.", Snackbar.LENGTH_LONG)
                             .setAction("export", null).show();
-
 
                 }
 

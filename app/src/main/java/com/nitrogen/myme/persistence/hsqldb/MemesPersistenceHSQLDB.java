@@ -3,6 +3,7 @@ package com.nitrogen.myme.persistence.hsqldb;
 import android.util.Log;
 
 
+import com.nitrogen.myme.application.Main;
 import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
@@ -25,14 +26,13 @@ public class MemesPersistenceHSQLDB  implements MemesPersistence{
     private List<Meme> memes = new ArrayList<Meme>();
     private List<Tag> tags;
     private final String dbPath;
+    private List<Meme> currView = new ArrayList<Meme>();
 
     public MemesPersistenceHSQLDB(String dbPath) {
         this.dbPath = dbPath;
         tags = Services.getTagsPersistence().getTags();
         createMemeMap();
-
     }
-
     private Connection connect() throws SQLException{
         return DriverManager.getConnection("jdbc:hsqldb:file:" + dbPath +";shutdown=true", "SA","");
     }
@@ -141,22 +141,23 @@ public class MemesPersistenceHSQLDB  implements MemesPersistence{
     }
     public void updateFav(Meme meme){
         try(Connection c = connect()){
-                int fav =0;
-                final PreparedStatement in = c.prepareStatement("UPDATE meme SET fav = ? WHERE name = ?");
-                if(meme.isFavourite()){
-                    fav = 1;
-                }
-                in.setInt(1, fav);
-                in.setString(2, meme.getName());
+            int fav =0;
+            final PreparedStatement in = c.prepareStatement("UPDATE meme SET fav = ? WHERE name = ?");
+            if(meme.isFavourite()){
+                fav = 1;
+            }
+            in.setInt(1, fav);
+            in.setString(2, meme.getName());
 
-                in.executeUpdate();
-                in.close();
-
+            in.executeUpdate();
+            in.close();
         }
         catch (final SQLException e){
             Log.e("Connect SQL",e.getMessage()+ e.getSQLState());
         }
-
     }
 
+    public void setCurrView(List<Meme> memes){ currView = memes; }
+
+    public List<Meme> getCurrView() { return currView; }
 }

@@ -11,10 +11,13 @@ public class UpdateTags {
     // Constructors
     //**************************************************
 
+    public UpdateTags() {
+        this.tagsPersistence = Services.getTagsPersistence();
+    }
+
     public UpdateTags(TagsPersistence tagsPersistenceGiven) {
         this.tagsPersistence = tagsPersistenceGiven;
     }
-
     //**************************************************
     // Methods
     //**************************************************

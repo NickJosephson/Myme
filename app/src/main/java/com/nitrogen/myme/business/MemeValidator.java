@@ -2,6 +2,12 @@ package com.nitrogen.myme.business;
 
 import com.nitrogen.myme.application.Services;
 import com.nitrogen.myme.business.Exceptions.InvalidMemeException;
+import com.nitrogen.myme.business.Exceptions.MemeHasDuplicateNameException;
+import com.nitrogen.myme.business.Exceptions.MemeHasDuplicateTagsException;
+import com.nitrogen.myme.business.Exceptions.MemeHasNoTagsException;
+import com.nitrogen.myme.business.Exceptions.MemeHasNonexistentTagsException;
+import com.nitrogen.myme.business.Exceptions.MemeNameTooLongException;
+import com.nitrogen.myme.business.Exceptions.NamelessMemeException;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
 import com.nitrogen.myme.persistence.MemesPersistence;
@@ -30,15 +36,15 @@ public class MemeValidator {
      */
     public boolean validateName(final Meme memeGiven) {
         if(memeGiven == null)
-            throw new InvalidMemeException("Meme cannot be null");
+            throw new InvalidMemeException();
         else if(memeGiven.getName() == null)
-            throw new InvalidMemeException("Name cannot be null");
+            throw new InvalidMemeException();
         else if(memeGiven.getName().length() <= 0)
-            throw new InvalidMemeException("Meme must have a name");
+            throw new NamelessMemeException();
         else if(memeGiven.getName().length() > MAX_NAME_LEN)
-            throw new InvalidMemeException("Length of meme name cannot be greater than " + MAX_NAME_LEN);
+            throw new MemeNameTooLongException();
         else if(!originalMemeName(memeGiven.getName()))
-            throw new InvalidMemeException("Meme name already exists");
+            throw new MemeHasDuplicateNameException();
 
         return true;
     }
@@ -61,17 +67,15 @@ public class MemeValidator {
      */
     public boolean validateTags(final Meme memeGiven) {
         if(memeGiven == null)
-            throw new InvalidMemeException("Meme cannot be null");
+            throw new InvalidMemeException();
         else if(memeGiven.getTags() == null)
-            throw new InvalidMemeException("Tags cannot be null");
+            throw new InvalidMemeException();
         else if(memeGiven.getTags().size() <= 0)
-            throw new InvalidMemeException("Meme must have at least 1 tag");
-        else if(memeGiven.getTags().size() > tagsPersistence.getTags().size())
-            throw new InvalidMemeException("Meme cannot have more than " + tagsPersistence.getTags().size() + " tags");
+            throw new MemeHasNoTagsException();
         else if(containsNonExistentTag(memeGiven))
-            throw new InvalidMemeException("Some tags in this Meme do not exist in app");
+            throw new MemeHasNonexistentTagsException();
         else if(containsDuplicateTags(memeGiven))
-            throw new InvalidMemeException("Meme contains duplicates of the same tag");
+            throw new MemeHasDuplicateTagsException();
 
         return true;
     }

@@ -17,6 +17,7 @@ public class MemesPersistenceStub implements MemesPersistence {
     private List<Meme> memes;
     private List<Tag> tags;
     private Map<String,Integer> memeMap = new HashMap<String,Integer>();
+    private List<Meme> currView = new ArrayList<Meme>();
 
     //**************************************************
     // Constructors
@@ -124,5 +125,9 @@ public class MemesPersistenceStub implements MemesPersistence {
             }
         }
     }
+
+    public void setCurrView(List<Meme> memes){ currView = memes; }
+
+    public List<Meme> getCurrView() { return currView; }
 
 }
