@@ -4,6 +4,7 @@ import com.nitrogen.myme.business.AccessFavourites;
 import com.nitrogen.myme.business.AccessMemeTemplates;
 import com.nitrogen.myme.business.AccessMemes;
 import com.nitrogen.myme.objects.Meme;
+import com.nitrogen.myme.objects.Tag;
 
 import java.util.List;
 
@@ -106,5 +107,25 @@ public class RVHelper {
      */
     public String getNameAtPosFavourites(int pos) {
         return accessFavourites.getMemes().get(pos).getName();
+    }
+
+    public boolean confirmTags(String tag){
+        boolean contains= false;
+        boolean contains1= false;
+
+        for (int i = 0; i < 2; i++){
+            for (Tag a: accessMemes.getCurrView().get(i).getTags()) {
+                if (a.getName().equals(tag)){
+                    if (i == 0)
+                        contains = true;
+                    if (i == 1)
+                        contains1 = true;
+                }
+
+            }
+        }
+
+
+         return contains && contains1;
     }
 }

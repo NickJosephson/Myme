@@ -26,6 +26,7 @@ public class MemesPersistenceHSQLDB  implements MemesPersistence{
     private List<Meme> memes = new ArrayList<Meme>();
     private List<Tag> tags;
     private final String dbPath;
+    private List<Meme> currView = new ArrayList<Meme>();
 
     public MemesPersistenceHSQLDB(String dbPath) {
         this.dbPath = dbPath;
@@ -156,4 +157,7 @@ public class MemesPersistenceHSQLDB  implements MemesPersistence{
         }
     }
 
+    public void setCurrView(List<Meme> memes){ currView = memes; }
+
+    public List<Meme> getCurrView() { return currView; }
 }

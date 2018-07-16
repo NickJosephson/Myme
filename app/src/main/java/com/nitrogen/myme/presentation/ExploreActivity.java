@@ -61,7 +61,7 @@ public class ExploreActivity extends AppCompatActivity {
         accessMemes = new AccessMemes();
         memes.addAll(accessMemes.getMemes());
         sortMemes = new SortMemes(memes);
-        sortMemes.sortByRelevance();
+        accessMemes.setCurrView(sortMemes.sortByRelevance());
 
         // Setup recycler view
         setupRV();

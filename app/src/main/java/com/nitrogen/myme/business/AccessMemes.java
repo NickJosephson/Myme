@@ -1,5 +1,6 @@
 package com.nitrogen.myme.business;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 
@@ -55,5 +56,9 @@ public class AccessMemes {
     public void updatefav(Meme meme){
         memePersistence.updateFav( meme);
     }
+
+    public void setCurrView(List<Meme> meme){ memePersistence.setCurrView(meme); }
+
+    public List<Meme> getCurrView(){ return memePersistence.getCurrView(); }
 
 }
