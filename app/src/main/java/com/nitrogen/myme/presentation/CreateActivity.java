@@ -28,6 +28,7 @@ import com.nitrogen.myme.BuildConfig;
 import com.nitrogen.myme.R;
 
 import com.nitrogen.myme.business.SaveHandler;
+import com.nitrogen.myme.objects.BitmapContext;
 import com.nitrogen.myme.persistence.ImageSaver;
 import com.nitrogen.myme.presentation.textEditor.Font;
 import com.nitrogen.myme.presentation.textEditor.FontProvider;
@@ -206,8 +207,13 @@ public class CreateActivity extends AppCompatActivity implements TextEditorDialo
 //        savior.setFileName(name);
 //        savior.save(bitmap);
 //        return name;
-        SaveHandler handler = new SaveHandler(CreateActivity.this);
-        String name = handler.writeToFile(bitmap);
+        BitmapContext bitmapContext = new BitmapContext();
+        bitmapContext.setBitmap(bitmap);
+        bitmapContext.setContext(CreateActivity.this);
+
+
+        SaveHandler handler = new SaveHandler(bitmapContext);
+        String name = handler.writeToFile(bitmapContext);
         return name;
     }
 
