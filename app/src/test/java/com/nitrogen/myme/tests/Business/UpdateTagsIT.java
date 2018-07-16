@@ -119,7 +119,7 @@ public class UpdateTagsIT {
         for(int i = 0 ; i < NUM_TAGS ; i++) {
             newTag = new Tag("test_tag_"+i);
             assertTrue(updateTags.insertTag(newTag));
-            assertTrue(updateTags.insertTag(newTag));
+            assertFalse(updateTags.insertTag(newTag));
         }
         assertEquals(initialSize + NUM_TAGS, accessTags.getTags().size());
     }
