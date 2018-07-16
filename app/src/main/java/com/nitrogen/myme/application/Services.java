@@ -36,4 +36,9 @@ public class Services {
         return tagsPersistence;
     }
 
+    public static synchronized void clean() {
+        memesPersistence = null;
+        memeTemplatesPersistence = null;
+        tagsPersistence = null;
+    }
 }
