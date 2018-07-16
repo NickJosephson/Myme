@@ -8,10 +8,6 @@ import com.nitrogen.myme.business.SortMemes;
 import com.nitrogen.myme.business.UpdateMemes;
 import com.nitrogen.myme.objects.Meme;
 import com.nitrogen.myme.objects.Tag;
-import com.nitrogen.myme.persistence.MemesPersistence;
-import com.nitrogen.myme.persistence.TagsPersistence;
-import com.nitrogen.myme.persistence.stubs.MemesPersistenceStub;
-import com.nitrogen.myme.persistence.stubs.TagsPersistenceStub;
 import com.nitrogen.myme.tests.utils.TestUtils;
 
 import org.junit.After;
@@ -31,9 +27,7 @@ import static org.junit.Assert.assertTrue;
 public class SortMemesIT {
     private File tempDB;
     private AccessMemes accessMemes;
-    private AccessFavourites accessFavourites;
     private AccessTags accessTags;
-    private List<Meme> memes;
 
     @Before
     public void setUp() throws IOException {
@@ -42,15 +36,10 @@ public class SortMemesIT {
         tempDB = TestUtils.copyDB();
 
         accessMemes = new AccessMemes();
-        accessFavourites = new AccessFavourites();
         accessTags = new AccessTags();
-        //memes = new LinkedList<>();
+
         assertNotNull(accessMemes);
         assertNotNull(accessTags);
-        //assertNotNull(memes);
-
-        // Initialize memes
-        //memes.addAll(accessMemes.getMemes());
     }
 
     @Test
