@@ -64,20 +64,29 @@ public class RVHelper {
 
     /* getItemCountExplore
      *
-     * purpose: Return the number of items in the recycler view.
+     * purpose: Return the number of items in the recycler view in the Explore activity.
      *
      */
     public int getItemCountExplore() {
         return accessMemes.getMemes().size();
     }
 
-    /* getItemCountFavourites
+    /* getItemCountTemplates
      *
-     * purpose: Return the number of items in the recycler view.
+     * purpose: Return the number of items in the recycler view in the Favourites activity.
      *
      */
     public int getItemCountFavourites() {
         return accessFavourites.getMemes().size();
+    }
+
+    /* getItemCountExplore
+     *
+     * purpose: Return the number of items in the recycler view when selecting a Template Meme.
+     *
+     */
+    public int getItemCountTemplates() {
+        return accessMemeTemplates.getTemplates().size();
     }
 
 

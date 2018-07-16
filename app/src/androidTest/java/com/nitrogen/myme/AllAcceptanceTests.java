@@ -6,7 +6,12 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         SearchForMemeTest.class,
-        ViewMemeTest.class
+        ViewMemeTest.class,
+        ExportingTest.class,
+        FavouritingTest.class,
+        CreatingMemeTest.class,
+        SavingInvalidMemeTest.class,
+        MemeEditingButtonsTest.class,
 })
 public class AllAcceptanceTests {
 }

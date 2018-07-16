@@ -33,6 +33,18 @@ import java.util.List;
 public class SaveMemeActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE_FILE_NAME = "com.nitrogen.myme.MESSAGE_MEME_NAME";
 
+    public static final String INVALID_NAME = "Invalid Name";
+    public static final String INVALID_NAME_NULL = "Meme must have a name";
+    public static final String INVALID_NAME_LENGTH = "Length of meme name cannot be greater than ";
+    public static final String INVALID_NAME_DUPLICATE = "Meme name already exists";
+    public static final String INVALID_NAME_UNKNOWN ="Unknown Error: meme name is invalid";
+
+    public static final String INVALID_TAGS = "Invalid Tags";
+    public static final String INVALID_TAGS_NULL = "Meme must have at least 1 tag";
+    public static final String INVALID_TAGS_DNE = "Some tags in this Meme do not exist in app";
+    public static final String INVALID_TAGS_DUPLICATE = "Meme contains duplicates of the same tag";
+    public static final String INVALID_TAGS_UNKNOWN = "Unknown error: Meme Tags are Invalid";
+
     List<CheckBox> tagCheckBoxes;
     String fileName;
 
@@ -137,16 +149,16 @@ public class SaveMemeActivity extends AppCompatActivity {
         try {
             memeValidator.validateName(newMeme);
         } catch(NamelessMemeException e) {
-            showErrorMsg("Invalid Name", "Meme must have a name");
+            showErrorMsg(INVALID_NAME, INVALID_NAME_NULL);
             isValid = false;
         } catch(MemeNameTooLongException e) {
-            showErrorMsg("Invalid Name", "Length of meme name cannot be greater than " + memeValidator.MAX_NAME_LEN);
+            showErrorMsg(INVALID_NAME, INVALID_NAME_LENGTH + memeValidator.MAX_NAME_LEN);
             isValid = false;
         } catch(MemeHasDuplicateNameException e) {
-            showErrorMsg("Invalid Name", "Meme name already exists");
+            showErrorMsg(INVALID_NAME, INVALID_NAME_DUPLICATE);
             isValid = false;
         } catch(InvalidMemeException e) {
-            showErrorMsg("Invalid Name", "Unknown Error: meme name is invalid");
+            showErrorMsg(INVALID_NAME, INVALID_NAME_UNKNOWN);
             isValid = false;
         }
 
@@ -154,16 +166,16 @@ public class SaveMemeActivity extends AppCompatActivity {
         try {
             memeValidator.validateTags(newMeme);
         } catch(MemeHasNoTagsException e) {
-            showErrorMsg("Invalid Tags", "Meme must have at least 1 tag");
+            showErrorMsg(INVALID_TAGS, INVALID_TAGS_NULL);
             isValid = false;
         } catch(MemeHasNonexistentTagsException e) {
-            showErrorMsg("Invalid Tags", "Some tags in this Meme do not exist in app");
+            showErrorMsg(INVALID_TAGS, INVALID_TAGS_DNE);
             isValid = false;
         } catch(MemeHasDuplicateTagsException e) {
-            showErrorMsg("Invalid Tags", "Meme contains duplicates of the same tag");
+            showErrorMsg(INVALID_TAGS, INVALID_TAGS_DUPLICATE);
             isValid = false;
         } catch(InvalidMemeException e) {
-            showErrorMsg("Invalid Tags", "Unknown error: Meme Tags are Invalid");
+            showErrorMsg(INVALID_TAGS, INVALID_TAGS_UNKNOWN);
             isValid = false;
         }
 
