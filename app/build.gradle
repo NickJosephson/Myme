@@ -32,4 +32,20 @@ dependencies {
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
     implementation group: 'org.hsqldb', name: 'hsqldb', version: '2.4.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    testCompile "org.mockito:mockito-core:2.+"
+    androidTestImplementation (group: 'com.android.support.test.espresso', name: 'espresso-core', version: '3.0.2') {
+        exclude group: 'com.android.support', module: 'support-annotations'
+
+    }
+    androidTestImplementation('com.android.support.test.espresso:espresso-contrib:2.2') {
+        // Necessary to avoid version conflicts
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
+    }
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.+'
+    androidTestImplementation ('com.android.support.test:rules:1.0.2'){
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
 }

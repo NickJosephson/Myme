@@ -1,5 +1,7 @@
 package com.nitrogen.myme.objects;
 
+import android.support.annotation.NonNull;
+
 /* Tag
  *
  * purpose: This class represents a tag for use in classifying Memes.

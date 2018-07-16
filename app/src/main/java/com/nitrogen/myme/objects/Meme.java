@@ -147,7 +147,6 @@ public class Meme {
 
     public boolean isFavourite() { return isFavourite; }
 
-
     public List<Tag> getTags() { return this.tags; }
 
     public String getThumbnailPath() {

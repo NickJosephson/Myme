@@ -74,24 +74,11 @@ public class TagsPersistenceHSQLDB implements TagsPersistence {
             if(!tags.contains(tag)) {
                 tagAdded = true;
             }
-            else {
-                final PreparedStatement st = c.prepareStatement("SELECT * FROM MEMETAGS WHERE name=?");
-                st.setString(1, "Pff guy");
-                final ResultSet rs = st.executeQuery();
-                while (rs.next()) {
-                    if (rs.getString("tagname").equals(tag.getName())){
-                        tagAdded = true;
-                    }
-                }
-                rs.close();
-                st.close();
-
-            }
             if(tagAdded){
-                final PreparedStatement in = c.prepareStatement("INSERT INTO memetags VALUES(? , ?)");
-                in.setString(1,"Pff guy");
-                in.setString(2, "lol");
+                final PreparedStatement in = c.prepareStatement("INSERT INTO tag VALUES(?)");
+                in.setString(1,tag.getName());
                 in.executeUpdate();
+                tags.add(tag);
             }
 
         }
