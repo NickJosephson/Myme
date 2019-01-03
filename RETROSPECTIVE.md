@@ -12,4 +12,4 @@ A short-term improvement we discussed in order to make our code adhere to the 3-
 To evaluate our success after we apply our improvements we would analyze our written code to ensure that it doesn’t violate SOLID principles and there are no code smells present. Additionally, we would make sure that our code now adheres to our code architecture guidelines. We would also extensively test our application to confirm that refactoring our code has not led to new errors. 
 	
 	
-[Iteration 2 project velocity] (https://code.cs.umanitoba.ca/comp3350-summer2018/nitrogen/blob/master/project_velocity.png)
+[Iteration 2 project velocity](project_velocity.png)
